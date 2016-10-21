@@ -226,8 +226,8 @@ INSERT INTO `HPoS`.`ActionType` (`actionType`) VALUES ('Modify Employee');
 INSERT INTO `HPoS`.`ActionType` (`actionType`) VALUES ('Remove Employee');
 
 -- Insert Product 
-INSERT INTO `HPoS`.`Product` (`proName`, `proPrice`, `proDes`,`quantity`) VALUES ('Aquafina', '6000', NULL,'41');
-INSERT INTO `HPoS`.`Product` (`proName`, `proPrice`, `proDes`, `quantity`) VALUES ('Raspberry Pi 3', '1200000', '', '10');
+INSERT INTO `HPoS`.`Product` (`proName`, `proPrice`, `proDes`,`quantity`) VALUES ('Aquafina', '6', NULL,'41');
+INSERT INTO `HPoS`.`Product` (`proName`, `proPrice`, `proDes`, `quantity`) VALUES ('Raspberry Pi 3', '1200', '', '10');
 
 -- Insert Barcode
 INSERT INTO `HPoS`.`Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `checkDigit`, `imDate`, `imTime`) VALUES ('1', '893', '4588', '06305', '3', '2016-10-12', '16:32:00');
