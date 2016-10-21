@@ -22,6 +22,7 @@ CREATE TABLE User (
  pinCode INT NOT NULL unique,
  lastName NVARCHAR(15) NOT NULL,
  firstName NVARCHAR(15) NOT NULL,
+ pictureUrl NVARCHAR(255) NULL,
  age INT NULL,
  DOB DATE NULL,
  idCard NVARCHAR(15) NULL,
@@ -60,23 +61,23 @@ CREATE TABLE Product (
  proName NVARCHAR(25) NOT NULL,
  proPrice DOUBLE NOT NULL,
  proDes NVARCHAR (255) NULL,
- PRIMARY KEY (proID)
+ ctID INT NULL,
+ PRIMARY KEY (proID),
+  CONSTRAINT fk_Product_Category
+ FOREIGN KEY (ctID)
+ REFERENCES Category(ctID)
 );
 
 -- Table Picture 
  
 CREATE TABLE Picture (
  picID INT NOT NULL AUTO_INCREMENT,
- picUrl NVARCHAR(200) NOT NULL,
+ picUrl NVARCHAR(255) NOT NULL,
  proID INT NULL,
- userID INT NULL,
  PRIMARY KEY (picID),
  CONSTRAINT fk_Picture_Product
  FOREIGN KEY (proID)
- REFERENCES Product (proID),
- CONSTRAINT fk_Picture_User
- FOREIGN KEY (proID)
- REFERENCES User(userID)
+ REFERENCES Product (proID)
  );
  
 -- Table InvoiceDetail 
@@ -129,26 +130,6 @@ primary key(countryPrefix)
 );
   
  
--- Table QualityStandard 
- 
--- CREATE TABLE QualityStandard (
---  standardID INT NOT NULL AUTO_INCREMENT,
---  standardName NVARCHAR(25) NOT NULL,
---  description NVARCHAR(255) NULL,
---  PRIMARY KEY (standardID)
--- );
- 
--- Table Attribute 
- 
--- CREATE TABLE Attribute (
---  attID INT NOT NULL AUTO_INCREMENT,
---  attName NVARCHAR(45) NOT NULL,
---  attDes NVARCHAR(250) NOT NULL,
---  PRIMARY KEY (attID)
--- 
--- );
- 
--- Table Manufacturer 
  
 CREATE TABLE Manufacturer (
  manuPrefix nvarchar(10) NOT NULL,
@@ -191,77 +172,17 @@ CREATE TABLE Category (
  );
  
 
-  
-
-
--- Table Product_has_QualityStandard 
  
--- CREATE TABLE Product_has_QualityStandard (
+-- CREATE TABLE Category_has_Product (
+--  Category_ctID INT NOT NULL,
 --  Product_proID INT NOT NULL,
---  QualityStandard_standardID INT NOT NULL,
---  PRIMARY KEY (Product_proID , QualityStandard_standardID),
---  CONSTRAINT fk_Product_has_QualityStandard_Product 
---  FOREIGN KEY (Product_proID)
---  REFERENCES Product (proID),
---  CONSTRAINT fk_Product_has_QualityStandard_Quality
---  FOREIGN KEY (QualityStandard_standardID)
---  REFERENCES QualityStandard (standardID)
--- );
- 
--- Table Product_has_Attribute 
- 
--- CREATE TABLE Product_has_Attribute (
---  Product_proID INT NOT NULL,
---  Attribute_attID INT NOT NULL,
---  PRIMARY KEY (Product_proID , Attribute_attID),
---  CONSTRAINT fk_Product_has_Attribute_Product 
---  FOREIGN KEY (Product_proID)
---  REFERENCES Product (proID),
---  CONSTRAINT fk_Product_has_Attribute_Attribute 
---  FOREIGN KEY (Attribute_attID)
---  REFERENCES Attribute (attID)
--- );
- 
--- Table Picture_has_Product 
- 
--- CREATE TABLE Picture_has_Product (
---  Picture_picID INT NOT NULL,
---  Product_proID INT NOT NULL,
---  PRIMARY KEY (Picture_picID , Product_proID),
---  CONSTRAINT fk_Picture_has_Product_Picture 
---  FOREIGN KEY (Picture_picID)
---  REFERENCES Picture (picID),
---  CONSTRAINT fk_Picture_has_Product_Product 
+--  PRIMARY KEY (Category_ctID , Product_proID),
+--  CONSTRAINT fk_Category_has_Product_Category 
+--  FOREIGN KEY (Category_ctID)
+--  REFERENCES Category (ctID),
+--  CONSTRAINT fk_Category_has_Product_Product 
 --  FOREIGN KEY (Product_proID)
 --  REFERENCES Product (proID)
--- );
- 
--- Table Category_has_Product 
- 
-CREATE TABLE Category_has_Product (
- Category_ctID INT NOT NULL,
- Product_proID INT NOT NULL,
- PRIMARY KEY (Category_ctID , Product_proID),
- CONSTRAINT fk_Category_has_Product_Category 
- FOREIGN KEY (Category_ctID)
- REFERENCES Category (ctID),
- CONSTRAINT fk_Category_has_Product_Product 
- FOREIGN KEY (Product_proID)
- REFERENCES Product (proID)
-);
- 
--- Table Picture_has_User 
- 
--- CREATE TABLE Picture_has_User (
---  Picture_picID INT NOT NULL,
---  User_userID INT NOT NULL,
---  PRIMARY KEY (Picture_picID , User_userID),
---  CONSTRAINT fk_Picture_has_User_Picture 
---  FOREIGN KEY (Picture_picID)
---  REFERENCES Picture (picID),
---  CONSTRAINT fk_Picture_has_User_User 
---  FOREIGN KEY (User_userID)
---  REFERENCES User (userID)
 -- );
  
  
@@ -321,51 +242,8 @@ INSERT INTO `HPoS`.`Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPr
 
 
 -- Insert Category
-INSERT INTO `HPoS`.`Category_has_Product` (`Category_ctID`, `Product_proID`) VALUES ('15', '1');
+-- INSERT INTO `HPoS`.`Category_has_Product` (`Category_ctID`, `Product_proID`) VALUES ('15', '1');
 
- -- QualityStandard data
- 
---  INSERT INTO QualityStandard (standardID, standardName, description)
---  VALUES (NULL, 'ISO 9000','Quality management');
---  INSERT INTO QualityStandard (standardID, standardName, description)
---  VALUES (NULL, 'ISO 14000','Environmental management');
---  INSERT INTO QualityStandard (standardID, standardName, description)
---  VALUES (NULL, 'ISO 45001','Occupational Health and Safety');
---  INSERT INTO QualityStandard (standardID, standardName, description)
---  VALUES (NULL, 'ISO 22000','Food safety management');
- 
- -- Attribute data
---  
---  INSERT INTO Attribute (attID, attName, attDes)
--- VALUES (NULL, 'Color', 'Blue');
--- INSERT INTO Attribute (attID, attName, attDes)
--- VALUES (NULL, 'Color', 'Red');
--- INSERT INTO Attribute (attID, attName, attDes)
--- VALUES (NULL, 'Color', 'Black');
--- INSERT INTO Attribute (attID, attName, attDes)
--- VALUES (NULL, 'Color', 'White');
--- INSERT INTO Attribute (attID, attName, attDes)
--- VALUES (NULL, 'Size', 'Small');
--- INSERT INTO Attribute (attID, attName, attDes)
--- VALUES (NULL, 'Size', 'Normal');
--- INSERT INTO Attribute (attID, attName, attDes)
--- VALUES (NULL, 'Size', 'Large');
--- INSERT INTO Attribute (attID, attName, attDes)
--- VALUES (NULL, 'Size', 'Small');
--- INSERT INTO Attribute (attID, attName, attDes)
--- VALUES (NULL, 'Components', 'Carbon');
--- INSERT INTO Attribute (attID, attName, attDes)
--- VALUES (NULL, 'Components', 'Glass');
--- INSERT INTO Attribute (attID, attName, attDes)
--- VALUES (NULL, 'Components', 'Camera');
--- INSERT INTO Attribute (attID, attName, attDes)
--- VALUES (NULL, 'Components', 'Pin');
--- INSERT INTO Attribute (attID, attName, attDes)
--- VALUES (NULL, 'Features', 'IOS');
--- INSERT INTO Attribute (attID, attName, attDes)
--- VALUES (NULL, 'Features', 'Android');
-
--- Manufacturer data
 
  -- Category data
  INSERT INTO Category (ctID, ctName)
