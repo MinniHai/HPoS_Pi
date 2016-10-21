@@ -3,8 +3,8 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 SET SQL_SAFE_UPDATES = 0;
  
 CREATE SCHEMA HPoS ;
-USE HPoS ;
- 
+USE HPoS ;-- a a
+  
 -- Table Role 
  
 CREATE TABLE Role (
@@ -19,10 +19,10 @@ CREATE TABLE User (
  userID INT NOT NULL AUTO_INCREMENT,
  username  NVARCHAR(20) NOT NULL unique,
  pwd NVARCHAR(20) NOT NULL,
- pinCode INT NOT NULL unique,
+ pinCode INT NOT NULL unique, 
+ pictureUrl NVARCHAR(255) NULL,
  lastName NVARCHAR(15) NOT NULL,
  firstName NVARCHAR(15) NOT NULL,
- pictureUrl NVARCHAR(255) NULL,
  age INT NULL,
  DOB DATE NULL,
  idCard NVARCHAR(15) NULL,
@@ -60,10 +60,11 @@ CREATE TABLE Product (
  proID INT NOT NULL AUTO_INCREMENT,
  proName NVARCHAR(25) NOT NULL,
  proPrice DOUBLE NOT NULL,
- proDes NVARCHAR (255) NULL,
+ quantity INT NOT NULL,
  ctID INT NULL,
+ proDes NVARCHAR (255) NULL,
  PRIMARY KEY (proID),
-  CONSTRAINT fk_Product_Category
+ CONSTRAINT fk_Product_Category
  FOREIGN KEY (ctID)
  REFERENCES Category(ctID)
 );
@@ -130,6 +131,7 @@ primary key(countryPrefix)
 );
   
  
+-- Table Manufacturer 
  
 CREATE TABLE Manufacturer (
  manuPrefix nvarchar(10) NOT NULL,
@@ -172,19 +174,7 @@ CREATE TABLE Category (
  );
  
 
- 
--- CREATE TABLE Category_has_Product (
---  Category_ctID INT NOT NULL,
---  Product_proID INT NOT NULL,
---  PRIMARY KEY (Category_ctID , Product_proID),
---  CONSTRAINT fk_Category_has_Product_Category 
---  FOREIGN KEY (Category_ctID)
---  REFERENCES Category (ctID),
---  CONSTRAINT fk_Category_has_Product_Product 
---  FOREIGN KEY (Product_proID)
---  REFERENCES Product (proID)
--- );
- 
+
  
  -- INSERT DATA
  
@@ -225,6 +215,7 @@ CREATE TABLE Category (
 
 -- Insert Company
 INSERT INTO `HPoS`.`Manufacturer` (`manuPrefix`, `manuName`, `address`, `phone`, `logo`) VALUES ('4588', 'PepsiCo', '', '', '');
+INSERT INTO `HPoS`.`Manufacturer` (`manuPrefix`, `manuName`, `address`) VALUES ('0214', 'Electrocomponents plc', 'John Wheeler');
 
 -- Insert ActionType
 INSERT INTO `HPoS`.`ActionType` (`actionType`) VALUES ('Add Inventory');
@@ -235,14 +226,12 @@ INSERT INTO `HPoS`.`ActionType` (`actionType`) VALUES ('Modify Employee');
 INSERT INTO `HPoS`.`ActionType` (`actionType`) VALUES ('Remove Employee');
 
 -- Insert Product 
-INSERT INTO `HPoS`.`Product` (`proName`, `proPrice`, `proDes`) VALUES ('Aquafina', '6000', NULL);
+INSERT INTO `HPoS`.`Product` (`proName`, `proPrice`, `proDes`,`quantity`) VALUES ('Aquafina', '6000', NULL,'41');
+INSERT INTO `HPoS`.`Product` (`proName`, `proPrice`, `proDes`, `quantity`) VALUES ('Raspberry Pi 3', '1200000', '', '10');
 
 -- Insert Barcode
 INSERT INTO `HPoS`.`Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `checkDigit`, `imDate`, `imTime`) VALUES ('1', '893', '4588', '06305', '3', '2016-10-12', '16:32:00');
-
-
--- Insert Category
--- INSERT INTO `HPoS`.`Category_has_Product` (`Category_ctID`, `Product_proID`) VALUES ('15', '1');
+INSERT INTO `HPoS`.`Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `checkDigit`, `imDate`, `imTime`) VALUES ('2', '506', '0214', '37002', '8', '2016-10-15', '11:27:00');
 
 
  -- Category data
