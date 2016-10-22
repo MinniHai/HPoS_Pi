@@ -40,12 +40,12 @@ CREATE TABLE User (
 CREATE TABLE Invoice (
  ivID INT NOT NULL AUTO_INCREMENT,
  userID INT NOT NULL,
- ivdate DATE NOT NULL,
- ivtime TIME NOT NULL,
- total DOUBLE NOT NULL,
+ ivDate DATE NOT NULL,
+ ivTime TIME NOT NULL,
+ subtotal DOUBLE NOT NULL,
  tax FLOAT NOT NULL,
  discount FLOAT NOT NULL,
- payment DOUBLE NOT NULL,
+ total DOUBLE NOT NULL,
  PRIMARY KEY (ivID),
  CONSTRAINT fk_Invoice_User 
  FOREIGN KEY (userID)
@@ -88,7 +88,7 @@ CREATE TABLE InvoiceDetail (
  ivID INT NOT NULL,
  proID INT NOT NULL,
  quantity INT NOT NULL,
- total INT NOT NULL,
+ subtotal INT NOT NULL,
  PRIMARY KEY (dtID),
  CONSTRAINT fk_InvoiceDetail_Product
  FOREIGN KEY (proID)
@@ -138,7 +138,7 @@ CREATE TABLE Manufacturer (
  manuName NVARCHAR(45) NOT NULL,
  address NVARCHAR(205) NULL,
  phone NVARCHAR(15) NULL,
- logo NVARCHAR(200) NULL,
+ logoUrl NVARCHAR(200) NULL,
  PRIMARY KEY (manuPrefix)
 );
 
