@@ -98,7 +98,7 @@ background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y
      <string>...</string>
     </property>
     <property name="icon">
-     <iconset resource="images.qrc">
+     <iconset>
       <normaloff>:/images/images/menu.png</normaloff>:/images/images/menu.png</iconset>
     </property>
     <property name="iconSize">
@@ -121,7 +121,7 @@ background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y
      <string>...</string>
     </property>
     <property name="icon">
-     <iconset resource="images.qrc">
+     <iconset>
       <normaloff>:/images/images/AddNew.png</normaloff>:/images/images/AddNew.png</iconset>
     </property>
     <property name="iconSize">
@@ -144,7 +144,7 @@ background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y
      <string>...</string>
     </property>
     <property name="icon">
-     <iconset resource="images.qrc">
+     <iconset>
       <normaloff>:/images/images/Save.png</normaloff>:/images/images/Save.png</iconset>
     </property>
     <property name="iconSize">
@@ -192,7 +192,7 @@ QToolButton:hover{
      <string>...</string>
     </property>
     <property name="icon">
-     <iconset resource="images.qrc">
+     <iconset>
       <normaloff>:/images/images/Back_icon.png</normaloff>:/images/images/Back_icon.png</iconset>
     </property>
     <property name="iconSize">
@@ -207,8 +207,8 @@ QToolButton:hover{
      <rect>
       <x>70</x>
       <y>0</y>
-      <width>370</width>
-      <height>40</height>
+      <width>150</width>
+      <height>37</height>
      </rect>
     </property>
     <property name="cursor">
@@ -390,8 +390,8 @@ QLineEdit:hover
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>317</width>
-      <height>373</height>
+      <width>312</width>
+      <height>397</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -525,8 +525,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>btnSave</tabstop>
   <tabstop>btnBack</tabstop>
  </tabstops>
- <resources>
-  <include location="images.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
