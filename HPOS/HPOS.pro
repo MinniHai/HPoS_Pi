@@ -25,7 +25,6 @@ SOURCES += main.cpp\
     s_search.cpp \
     s_payment.cpp \
     s_menu.cpp \
-    s_listproduct.cpp \
     s_checkout.cpp \
     e_user.cpp \
     e_product.cpp \
@@ -37,7 +36,8 @@ SOURCES += main.cpp\
     e_invoicedetail.cpp \
     e_category.cpp \
     customeqlabel.cpp \
-    repository.cpp
+    repository.cpp \
+    s_shoppingcart.cpp
 
 HEADERS  += \
     utils.h \
@@ -53,7 +53,6 @@ HEADERS  += \
     s_payment.h \
     s_search.h \
     s_menu.h \
-    s_listproduct.h \
     s_checkout.h \
     e_user.h \
     e_product.h \
@@ -65,7 +64,8 @@ HEADERS  += \
     e_category.h \
     e_manufacturer.h \
     customeqlabel.h \
-    repository.h
+    repository.h \
+    s_shoppingcart.h
 
 FORMS    += \
     keyboard.ui \
@@ -76,8 +76,8 @@ FORMS    += \
     menuScreen.ui \
     manufactureScreen.ui \
     checkoutScreen.ui \
-    listproductScreen.ui \
-    loginScreen.ui
+    loginScreen.ui \
+    shoppingCartScreen.ui
 
 RESOURCES += \
     images.qrc
