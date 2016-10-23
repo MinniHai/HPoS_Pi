@@ -32,5 +32,6 @@
         <file>images/HumanResources.png</file>
         <file>images/HumanResources1.png</file>
         <file>images/search-icon.png</file>
+        <file>images/MenuSearch.png</file>
     </qresource>
 </RCC>
