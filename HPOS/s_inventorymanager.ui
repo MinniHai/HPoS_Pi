@@ -157,82 +157,6 @@ QToolButton:hover{
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QComboBox" name="cbProductName">
-    <property name="geometry">
-     <rect>
-      <x>390</x>
-      <y>0</y>
-      <width>91</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>ArrowCursor</cursorShape>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QLineEdit{
-	text-align: center;
-}
-QComboBox QAbstractItemView
-{
-    border: 2px solid darkgray;
-    selection-background-color: qlineargradient(spread:pad, x1:0.63, y1:0.829546, x2:0.852182, y2:0.232, stop:0 rgba(255, 170, 0, 255), stop:1 rgba(255, 220, 19, 255)) ;
-text-align: center;
-}
-QComboBox::down-arrow
-{
-	
-	
-	image: url(:/images/images/down-arrow.png);
-}
-QComboBox:hover,QPushButton:hover {
-     border: 2px solid qlineargradient(spread:pad, x1:0.63, y1:0.829546, x2:0.852182, y2:0.232, stop:0 rgba(255, 170, 0, 255), stop:1 rgba(255, 220, 19, 255)) ;
- }
-
-    QComboBox {
-    	border: 4px qlineargradient(spread:pad, x1:0.63, y1:0.829546, 			x2:0.852182, y2:0.232, stop:0 rgba(255, 170, 0, 0), stop:1 rgba(255, 220, 19, 0));
-    	border-radius: 10px;
-		
-    
-	background-color: qlineargradient(spread:pad, x1:0.067, y1:0.153, x2:0.466, y2:0.567136, stop:0.1875 rgba(255, 170, 0, 255), stop:0.818182 rgba(245, 163, 0, 255));
-		
-	font: 14pt &quot;MS Shell Dlg 2&quot;;
-    padding: 1px 2px 1px 40px;
-   	text-align: center;
-    }
-  QComboBox::drop-down
-{
-     subcontrol-origin: padding;
-     subcontrol-position: top right;
-     width: 15px;
-
-     border-left-width: 0px;
-     border-left-color: darkgray;
-     border-left-style: solid; /* just a single line */
-     border-top-right-radius: 3px; /* same radius as the QComboBox */
-     border-bottom-right-radius: 3px;
- }
- 
-     
-     
-    </string>
-    </property>
-    <property name="inputMethodHints">
-     <set>Qt::ImhLatinOnly</set>
-    </property>
-    <property name="editable">
-     <bool>true</bool>
-    </property>
-    <property name="sizeAdjustPolicy">
-     <enum>QComboBox::AdjustToContents</enum>
-    </property>
-    <property name="duplicatesEnabled">
-     <bool>false</bool>
-    </property>
-    <property name="frame">
-     <bool>true</bool>
-    </property>
-   </widget>
   </widget>
   <widget class="QFrame" name="frame_2">
    <property name="geometry">
@@ -370,7 +294,7 @@ QComboBox:hover,QPushButton:hover {
     <bool>true</bool>
    </property>
    <attribute name="horizontalHeaderVisible">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <attribute name="horizontalHeaderCascadingSectionResizes">
     <bool>false</bool>
@@ -584,10 +508,6 @@ QComboBox:hover,QPushButton:hover {
     </property>
    </item>
   </widget>
-  <zorder>frame_3</zorder>
-  <zorder>frame_2</zorder>
-  <zorder>tblListProduct</zorder>
-  <zorder>cbProductName</zorder>
  </widget>
  <resources>
   <include location="images.qrc"/>

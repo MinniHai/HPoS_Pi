@@ -3,6 +3,7 @@
 #include "s_checkout.h"
 #include "e_user.h"
 #include "session.h"
+#include "s_usermanager.h"
 
 S_Menu *S_Menu::s_instance;
 S_Menu *S_Menu::instance()
@@ -74,4 +75,17 @@ void S_Menu::on_btnImport_clicked()
     checkout->setModal(true);
     checkout->showFullScreen();
     this->close();
+}
+
+
+
+void S_Menu::on_btnHumanResource_clicked()
+{
+    this->close();
+    S_UserManager *user = new S_UserManager();
+    user->setModal(true);
+    user->showScreen();
+    //    user->exec();
+
+
 }

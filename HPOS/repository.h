@@ -11,7 +11,7 @@ class Repository
 
 public:
     Repository();
-
+    void setSelectQuery(QString select, QString from);
     void setSelectQuery(QString select, QString from, QString where, QString equal);
     void setSelectQuery(QString select, QString from,
                         QString where1, QString equal1,

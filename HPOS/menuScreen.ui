@@ -38,7 +38,7 @@ QFrame#frame
 {
 		background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y2:0.574, stop:0 rgba(255, 151, 0, 255), stop:0.75 rgba(255, 170, 0, 255));
 }
-QToolButton#btnExport
+QToolButton#btnHumanResource
 {
 	background-color: qlineargradient(spread:reflect, x1:0.653, y1:0.699136, x2:0.437227, y2:0.057, stop:0.159091 rgba(85, 170, 0, 255), stop:0.846591 rgba(97, 194, 0, 255))
 }
@@ -219,7 +219,7 @@ QToolButton#btnOrder
     </size>
    </property>
   </widget>
-  <widget class="QToolButton" name="btnExport">
+  <widget class="QToolButton" name="btnHumanResource">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -227,6 +227,9 @@ QToolButton#btnOrder
      <width>231</width>
      <height>131</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: qlineargradient(spread:reflect, x1:0.653, y1:0.699136, x2:0.437227, y2:0.057, stop:0.159091 rgba(85, 170, 0, 255), stop:0.846591 rgba(97, 194, 0, 255))</string>
    </property>
    <property name="text">
     <string>...</string>

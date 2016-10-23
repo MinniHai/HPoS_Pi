@@ -98,7 +98,7 @@ background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y
      <string>...</string>
     </property>
     <property name="icon">
-     <iconset>
+     <iconset resource="images.qrc">
       <normaloff>:/images/images/menu.png</normaloff>:/images/images/menu.png</iconset>
     </property>
     <property name="iconSize">
@@ -121,7 +121,7 @@ background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y
      <string>...</string>
     </property>
     <property name="icon">
-     <iconset>
+     <iconset resource="images.qrc">
       <normaloff>:/images/images/AddNew.png</normaloff>:/images/images/AddNew.png</iconset>
     </property>
     <property name="iconSize">
@@ -144,7 +144,7 @@ background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y
      <string>...</string>
     </property>
     <property name="icon">
-     <iconset>
+     <iconset resource="images.qrc">
       <normaloff>:/images/images/Save.png</normaloff>:/images/images/Save.png</iconset>
     </property>
     <property name="iconSize">
@@ -192,7 +192,7 @@ QToolButton:hover{
      <string>...</string>
     </property>
     <property name="icon">
-     <iconset>
+     <iconset resource="images.qrc">
       <normaloff>:/images/images/Back_icon.png</normaloff>:/images/images/Back_icon.png</iconset>
     </property>
     <property name="iconSize">
@@ -207,8 +207,8 @@ QToolButton:hover{
      <rect>
       <x>70</x>
       <y>0</y>
-      <width>150</width>
-      <height>37</height>
+      <width>350</width>
+      <height>42</height>
      </rect>
     </property>
     <property name="cursor">
@@ -240,6 +240,8 @@ QComboBox:hover,QPushButton:hover {
 		
     	background:qlineargradient(spread:pad, x1:0.63, y1:0.829546, x2:0.852182, y2:0.232, stop:0 rgba(255, 170, 0, 255), stop:1 rgba(255, 220, 19, 255)) ;
 		
+	height:40px;
+	width:350px;
 	font: 20pt &quot;MS Shell Dlg 2&quot;;
     padding: 1px 2px 1px 40px;
    	text-align: center;
@@ -395,6 +397,13 @@ QLineEdit:hover
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
+     <item row="10" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Description</string>
+       </property>
+      </widget>
+     </item>
      <item row="7" column="1">
       <widget class="QToolButton" name="btnAddManufacture">
        <property name="styleSheet">
@@ -414,16 +423,6 @@ QToolButton:hover
        </property>
        <property name="text">
         <string>+</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0" colspan="2">
-      <widget class="QLineEdit" name="ledCountry">
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string/>
        </property>
       </widget>
      </item>
@@ -474,13 +473,6 @@ QToolButton:hover
        </property>
       </widget>
      </item>
-     <item row="10" column="0">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>Description</string>
-       </property>
-      </widget>
-     </item>
      <item row="11" column="0" colspan="2">
       <widget class="QTextEdit" name="tetDescription">
        <property name="styleSheet">
@@ -497,6 +489,9 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
+     <item row="9" column="0" colspan="2">
+      <widget class="QComboBox" name="cbCategory"/>
+     </item>
      <item row="8" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
@@ -504,8 +499,15 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="9" column="0" colspan="2">
-      <widget class="QComboBox" name="cbCategory"/>
+     <item row="4" column="0" colspan="2">
+      <widget class="QLineEdit" name="ledCountry">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -525,6 +527,8 @@ p, li { white-space: pre-wrap; }
   <tabstop>btnSave</tabstop>
   <tabstop>btnBack</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>

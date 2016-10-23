@@ -6,6 +6,19 @@ Repository::Repository()
     database = Utils::instance()->getDB();
 }
 
+void Repository::setSelectQuery(QString select, QString from)
+{
+    if(database)
+    {
+        if(database->open())
+        {
+            query = QSqlQuery(*database);
+            query.prepare("SELECT " + select + " FROM " + from);
+        }
+    }
+    //TODO: database NULL
+}
+
 void Repository::setSelectQuery(QString select, QString from, QString where, QString equal)
 {
     if(database)

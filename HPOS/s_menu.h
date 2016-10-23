@@ -29,6 +29,8 @@ private slots:
 
     void on_btnImport_clicked();
 
+    void on_btnHumanResource_clicked();
+
 private:
     Ui::Menu *ui;
 };
