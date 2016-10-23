@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>images/ajax-loader(2).gif</file>
+        <file>images/ajax-loader(3).gif</file>
+        <file>images/ajax-loader.gif</file>
+        <file>images/HPOSsss.png</file>
+        <file>images/white HPOS.png</file>
+        <file>images/logoWhite.png</file>
+        <file>images/WhiteLoader.gif</file>
+        <file>images/export1.png</file>
+        <file>images/import1.png</file>
+        <file>images/order1.png</file>
+        <file>images/logout.png</file>
+        <file>images/ajax-loader(1).gif</file>
+        <file>images/export2.png</file>
+        <file>images/manual.png</file>
+        <file>images/user.png</file>
+        <file>images/back.png</file>
+        <file>images/add.png</file>
+        <file>images/checkout.png</file>
+        <file>images/plus.png</file>
+        <file>images/minus.png</file>
+        <file>images/menu.png</file>
+        <file>images/check.png</file>
+        <file>images/print.png</file>
+        <file>images/Back_icon.png</file>
+        <file>images/Save.png</file>
+        <file>images/AddNew.png</file>
+        <file>images/down-arrow.png</file>
+        <file>images/report.png</file>
+        <file>images/Inventory.png</file>
+        <file>images/HumanResources.png</file>
+        <file>images/HumanResources1.png</file>
+        <file>images/search-icon.png</file>
+    </qresource>
+</RCC>
