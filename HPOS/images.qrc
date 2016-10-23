@@ -36,57 +36,5 @@
         <file>images/delete.png</file>
         <file>images/searchicon.png</file>
         <file>images/Thumbs.db</file>
-        <file>barcodescanner.cpp</file>
-        <file>barcodescanner.h</file>
-        <file>customeqlabel.cpp</file>
-        <file>customeqlabel.h</file>
-        <file>e_barcode.cpp</file>
-        <file>e_barcode.h</file>
-        <file>e_category.cpp</file>
-        <file>e_category.h</file>
-        <file>e_country.cpp</file>
-        <file>e_country.h</file>
-        <file>e_invoice.cpp</file>
-        <file>e_invoice.h</file>
-        <file>e_invoicedetail.cpp</file>
-        <file>e_invoicedetail.h</file>
-        <file>e_manifacturer.cpp</file>
-        <file>e_manufacturer.h</file>
-        <file>e_picture.cpp</file>
-        <file>e_picture.h</file>
-        <file>e_product.cpp</file>
-        <file>e_product.h</file>
-        <file>e_user.cpp</file>
-        <file>e_user.h</file>
-        <file>keyboard.cpp</file>
-        <file>keyboard.h</file>
-        <file>main.cpp</file>
-        <file>repository.cpp</file>
-        <file>repository.h</file>
-        <file>s_checkout.cpp</file>
-        <file>s_checkout.h</file>
-        <file>s_listproduct.cpp</file>
-        <file>s_listproduct.h</file>
-        <file>s_login.cpp</file>
-        <file>s_login.h</file>
-        <file>s_manufacture.cpp</file>
-        <file>s_manufacture.h</file>
-        <file>s_menu.cpp</file>
-        <file>s_menu.h</file>
-        <file>s_payment.cpp</file>
-        <file>s_payment.h</file>
-        <file>s_product.cpp</file>
-        <file>s_product.h</file>
-        <file>s_search.cpp</file>
-        <file>s_search.h</file>
-        <file>s_waiting.cpp</file>
-        <file>s_waiting.h</file>
-        <file>session.cpp</file>
-        <file>session.h</file>
-        <file>shoppingcart.cpp</file>
-        <file>shoppingcart.h</file>
-        <file>ui_keyboard.h</file>
-        <file>utils.cpp</file>
-        <file>utils.h</file>
     </qresource>
 </RCC>

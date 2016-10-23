@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     customeqlabel.cpp \
     repository.cpp \
     s_shoppingcart.cpp \
-    s_usermanager.cpp
+    s_usermanager.cpp \
+    s_inventorymanager.cpp
 
 HEADERS  += \
     utils.h \
@@ -67,7 +68,8 @@ HEADERS  += \
     customeqlabel.h \
     repository.h \
     s_shoppingcart.h \
-    s_usermanager.h
+    s_usermanager.h \
+    s_inventorymanager.h
 
 FORMS    += \
     keyboard.ui \
@@ -80,18 +82,11 @@ FORMS    += \
     checkoutScreen.ui \
     loginScreen.ui \
     shoppingCartScreen.ui \
-    s_usermanager.ui
+    s_usermanager.ui \
+    s_inventorymanager.ui
 
 RESOURCES += \
     images.qrc
-
-OTHER_FILES += \
-    HPOS.pro.user \
-    HPOS.pro.user.3.3-pre1 \
-    HPOS.pro.user.18 \
-    HPOS.pro.user.aaa229c \
-    HPOS.pro.user.b4b2bb7.3.3-pre1 \
-    HPOS.pro.user.e263716.18
 
 #CONFIG += build_ubuntu
 #build_ubuntu{
@@ -120,5 +115,3 @@ OTHER_FILES += \
 
 #}
 
-DISTFILES += \
-    HPOS.pro.user.e263716

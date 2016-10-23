@@ -32,7 +32,7 @@ void S_Login::login()
     if(ui->ledPassword->text().length() > 1)
     {
         E_User *user = new E_User();
-        user->getUserByPincode(ui->ledPassword->text());
+        user  = user->getUserByPincode(ui->ledPassword->text());
         if(user != NULL)
         {
             Session::instance()->setUserSession((E_User *)user);
