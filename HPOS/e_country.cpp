@@ -7,5 +7,5 @@ E_Country::E_Country()
 
 QString E_Country::getCountryNameByPrefix(QString prefix)
 {
-return "jgjhghjhj";
+return "abc";
 }
