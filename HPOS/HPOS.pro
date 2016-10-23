@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     e_category.cpp \
     customeqlabel.cpp \
     repository.cpp \
-    s_shoppingcart.cpp
+    s_shoppingcart.cpp \
+    s_usermanager.cpp
 
 HEADERS  += \
     utils.h \
@@ -65,7 +66,8 @@ HEADERS  += \
     e_manufacturer.h \
     customeqlabel.h \
     repository.h \
-    s_shoppingcart.h
+    s_shoppingcart.h \
+    s_usermanager.h
 
 FORMS    += \
     keyboard.ui \
@@ -77,7 +79,8 @@ FORMS    += \
     manufactureScreen.ui \
     checkoutScreen.ui \
     loginScreen.ui \
-    shoppingCartScreen.ui
+    shoppingCartScreen.ui \
+    s_usermanager.ui
 
 RESOURCES += \
     images.qrc
@@ -116,3 +119,6 @@ OTHER_FILES += \
 #LIBS += /opt/opencv2.4.13/lib/*.so.2.4.13
 
 #}
+
+DISTFILES += \
+    HPOS.pro.user.e263716
