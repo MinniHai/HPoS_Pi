@@ -33,5 +33,6 @@
         <file>images/HumanResources1.png</file>
         <file>images/search-icon.png</file>
         <file>images/MenuSearch.png</file>
+        <file>images/delete.png</file>
     </qresource>
 </RCC>
