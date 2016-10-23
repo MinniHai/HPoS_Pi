@@ -18,7 +18,6 @@ CREATE TABLE Role (
 CREATE TABLE User (
  userID INT NOT NULL AUTO_INCREMENT,
  username  NVARCHAR(20) NOT NULL unique,
- pwd NVARCHAR(20) NOT NULL,
  pinCode INT NOT NULL unique, 
  pictureUrl NVARCHAR(255) NULL,
  lastName NVARCHAR(15) NOT NULL,
@@ -187,34 +186,13 @@ CREATE TABLE Category (
 
  -- User data
  
- INSERT INTO User ( lastname, firstname, DOB, roleID, username,pwd,pincode)
- VALUES ( 'Michael', 'Smith',  '2001-06-02',   '2', 'michael', '123123', '12345'); 
- INSERT INTO User ( lastname, firstname,  DOB,  roleID, username, pwd, pincode)
- VALUES ( 'Susan', 'Barker',  '2002-02-22',   '2','susan', '123123', '22345'); 
- INSERT INTO User ( lastname, firstname,  DOB,  roleID, username, pwd, pincode)
- VALUES ( 'Robert', 'Tyler',  '2003-06-12',   '2','robert', '123123', '32345'); 
- INSERT INTO User ( lastname, firstname,  DOB,  roleID, username, pwd, pincode)
- VALUES ( 'John', 'Gooding',  '1991-05-03',   '2','john', '123123', '42345'); 
- INSERT INTO User ( lastname, firstname,  DOB,  roleID, username, pwd, pincode)
- VALUES ( 'Le', 'Long',  '1991-06-20',   '1','long', '123123', '52345'); 
- INSERT INTO User ( lastname, firstname,  DOB,  roleID, username, pwd, pincode)
- VALUES ( 'Helen', 'Fleming',  '1992-06-25',   '2','helen', '123123', '62345'); 
- INSERT INTO User ( lastname, firstname,  DOB,  roleID, username, pwd, pincode)
- VALUES ( 'Nguyen', 'Hieu',  '1993-09-21',   '2','hieu', '123123', '72345'); 
- INSERT INTO User ( lastname, firstname,  DOB,  roleID, username, pwd, pincode)
- VALUES ( 'Nguyen', 'Hai',  '1994-07-12',   '2','hai', '123123', '82345'); 
- INSERT INTO User ( lastname, firstname,  DOB,  roleID, username, pwd, pincode)
- VALUES ( 'Da', 'Mi',  '1995-06-22',   '2','mi', '123123', '92345'); 
- INSERT INTO User ( lastname, firstname,  DOB,  roleID, username, pwd, pincode)
- VALUES ( 'Ngo', 'Tien',  '2001-06-2',   '2','tien', '123123', '102345'); 
- INSERT INTO User ( lastname, firstname,  DOB,  roleID, username, pwd, pincode)
- VALUES ( 'Tran', 'Ly',  '1991-06-22',   '2','ly', '123123', '112345'); 
 
-  INSERT INTO User ( lastname, firstname,  DOB,  roleID, username, pwd, pincode)
- VALUES ( 'admin', 'admin',  '1991-06-22',   '2','admin', '123123', '123123');  
+
+  INSERT INTO User ( lastname, firstname,  DOB,  roleID, username, pincode)
+ VALUES ( 'admin', 'admin',  '1991-06-22',   '2','admin', '123123');  
 
 -- Insert Company
-INSERT INTO `HPoS`.`Manufacturer` (`manuPrefix`, `manuName`, `address`, `phone`, `logo`) VALUES ('4588', 'PepsiCo', '', '', '');
+INSERT INTO `HPoS`.`Manufacturer` (`manuPrefix`, `manuName`, `address`, `phone`, `logoUrl`) VALUES ('4588', 'PepsiCo', '', '', '');
 INSERT INTO `HPoS`.`Manufacturer` (`manuPrefix`, `manuName`, `address`) VALUES ('0214', 'Electrocomponents plc', 'John Wheeler');
 
 -- Insert ActionType
