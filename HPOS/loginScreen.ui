@@ -92,7 +92,7 @@ QPushButton#btnLogin:hover
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>E:/Downloads/white HPOS.png</pixmap>
+     <pixmap resource="images.qrc">:/images/images/white HPOS.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -177,6 +177,8 @@ QPushButton#btnLogin:hover
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>
