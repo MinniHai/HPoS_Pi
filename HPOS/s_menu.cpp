@@ -4,6 +4,7 @@
 #include "e_user.h"
 #include "session.h"
 #include "s_usermanager.h"
+#include "s_inventorymanager.h"
 
 S_Menu *S_Menu::s_instance;
 S_Menu *S_Menu::instance()
@@ -88,4 +89,13 @@ void S_Menu::on_btnHumanResource_clicked()
     //    user->exec();
 
 
+}
+
+void S_Menu::on_btnManual_clicked()
+{
+    this->hide();
+    S_InventoryManager inventory;
+    inventory.setModal(true);
+    inventory.showScreen();
+    inventory.exec();
 }

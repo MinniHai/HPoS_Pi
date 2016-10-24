@@ -31,6 +31,8 @@ private slots:
 
     void on_btnHumanResource_clicked();
 
+    void on_btnManual_clicked();
+
 private:
     Ui::Menu *ui;
 };

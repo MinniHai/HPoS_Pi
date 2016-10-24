@@ -8,6 +8,7 @@
 class E_Picture;
 class E_Category;
 
+
 class E_Product : public Repository
 {
 public:
@@ -15,6 +16,7 @@ public:
 
     E_Product();
     E_Product *getResultSet();
+    QList <E_Product *> getAllProduct();
     QString name;
     double price;
     QString description;

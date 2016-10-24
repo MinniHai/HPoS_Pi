@@ -324,7 +324,7 @@ QToolButton:hover{
     <enum>Qt::ScrollBarAsNeeded</enum>
    </property>
    <property name="horizontalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
+    <enum>Qt::ScrollBarAsNeeded</enum>
    </property>
    <property name="tabKeyNavigation">
     <bool>true</bool>
@@ -345,7 +345,7 @@ QToolButton:hover{
     <bool>true</bool>
    </property>
    <attribute name="horizontalHeaderVisible">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <attribute name="horizontalHeaderCascadingSectionResizes">
     <bool>false</bool>
