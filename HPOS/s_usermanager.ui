@@ -324,7 +324,7 @@ QToolButton:hover{
     <string notr="true">border-color: rgb(0, 0, 255);</string>
    </property>
    <property name="verticalScrollBarPolicy">
-    <enum>Qt::ScrollBarAsNeeded</enum>
+    <enum>Qt::ScrollBarAlwaysOff</enum>
    </property>
    <property name="horizontalScrollBarPolicy">
     <enum>Qt::ScrollBarAlwaysOff</enum>

@@ -3,6 +3,7 @@
 #include "e_user.h"
 #include "e_role.h"
 #include "s_menu.h"
+#include "s_userdetail.h"
 #include <QResizeEvent>
 #include <QPushButton>
 #include <QHBoxLayout>
@@ -32,7 +33,7 @@ void S_UserManager::resizeEvent(QResizeEvent *event)
     ui->tblListUser->setColumnWidth(1, width * 2 / 12);
     ui->tblListUser->setColumnWidth(2, width * 5 / 12);
     ui->tblListUser->setColumnWidth(3, width * 0.95 / 12);
-
+//TODO: scroll off
 }
 void S_UserManager::showScreen()
 {
@@ -83,4 +84,22 @@ void S_UserManager::on_btnMenu_clicked()
 void S_UserManager::on_btnSearch_clicked()
 {
 
+}
+
+void S_UserManager::on_btnNew_clicked()
+{
+    this->hide();
+    S_UserDetail userdetail;
+    userdetail.setModal(true);
+    userdetail.showFullScreen();
+    userdetail.exec();
+}
+
+void S_UserManager::on_btnBack_clicked()
+{
+    this->hide();
+    S_Menu menu;
+    menu.setModal(true);
+    menu.showFullScreen();
+    menu.exec();
 }

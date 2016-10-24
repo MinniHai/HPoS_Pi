@@ -29,6 +29,10 @@ private slots:
 
     void on_btnSearch_clicked();
 
+    void on_btnNew_clicked();
+
+    void on_btnBack_clicked();
+
 private:
     Ui::S_UserManager *ui;
 };
