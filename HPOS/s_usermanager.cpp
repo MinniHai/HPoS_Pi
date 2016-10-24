@@ -4,6 +4,7 @@
 #include "e_role.h"
 #include "s_menu.h"
 #include "s_userdetail.h"
+#include "keyboard.h"
 #include <QResizeEvent>
 #include <QPushButton>
 #include <QHBoxLayout>
@@ -19,6 +20,7 @@ S_UserManager::S_UserManager(QWidget *parent) :
     ui(new Ui::S_UserManager)
 {
     ui->setupUi(this);
+    connect(ui->ledSearch, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
 
 }
 
@@ -39,9 +41,9 @@ void S_UserManager::showScreen()
 {
     E_User *user = new E_User();
     listUser = user->getAllUser();
-    if(!listUser.isEmpty())
+    if (!listUser.isEmpty())
     {
-        for(int i = 0; i < listUser.size(); i++)
+        for (int i = 0; i < listUser.size(); i++)
         {
             ui->tblListUser->insertRow(i);
             ui->tblListUser->setItem(i, 0, createTableWidgetItem(listUser[i]->username));
@@ -74,11 +76,11 @@ QTableWidgetItem *S_UserManager::createTableWidgetItem(const QString &text) cons
 
 void S_UserManager::on_btnMenu_clicked()
 {
-    this->hide();
     S_Menu menu;
     menu.setModal(true);
     menu.showFullScreen();
     menu.exec();
+    this->hide();
 }
 
 void S_UserManager::on_btnSearch_clicked()
@@ -97,9 +99,18 @@ void S_UserManager::on_btnNew_clicked()
 
 void S_UserManager::on_btnBack_clicked()
 {
-    this->hide();
     S_Menu menu;
     menu.setModal(true);
     menu.showFullScreen();
     menu.exec();
+    this->hide();
+}
+
+void S_UserManager::runKeyboard()
+{
+    Keyboard *keyboard = Keyboard::instance();
+    QLineEdit *line = ui->ledSearch;
+    keyboard->setLineEdit(line);
+    keyboard->setWindowModality(Qt::WindowModal);
+    keyboard->showFullScreen();
 }

@@ -25,6 +25,9 @@ public:
     QTableWidgetItem *createTableWidgetItem(const QString &text) const;
 
 private slots:
+
+    void runKeyboard();
+
     void on_btnMenu_clicked();
 
     void on_btnSearch_clicked();

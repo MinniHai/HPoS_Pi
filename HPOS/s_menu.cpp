@@ -72,13 +72,11 @@ void S_Menu::on_btnOrder_clicked()
 
 void S_Menu::on_btnHumanResource_clicked()
 {
-    this->close();
     S_UserManager *user = new S_UserManager();
     user->setModal(true);
     user->showScreen();
     //    user->exec();
-
-
+    this->close();
 }
 
 void S_Menu::on_btnCheckout_clicked()
@@ -92,9 +90,9 @@ void S_Menu::on_btnCheckout_clicked()
 
 void S_Menu::on_btnManual_clicked()
 {
-    this->hide();
     S_InventoryManager inventory;
     inventory.setModal(true);
     inventory.showScreen();
     inventory.exec();
+    this->hide();
 }

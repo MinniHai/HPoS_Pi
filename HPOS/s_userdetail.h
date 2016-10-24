@@ -20,6 +20,8 @@ private slots:
 
     void on_btnBack_clicked();
 
+    void runKeyboard();
+
 private:
     Ui::S_UserDetail *ui;
 };

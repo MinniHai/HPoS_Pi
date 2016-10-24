@@ -24,10 +24,10 @@ S_InventoryManager::~S_InventoryManager()
 
 void S_InventoryManager::on_btnMenu_3_clicked()
 {
-    this->hide();
     S_Menu menu;
     menu.setModal(true);
     menu.exec();
+    this->hide();
 }
 
 void S_InventoryManager::resizeEvent(QResizeEvent *event)
