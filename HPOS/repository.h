@@ -4,6 +4,8 @@
 #include <QSqlDatabase>
 #include <QObject>
 #include <QSqlQuery>
+#include <QSqlRecord>
+#include <QVariant>
 #include <QList>
 
 class Repository

@@ -7,10 +7,16 @@ E_Country::E_Country()
 
 E_Country *E_Country::getResultSet()
 {
-    //TODO:implement this method.
+    E_Country *country = new E_Country();
+    country->prefix = query.value(query.record().indexOf("countryPrefix")).toString();
+    country->name = query.value(query.record().indexOf("countryName")).toString();
+    country->description = query.value(query.record().indexOf("description")).toString();
+    return country;
 }
 
-QString E_Country::getCountryNameByPrefix(QString prefix)
+E_Country *E_Country::getCountryNameByPrefix(QString prefix)
 {
-    return "abc";
+    Repository *countryRepo = new E_Country();
+    countryRepo->setSelectQuery("*","Country","countryPrefix",prefix);
+    return (E_Country *)countryRepo;
 }
