@@ -15,9 +15,9 @@ E_Barcode::E_Barcode()
 E_Barcode *E_Barcode::getResultSet()
 {
     E_Barcode *barcode = new E_Barcode();
-    barcode->countryPrefix = countryPrefix;
-    barcode->manufacturerPrefix = manufacturerPrefix;
-    barcode->productPrefix = productPrefix;
+    barcode->countryPrefix = query.value(query.record().indexOf("countryPrefix")).toString();;
+    barcode->manufacturerPrefix = query.value(query.record().indexOf("manuPrefix")).toString();;
+    barcode->productPrefix = query.value(query.record().indexOf("productPrefix")).toString();;
     barcode->imDate = query.value(query.record().indexOf("imDate")).toString();
     barcode->imTime = query.value(query.record().indexOf("imTime")).toString();
     return barcode;

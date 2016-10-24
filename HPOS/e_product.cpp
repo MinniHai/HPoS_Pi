@@ -43,6 +43,7 @@ QList<E_Product *> E_Product::getAllProduct()
         E_Product *product = (E_Product *)item;
         product->barcode = E_Barcode::getBarcodeByProID(product->proID);
         product->barcode->manufacturer = E_Manufacturer::getManufacturerByPrefix(product->barcode->manufacturerPrefix);
+        qDebug() << product->barcode->manufacturer->manuName;
         product->barcode->country = E_Country::getCountryNameByPrefix(product->barcode->countryPrefix);
         product->category = E_Category::getCategoryByID(product->ctID);
         listProduct.append(product);

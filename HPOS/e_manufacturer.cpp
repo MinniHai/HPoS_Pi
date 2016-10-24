@@ -1,5 +1,4 @@
 #include "e_manufacturer.h"
-
 E_Manufacturer::E_Manufacturer()
 {
 
