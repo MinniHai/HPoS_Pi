@@ -20,6 +20,8 @@ public:
                         QString where2, QString equal2,
                         QString where3, QString equal3);
 
+    void setSelectLikeQuery(QString select, QString from, QString where, QString equal);
+
     Repository *getEntityByQuery();
 
     QList<Repository *>getListEntityByQuery();

@@ -57,6 +57,21 @@ void Repository::setSelectQuery(QString select, QString from,
     //TODO: database NULL
 }
 
+void Repository::setSelectLikeQuery(QString select, QString from, QString where, QString equal)
+{
+    if(database)
+    {
+        if(database->open())
+        {
+            query = QSqlQuery(*database);
+            query.prepare("SELECT " + select + " FROM " + from + " WHERE "
+                          + where + "LIKE" + " :equal"
+                         );
+            query.bindValue(":equal", "%" + equal + "%");
+        }
+    }
+    //TODO: database NULL
+}
 
 Repository *Repository::getEntityByQuery()
 {
