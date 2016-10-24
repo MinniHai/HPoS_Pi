@@ -10,13 +10,13 @@ S_UserDetail::S_UserDetail(QWidget *parent) :
     ui(new Ui::S_UserDetail)
 {
     ui->setupUi(this);
-    connect(ui->ledFirstName,SIGNAL(selectionChanged()),SLOT(runKeyboard()));
-    connect(ui->ledLastName,SIGNAL(selectionChanged()),SLOT(runKeyboard()));
-    connect(ui->ledAge,SIGNAL(selectionChanged()),SLOT(runKeyboard()));
-    connect(ui->ledDOB,SIGNAL(selectionChanged()),SLOT(runKeyboard()));
-    connect(ui->ledPhone,SIGNAL(selectionChanged()),SLOT(runKeyboard()));
-    connect(ui->ledPinCode,SIGNAL(selectionChanged()),SLOT(runKeyboard()));
-    connect(ui->ledRole,SIGNAL(selectionChanged()),SLOT(runKeyboard()));
+    connect(ui->ledFirstName, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+    connect(ui->ledLastName, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+    connect(ui->ledAge, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+    connect(ui->ledDOB, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+    connect(ui->ledPhone, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+    connect(ui->ledPinCode, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+    connect(ui->ledRole, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
 }
 
 S_UserDetail::~S_UserDetail()
@@ -49,5 +49,6 @@ void S_UserDetail::runKeyboard()
     QLineEdit *line = (QLineEdit *)sender();
     keyboard->setLineEdit(line);
     keyboard->setWindowModality(Qt::WindowModal);
-    keyboard->show();
+    keyboard->showFullScreen();
+    this->hide();
 }

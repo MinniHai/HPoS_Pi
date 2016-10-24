@@ -55,7 +55,7 @@ QToolButton
     padding-right: 5px;
 }
 
-QToolButton#btnImport
+QToolButton#btnCheckout
 {
 	
 	background-color: qlineargradient(spread:reflect, x1:0.653, y1:0.699136, x2:0.175864, y2:0.352, stop:0.551136 rgba(0, 155, 232, 255), stop:0.954545 rgba(0, 144, 216, 255));
@@ -204,6 +204,9 @@ QToolButton#btnOrder
      <width>231</width>
      <height>131</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: qlineargradient(spread:reflect, x1:0.653, y1:0.699136, x2:0.175864, y2:0.352, stop:0.551136 rgba(0, 155, 232, 255), stop:0.954545 rgba(0, 144, 216, 255));</string>
    </property>
    <property name="text">
     <string>...</string>
