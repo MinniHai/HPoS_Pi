@@ -15,6 +15,11 @@ public:
     explicit S_UserDetail(QWidget *parent = 0);
     ~S_UserDetail();
 
+private slots:
+    void on_btnMenu_clicked();
+
+    void on_btnBack_clicked();
+
 private:
     Ui::S_UserDetail *ui;
 };
