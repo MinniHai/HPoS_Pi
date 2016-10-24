@@ -17,6 +17,6 @@ E_Role *E_Role::getResultSet()
 E_Role *E_Role::getRoleByID(QString id)
 {
     Repository *role = new E_Role();
-    role->setSelectQuery("*", "role", "roleID", id);
+    role->setSelectQuery("*", "Role", "roleID", id);
     return (E_Role *) role->getEntityByQuery();
 }

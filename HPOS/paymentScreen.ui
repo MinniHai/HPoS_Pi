@@ -23,9 +23,6 @@ border: 2px solid qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
 }
 QLineEdit
 {
-	center: text;
-	
-	
 	font: 75 26pt &quot;Cambria Math&quot;;
 }
 QLineEdit:hover

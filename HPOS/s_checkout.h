@@ -18,6 +18,8 @@ public:
     QTableWidgetItem *createTableWidgetItem(const QString &text) const;
     static S_Checkout *s_instance;
     static S_Checkout *instance();
+
+    void showDataToTable();
     explicit S_Checkout(QWidget *parent = 0);
     ~S_Checkout();
 

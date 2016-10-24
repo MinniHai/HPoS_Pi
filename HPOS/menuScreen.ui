@@ -196,7 +196,7 @@ QToolButton#btnOrder
     </size>
    </property>
   </widget>
-  <widget class="QToolButton" name="btnImport">
+  <widget class="QToolButton" name="btnCheckout">
    <property name="geometry">
     <rect>
      <x>240</x>

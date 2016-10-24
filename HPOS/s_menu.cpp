@@ -70,16 +70,6 @@ void S_Menu::on_btnOrder_clicked()
     this->close();
 }
 
-void S_Menu::on_btnImport_clicked()
-{
-    S_Checkout *checkout = S_Checkout::instance();
-    checkout->setModal(true);
-    checkout->showFullScreen();
-    this->close();
-}
-
-
-
 void S_Menu::on_btnHumanResource_clicked()
 {
     this->close();
@@ -89,6 +79,15 @@ void S_Menu::on_btnHumanResource_clicked()
     //    user->exec();
 
 
+}
+
+void S_Menu::on_btnCheckout_clicked()
+{
+    S_Checkout *checkout = S_Checkout::instance();
+    checkout->setModal(true);
+    checkout->showDataToTable();
+    checkout->showFullScreen();
+    this->close();
 }
 
 void S_Menu::on_btnManual_clicked()

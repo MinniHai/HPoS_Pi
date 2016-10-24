@@ -27,12 +27,10 @@ private slots:
     void getTimer();
     void on_btnOrder_clicked();
 
-    void on_btnImport_clicked();
-
     void on_btnHumanResource_clicked();
 
     void on_btnManual_clicked();
-
+    void on_btnCheckout_clicked();
 private:
     Ui::Menu *ui;
 };

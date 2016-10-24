@@ -33,12 +33,20 @@ S_Checkout::S_Checkout(QWidget *parent) :
     ui->setupUi(this);
     ui->tableWidget->verticalHeader()->hide();
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+}
 
+void S_Checkout::showDataToTable()
+{
     ShoppingCart *cart = ShoppingCart::instance();
     if(!cart->cart.isEmpty())
     {
+        //get cart in shopping cart
         QList<E_Product *> productList = (QList<E_Product *>)cart->cart.keys();
         QList<int> quantity = cart->cart.values();
+        //reset tableview
+        ui->tableWidget->clearContents();
+        ui->tableWidget->setRowCount(0);
+        //set newer data to tableview
         for(int i = 0 ; i < productList.size(); i++)
         {
             ui->tableWidget->insertRow(i);
@@ -46,11 +54,12 @@ S_Checkout::S_Checkout(QWidget *parent) :
             ui->tableWidget->setItem(i, 1, createTableWidgetItem(QString::number(quantity[i])));
             ui->tableWidget->setItem(i, 2, createTableWidgetItem(QString::number(productList[i]->price)));
             ui->tableWidget->setItem(i, 3, createTableWidgetItem(QString::number(quantity[i] * productList[i]->price)));
+
+            //add button to table
             QWidget *pWidget = new QWidget();
             QPushButton *btn_edit = new QPushButton();
             btn_edit->setText("Edit");
             btn_edit->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-            //        btn_edit->setStyleSheet("background-color:black");
             QHBoxLayout *pLayout = new QHBoxLayout(pWidget);
             pLayout->addWidget(btn_edit);
             pLayout->setAlignment(Qt::AlignHCenter);

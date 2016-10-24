@@ -256,5 +256,6 @@ void S_Search::on_btnAdd_clicked()
     {
         ShoppingCart *cart = ShoppingCart::instance();
         cart->addCart(e_barcode->product, 1);
+        qDebug() << "add cart";
     }
 }
