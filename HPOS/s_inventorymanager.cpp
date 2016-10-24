@@ -9,6 +9,7 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QDebug>
+#include "e_barcode.h"
 
 S_InventoryManager::S_InventoryManager(QWidget *parent) :
     QDialog(parent),
@@ -36,7 +37,7 @@ void S_InventoryManager::resizeEvent(QResizeEvent *event)
     ui->tblListInventory->setColumnWidth(0, width * 5.5 / 19);
     ui->tblListInventory->setColumnWidth(1, width * 3 / 19);
     ui->tblListInventory->setColumnWidth(2, width * 3 / 19);
-    ui->tblListInventory->setColumnWidth(3, width * 2/ 19);
+    ui->tblListInventory->setColumnWidth(3, width * 2 / 19);
     ui->tblListInventory->setColumnWidth(4, width * 4 / 19);
     ui->tblListInventory->setColumnWidth(5, width * 1.45 / 19);
 
@@ -53,31 +54,33 @@ void S_InventoryManager::on_btnBack_3_clicked()
 
 void S_InventoryManager::showScreen()
 {
-    E_Product * product= new E_Product();
+    E_Product *product = new E_Product();
     listProduct = product->getAllProduct();
-            if(!listProduct.isEmpty())
-                {
-                    for(int i = 0; i < listProduct.size(); i++)
-                    {
-                        ui->tblListInventory->insertRow(i);
-                        ui->tblListInventory->setItem(i, 0, createTableWidgetItem(listProduct[i]->name));
-                        ui->tblListInventory->setItem(i, 1, createTableWidgetItem(QString::number(listProduct[i]->price)));
-                        ui->tblListInventory->setItem(i, 2, createTableWidgetItem(QString::number(listProduct[i]->quantity)));
-                        //
-                        QWidget *pWidget = new QWidget();
-                        QPushButton *btn_edit = new QPushButton();
-                        btn_edit->setText("Edit");
-                        btn_edit->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-                        //        btn_edit->setStyleSheet("background-color:black");
-                        QHBoxLayout *pLayout = new QHBoxLayout(pWidget);
-                        pLayout->addWidget(btn_edit);
-                        pLayout->setAlignment(Qt::AlignHCenter);
-                        pLayout->setContentsMargins(0, 0, 0, 0);
-                        pWidget->setLayout(pLayout);
-                        ui->tblListInventory->setCellWidget(i, 5, pWidget);
-                    }
-                }
-  this->showFullScreen();
+    if(!listProduct.isEmpty())
+    {
+        for(int i = 0; i < listProduct.size(); i++)
+        {
+            ui->tblListInventory->insertRow(i);
+            ui->tblListInventory->setItem(i, 0, createTableWidgetItem(listProduct[i]->name));
+            ui->tblListInventory->setItem(i, 1, createTableWidgetItem(QString::number(listProduct[i]->price)));
+            ui->tblListInventory->setItem(i, 2, createTableWidgetItem(listProduct[i]->category->categoryName));
+            ui->tblListInventory->setItem(i, 3, createTableWidgetItem(QString::number(listProduct[i]->quantity)));
+            ui->tblListInventory->setItem(i, 4, createTableWidgetItem(listProduct[i]->barcode->manufacturer->manuName));
+            //
+            QWidget *pWidget = new QWidget();
+            QPushButton *btn_edit = new QPushButton();
+            btn_edit->setText("Edit");
+            btn_edit->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+            //        btn_edit->setStyleSheet("background-color:black");
+            QHBoxLayout *pLayout = new QHBoxLayout(pWidget);
+            pLayout->addWidget(btn_edit);
+            pLayout->setAlignment(Qt::AlignHCenter);
+            pLayout->setContentsMargins(0, 0, 0, 0);
+            pWidget->setLayout(pLayout);
+            ui->tblListInventory->setCellWidget(i, 5, pWidget);
+        }
+    }
+    this->showFullScreen();
 }
 
 QTableWidgetItem *S_InventoryManager::createTableWidgetItem(const QString &text) const

@@ -24,10 +24,12 @@ public:
     QString description;
     int pictureID;
     int quantity;
+    QString ctID;
+
 
     E_Barcode *barcode;
     QList<E_Picture *> listPicture;
-    E_Category *listCategory;
+    E_Category *category;
     QList<E_Barcode *> listBarcode;
 
 };

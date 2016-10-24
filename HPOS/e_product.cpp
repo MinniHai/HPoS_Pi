@@ -5,6 +5,7 @@
 #include "e_manufacturer.h"
 #include "e_barcode.h"
 #include "e_country.h"
+#include "e_category.h"
 
 E_Product::E_Product()
 {
@@ -15,6 +16,7 @@ E_Product *E_Product::getResultSet()
     E_Product *product = new E_Product();
     product->name = query.value(query.record().indexOf("proName")).toString();
     product->proID = query.value(query.record().indexOf("proID")).toString();
+    product->ctID = query.value(query.record().indexOf("ctID")).toString();
     product->price = query.value(query.record().indexOf("proPrice")).toDouble();
     product->quantity = query.value(query.record().indexOf("quantity")).toInt();
     product->description = query.value(query.record().indexOf("proDes")).toString();
@@ -42,6 +44,7 @@ QList<E_Product *> E_Product::getAllProduct()
         product->barcode = E_Barcode::getBarcodeByProID(product->proID);
         product->barcode->manufacturer = E_Manufacturer::getManufacturerByPrefix(product->barcode->manufacturerPrefix);
         product->barcode->country = E_Country::getCountryNameByPrefix(product->barcode->countryPrefix);
+        product->category = E_Category::getCategoryByID(product->ctID);
         listProduct.append(product);
     }
     return listProduct;
