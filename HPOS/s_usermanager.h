@@ -36,6 +36,8 @@ private slots:
 
     void on_btnBack_clicked();
 
+    void on_btnDelete_clicked();
+
 private:
     Ui::S_UserManager *ui;
 };

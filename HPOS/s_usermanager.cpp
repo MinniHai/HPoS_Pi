@@ -114,3 +114,8 @@ void S_UserManager::runKeyboard()
     keyboard->setWindowModality(Qt::WindowModal);
     keyboard->showFullScreen();
 }
+
+void S_UserManager::on_btnDelete_clicked()
+{
+
+}

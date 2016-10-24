@@ -194,9 +194,9 @@ QComboBox:hover,QPushButton:hover {
 		
 	height:40px;
 	width:350px;
-	font: 20pt &quot;MS Shell Dlg 2&quot;;
+	font: 12pt &quot;MS Shell Dlg 2&quot;;
     padding: 1px 2px 1px 40px;
-   	text-align: center;
+   	text-align: left;
     }
   QComboBox::drop-down
 {
@@ -215,6 +215,31 @@ QComboBox:hover,QPushButton:hover {
      
     </string>
     </property>
+    <item>
+     <property name="text">
+      <string/>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Barcode</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Category</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Manufacturer</string>
+     </property>
+    </item>
    </widget>
   </widget>
   <widget class="QFrame" name="frame_2">
