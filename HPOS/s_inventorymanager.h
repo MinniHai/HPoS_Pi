@@ -26,6 +26,8 @@ public:
 private slots:
     void on_btnMenu_3_clicked();
 
+    void runKeyboard();
+
     void on_btnBack_3_clicked();
 
     void on_btnNew_clicked();

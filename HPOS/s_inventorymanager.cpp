@@ -5,17 +5,20 @@
 #include "e_category.h"
 #include "e_manufacturer.h"
 #include "e_product.h"
+#include "keyboard.h"
+#include "e_barcode.h"
+
 #include "QResizeEvent"
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QDebug>
-#include "e_barcode.h"
 
 S_InventoryManager::S_InventoryManager(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::S_InventoryManager)
 {
     ui->setupUi(this);
+    connect(ui->ledSearch, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
 }
 
 S_InventoryManager::~S_InventoryManager()
@@ -27,6 +30,7 @@ void S_InventoryManager::on_btnMenu_3_clicked()
 {
     S_Menu menu;
     menu.setModal(true);
+    menu.showFullScreen();
     menu.exec();
     this->hide();
 }
@@ -94,4 +98,13 @@ QTableWidgetItem *S_InventoryManager::createTableWidgetItem(const QString &text)
 void S_InventoryManager::on_btnNew_clicked()
 {
 
+}
+
+void S_InventoryManager::runKeyboard()
+{
+    Keyboard *keyboard = Keyboard::instance();
+    QLineEdit *line = ui->ledSearch;
+    keyboard->setLineEdit(line);
+    keyboard->setWindowModality(Qt::WindowModal);
+    keyboard->showFullScreen();
 }
