@@ -2,10 +2,12 @@
 #include "ui_s_usermanager.h"
 #include "e_user.h"
 #include "e_role.h"
+#include "s_menu.h"
 #include <QResizeEvent>
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QDebug>
+
 
 
 
@@ -67,4 +69,18 @@ QTableWidgetItem *S_UserManager::createTableWidgetItem(const QString &text) cons
     QTableWidgetItem *item = new QTableWidgetItem(text);
     item->setTextAlignment(Qt::AlignCenter);
     return item;
+}
+
+void S_UserManager::on_btnMenu_clicked()
+{
+    this->hide();
+    S_Menu menu;
+    menu.setModal(true);
+    menu.showFullScreen();
+    menu.exec();
+}
+
+void S_UserManager::on_btnSearch_clicked()
+{
+
 }

@@ -241,7 +241,7 @@ QComboBox:hover,QPushButton:hover {
     	background:qlineargradient(spread:pad, x1:0.63, y1:0.829546, x2:0.852182, y2:0.232, stop:0 rgba(255, 170, 0, 255), stop:1 rgba(255, 220, 19, 255)) ;
 		
 	height:40px;
-	width:350px;
+	width: 350px;
 	font: 20pt &quot;MS Shell Dlg 2&quot;;
     padding: 1px 2px 1px 40px;
    	text-align: center;

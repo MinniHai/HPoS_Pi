@@ -24,6 +24,11 @@ public:
     void resizeEvent(QResizeEvent *event);
     QTableWidgetItem *createTableWidgetItem(const QString &text) const;
 
+private slots:
+    void on_btnMenu_clicked();
+
+    void on_btnSearch_clicked();
+
 private:
     Ui::S_UserManager *ui;
 };

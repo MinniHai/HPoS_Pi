@@ -29,6 +29,7 @@ E_User *E_User::getUserByPincode(QString pinCode)
     user->setSelectQuery("*", "User", "pinCode", pinCode);
     return (E_User *) user->getEntityByQuery();
 }
+
 QList<E_User *> E_User::getAllUser()
 {
     QList <E_User *> listUser;
