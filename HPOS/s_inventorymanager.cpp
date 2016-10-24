@@ -2,6 +2,7 @@
 #include "ui_s_inventorymanager.h"
 #include "s_menu.h"
 #include "s_search.h"
+#include "s_product.h"
 #include "e_category.h"
 #include "e_manufacturer.h"
 #include "e_product.h"
@@ -97,7 +98,11 @@ QTableWidgetItem *S_InventoryManager::createTableWidgetItem(const QString &text)
 
 void S_InventoryManager::on_btnNew_clicked()
 {
-
+    S_Product product;
+    product.setModal(true);
+    product.showFullScreen();
+    product.exec();
+    this->hide();
 }
 
 void S_InventoryManager::runKeyboard()
