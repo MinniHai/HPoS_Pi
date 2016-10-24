@@ -245,6 +245,7 @@ QLineEdit
 	border-radius: 6px;
 	
 }
+
 QLineEdit:hover
 {
  border: 2px solid QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #d7801a);
@@ -258,7 +259,7 @@ QLineEdit:hover
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>-79</y>
+      <y>0</y>
       <width>312</width>
       <height>318</height>
      </rect>
