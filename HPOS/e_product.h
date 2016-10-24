@@ -7,6 +7,7 @@
 
 class E_Picture;
 class E_Category;
+class E_Barcode;
 
 
 class E_Product : public Repository
@@ -18,13 +19,17 @@ public:
     E_Product *getResultSet();
     QList <E_Product *> getAllProduct();
     QString name;
+    QString proID;
     double price;
     QString description;
     int pictureID;
     int quantity;
 
+    E_Barcode *barcode;
     QList<E_Picture *> listPicture;
-    QList<E_Category> *listCategory;
+    E_Category *listCategory;
+    QList<E_Barcode *> listBarcode;
+
 };
 
 #endif // E_PRODUCT_H

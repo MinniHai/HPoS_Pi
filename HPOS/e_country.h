@@ -2,15 +2,18 @@
 #define E_COUNTRY_H
 
 #include <QString>
+#include "repository.h"
 
-class E_Country
+class E_Country: public Repository
 {
 public:
     QString prefix;
     QString name;
     QString description;
+
     E_Country();
     static QString getCountryNameByPrefix(QString prefix);
+    E_Country *getResultSet();
 };
 
 #endif // E_COUNTRY_H

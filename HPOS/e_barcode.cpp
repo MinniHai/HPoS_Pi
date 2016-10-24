@@ -4,6 +4,8 @@
 #include <QSqlError>
 #include <QSqlRecord>
 #include "e_product.h"
+#include "e_country.h"
+#include "e_manufacturer.h"
 
 E_Barcode::E_Barcode()
 {
@@ -16,11 +18,18 @@ E_Barcode *E_Barcode::getResultSet()
     barcode->countryPrefix = countryPrefix;
     barcode->manufacturerPrefix = manufacturerPrefix;
     barcode->productPrefix = productPrefix;
-    barcode->product = E_Product::getProductByID(query.value(query.record().indexOf("proID")).toString());
-    barcode->product->listPicture = E_Picture::getPictureByProductID(query.value(query.record().indexOf("proID")).toString());
     barcode->imDate = query.value(query.record().indexOf("imDate")).toString();
     barcode->imTime = query.value(query.record().indexOf("imTime")).toString();
     return barcode;
+}
+
+E_Barcode *E_Barcode::getBarcodeByProID(QString proID)
+{
+    Repository *barcodeRepository = new E_Barcode();
+    barcodeRepository->setSelectQuery("*", "Barcode",
+                                      "proID", proID
+                                     );
+    return (E_Barcode *) barcodeRepository->getEntityByQuery();
 }
 
 E_Barcode *E_Barcode::getBarcode(QString countryPrefix, QString manufacturerPrefix, QString productPrefix)
