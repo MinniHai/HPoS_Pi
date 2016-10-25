@@ -17,6 +17,7 @@ public:
     static E_Barcode *getBarcode(QString barcode);
     static E_Barcode *getBarcodeByProID(QString proID);
     static QList<E_Barcode *> searchBarcode(QString barcode);
+    static QList<E_Barcode *> getBarcodeByManuRefix(QString prefix);
     QString countryPrefix;
     QString manufacturerPrefix;
     QString productPrefix;

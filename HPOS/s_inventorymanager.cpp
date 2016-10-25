@@ -169,6 +169,27 @@ void S_InventoryManager::searchInventory(QString text)
 
         }
     }
+    else if(ui->cbbSearchType->currentText() == "Manufacturer")
+    {
+        foreach(E_Manufacturer *manuItem,  E_Manufacturer::searchByName(text))
+        {
+
+            foreach(E_Barcode *item, E_Barcode::getBarcodeByManuRefix(manuItem->manuPrefix))
+            {
+                E_Product *pro = E_Product::getProductByID(item->proID);
+                if(listProduct.isEmpty())
+                {
+                    listProduct.append(pro);
+                }
+                else if(!listProduct.contains(pro))
+                {
+                    listProduct.append(pro);
+                }
+
+            }
+        }
+
+    }
 
     setDataToTable();
 

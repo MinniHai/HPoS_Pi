@@ -16,7 +16,7 @@ public:
 
     E_Manufacturer *getResultSet();
     static E_Manufacturer *getManufacturerByPrefix(QString prefix);
-
+    static QList<E_Manufacturer *> searchByName(QString name);
 };
 
 #endif // E_MANIFACTURER_H

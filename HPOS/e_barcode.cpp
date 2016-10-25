@@ -7,6 +7,7 @@
 #include "e_country.h"
 #include "e_manufacturer.h"
 
+
 E_Barcode::E_Barcode()
 {
 
@@ -97,4 +98,22 @@ QList<E_Barcode *> E_Barcode::searchBarcode(QString barcode)
     }
     qDebug() << barcodeList.size();
     return barcodeList;
+}
+QList<E_Barcode *> E_Barcode::getBarcodeByManuRefix(QString prefix)
+{
+    QList<E_Barcode *> barcodeList;
+    Repository *barcodeRepository = new E_Barcode();
+    barcodeRepository->setSelectQuery("*", "Barcode",
+
+                                      "manuPrefix", prefix
+
+                                     );
+    foreach(Repository *item, barcodeRepository->getListEntityByQuery())
+    {
+        barcodeList.append((E_Barcode *)item);
+    }
+    qDebug() << barcodeList.size();
+    return barcodeList;
+
+
 }

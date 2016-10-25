@@ -131,9 +131,9 @@ QToolButton:hover{
    <widget class="QLineEdit" name="ledSearch">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>60</x>
       <y>0</y>
-      <width>291</width>
+      <width>311</width>
       <height>41</height>
      </rect>
     </property>
@@ -160,15 +160,15 @@ QToolButton:hover{
    <widget class="QComboBox" name="cbbSearchType">
     <property name="geometry">
      <rect>
-      <x>370</x>
+      <x>360</x>
       <y>0</y>
-      <width>111</width>
+      <width>121</width>
       <height>41</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">QLineEdit{
-	text-align: center;
+	/*text-align: center;*/
 }
 QComboBox QAbstractItemView
 {
@@ -194,8 +194,8 @@ QComboBox:hover,QPushButton:hover {
 		
 	height:40px;
 	width:350px;
-	font: 12pt &quot;MS Shell Dlg 2&quot;;
-    padding: 1px 2px 1px 40px;
+	font: 75 11pt &quot;MS Shell Dlg 2&quot;;
+    padding: 1px 2px 1px 10px;
    	text-align: left;
     }
   QComboBox::drop-down
