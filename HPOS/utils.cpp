@@ -21,7 +21,7 @@ Utils *Utils::instance()
 
 Utils::Utils()
 {
-    is_Debug = true;
+    is_Debug = false;
     dbDriver  = "QMYSQL";
     dbHostName = "127.0.0.1";
     dbName = "HPoS";

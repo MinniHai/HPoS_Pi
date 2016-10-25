@@ -6,6 +6,45 @@ Repository::Repository()
     database = Utils::instance()->getDB();
 }
 
+void Repository::setInsertQuery(QString into, QHashIterator<QString, QString> values)
+{
+    if(database)
+    {
+        if(database->open())
+        {
+            query = QSqlQuery(*database);
+
+            QString queryString = "INSERT " + into + " (";
+            QString valuesString = "";
+            QString column = "(";
+            while(values.hasNext())
+            {
+                values.next();
+                if(values.hasNext())
+                {
+                    valuesString.append(":" + values.key() + " , ");
+                    column.append(" " + values.key() + " , ");
+                }
+                else
+                {
+                    valuesString.append(":" + values.key() + " )");
+                    column.append(" " + values.key() + " )");
+                }
+            }
+            queryString.append(column).append(valuesString);
+            qDebug() << queryString;
+            query.prepare(queryString);
+            while(values.hasPrevious())
+            {
+                values.previous();
+                query.bindValue(":" + values.key(), values.value());
+            }
+        }
+    }
+    //TODO: database NULL
+
+}
+
 void Repository::setSelectQuery(QString select, QString from)
 {
     if(database)
@@ -64,8 +103,6 @@ void Repository::setSelectLikeQuery(QString select, QString from, QString where,
         if(database->open())
         {
             query = QSqlQuery(*database);
-            qDebug() << "SELECT " + select + " FROM " + from + " WHERE "
-                        + where + " LIKE :equal";
             query.prepare("SELECT " + select + " FROM " + from + " WHERE "
                           + where + " LIKE :equal"
                          );

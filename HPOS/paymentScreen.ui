@@ -85,7 +85,7 @@ QToolButton:hover
 background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y2:0.574, stop:0 rgba(255, 151, 0, 255), stop:0.75 rgba(255, 170, 0, 255));
 	
 }
-#btnBack{
+#btnMenu{
 	background-color: qlineargradient(spread:pad, x1:0, y1:0.152818, x2:1, y2:0.932, stop:0 rgba(85, 170, 0, 255), stop:0.573864 rgba(47, 95, 0, 255));
 }
 </string>
@@ -178,7 +178,7 @@ background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y
     </property>
     <property name="icon">
      <iconset resource="images.qrc">
-      <normaloff>:/images/images/back.png</normaloff>:/images/images/back.png</iconset>
+      <normaloff>:/images/images/menu.png</normaloff>:/images/images/menu.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -206,9 +206,9 @@ background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y
    <widget class="QLabel" name="lblTakeCash_3">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>80</x>
       <y>0</y>
-      <width>81</width>
+      <width>71</width>
       <height>51</height>
      </rect>
     </property>

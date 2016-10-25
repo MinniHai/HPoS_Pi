@@ -7,6 +7,7 @@
 #include <QSqlRecord>
 #include <QVariant>
 #include <QList>
+#include <QHash>
 
 class Repository
 {
@@ -21,6 +22,8 @@ public:
                         QString where3, QString equal3);
 
     void setSelectLikeQuery(QString select, QString from, QString where, QString equal);
+
+    void setInsertQuery(QString into, QHashIterator<QString, QString> values);
 
     Repository *getEntityByQuery();
 
