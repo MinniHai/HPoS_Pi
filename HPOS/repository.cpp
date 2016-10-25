@@ -65,9 +65,9 @@ void Repository::setSelectLikeQuery(QString select, QString from, QString where,
         {
             query = QSqlQuery(*database);
             query.prepare("SELECT " + select + " FROM " + from + " WHERE "
-                          + where + "LIKE" + " :equal"
+                          + where + " LIKE :equal"
                          );
-            query.bindValue(":equal", "%" + equal + "%");
+            query.bindValue(":equal", "%" +  equal + "%");
         }
     }
     //TODO: database NULL

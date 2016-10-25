@@ -11,13 +11,14 @@ public:
     E_User();
     E_User *getResultSet();
     E_User *getUserByPincode(QString pinCode);
-    QList <E_User *> getAllUser();
+    static QList <E_User *> getAllUser();
     E_Role *roleType;
     QString phone;
     QString username;
     QString getFirstName();
     QString getUserName();
     void setUserName(QString username);
+    static QList<E_User *> SearchByUserName(QString name);
     //TODO: get;set;
 private:
     Utils *utils;

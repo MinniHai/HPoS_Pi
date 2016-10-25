@@ -38,7 +38,7 @@ void S_UserDetail::on_btnBack_clicked()
 
     S_UserManager usermanager;
     usermanager.setModal(true);
-    usermanager.showScreen();
+    usermanager.setDataToTable();
     usermanager.exec();
     this->hide();
 }

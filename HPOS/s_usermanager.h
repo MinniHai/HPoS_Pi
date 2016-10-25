@@ -19,12 +19,15 @@ public:
 
     explicit S_UserManager(QWidget *parent = 0);
     ~S_UserManager();
-    void showScreen();
+    void setDataToTable();
     QList<E_User *> listUser;
     void resizeEvent(QResizeEvent *event);
     QTableWidgetItem *createTableWidgetItem(const QString &text) const;
 
+
 private slots:
+
+    void search();
 
     void runKeyboard();
 

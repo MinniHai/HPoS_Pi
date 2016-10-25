@@ -74,9 +74,12 @@ void S_Menu::on_btnHumanResource_clicked()
 {
     S_UserManager *user = new S_UserManager();
     user->setModal(true);
-    user->showScreen();
+    user->listUser = E_User::getAllUser();
+    user->setDataToTable();
     //    user->exec();
+    user->showFullScreen();
     this->close();
+
 }
 
 void S_Menu::on_btnCheckout_clicked()

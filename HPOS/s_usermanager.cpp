@@ -10,17 +10,14 @@
 #include <QHBoxLayout>
 #include <QDebug>
 
-
-
-
-
-
 S_UserManager::S_UserManager(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::S_UserManager)
 {
     ui->setupUi(this);
+    listUser = E_User::getAllUser();
     connect(ui->ledSearch, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+    connect(ui->ledSearch, SIGNAL(textChanged(QString)), SLOT(search()));
 
 }
 
@@ -35,15 +32,15 @@ void S_UserManager::resizeEvent(QResizeEvent *event)
     ui->tblListUser->setColumnWidth(1, width * 2 / 12);
     ui->tblListUser->setColumnWidth(2, width * 5 / 12);
     ui->tblListUser->setColumnWidth(3, width * 0.95 / 12);
-//TODO: scroll off
+    //TODO: scroll off
 }
-void S_UserManager::showScreen()
+void S_UserManager::setDataToTable()
 {
-    E_User *user = new E_User();
-    listUser = user->getAllUser();
-    if (!listUser.isEmpty())
+    ui->tblListUser->clearContents();
+    ui->tblListUser->setRowCount(0);
+    if(!listUser.isEmpty())
     {
-        for (int i = 0; i < listUser.size(); i++)
+        for(int i = 0; i < listUser.size(); i++)
         {
             ui->tblListUser->insertRow(i);
             ui->tblListUser->setItem(i, 0, createTableWidgetItem(listUser[i]->username));
@@ -65,7 +62,11 @@ void S_UserManager::showScreen()
 
         }
     }
-    this->showFullScreen();
+    else
+    {
+        qDebug() << "list is empty!";
+    }
+
 }
 QTableWidgetItem *S_UserManager::createTableWidgetItem(const QString &text) const
 {
@@ -118,4 +119,10 @@ void S_UserManager::runKeyboard()
 void S_UserManager::on_btnDelete_clicked()
 {
 
+}
+void S_UserManager::search()
+{
+    listUser = E_User::SearchByUserName(ui->ledSearch->text());
+    setDataToTable();
+    qDebug() << "search";
 }

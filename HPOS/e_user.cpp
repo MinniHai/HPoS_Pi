@@ -56,3 +56,16 @@ void E_User::setUserName(QString username)
 {
     this->username = username;
 }
+QList<E_User *> E_User::SearchByUserName(QString name)
+{
+    QList <E_User *> listUser;
+
+    Repository *userRepo = new E_User();
+    userRepo->setSelectLikeQuery("*", "User", "username", name);
+    foreach(Repository *item, userRepo->getListEntityByQuery())
+    {
+        listUser.append((E_User *)item);
+    }
+    return listUser;
+
+}
