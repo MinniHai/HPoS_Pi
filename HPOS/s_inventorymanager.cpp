@@ -20,15 +20,17 @@ S_InventoryManager::S_InventoryManager(QWidget *parent) :
     ui(new Ui::S_InventoryManager)
 {
     ui->setupUi(this);
-    listProduct = E_Product::getAllProduct();
     ui->cbbSearchType->addItem("Name", QVariant("proName"));
     ui->cbbSearchType->addItem("Barcode", QVariant(""));
     ui->cbbSearchType->addItem("Category", QVariant(""));
     ui->cbbSearchType->addItem("Manufacturer", QVariant(""));
 
+
+    ui->cbbSearchType->setCurrentIndex(ui->cbbSearchType->findText("Name"));
+
     connect(ui->ledSearch, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
-    connect(ui->ledSearch,SIGNAL(textChanged(QString)),SLOT(searchInventory()));
-   // connect(ui->ledSearch,SIGNAL(textChanged(QString)),SLOT(searchByBarcode()));
+    connect(ui->ledSearch, SIGNAL(textChanged(QString)), SLOT(searchInventory(QString)));
+    // connect(ui->ledSearch,SIGNAL(textChanged(QString)),SLOT(searchByBarcode()));
 
 }
 
@@ -97,7 +99,6 @@ void S_InventoryManager::setDataToTable()
             ui->tblListInventory->setCellWidget(i, 5, pWidget);
         }
     }
-    this->showFullScreen();
 }
 
 QTableWidgetItem *S_InventoryManager::createTableWidgetItem(const QString &text) const
@@ -126,20 +127,25 @@ void S_InventoryManager::runKeyboard()
     keyboard->showFullScreen();
 }
 
-void S_InventoryManager::searchInventory()
+void S_InventoryManager::searchInventory(QString text)
 {
-
-    if (ui->cbbSearchType->currentText() == "Name") {
+    listProduct.clear();
+    if(ui->cbbSearchType->currentText() == "Name")
+    {
 
         listProduct = E_Product::searchByColumn(ui->cbbSearchType->currentData().toString()
-                                                ,ui->ledSearch->text());
+                                                , text);
+        qDebug() << listProduct[0]->name;
+        qDebug() << listProduct.size();
 
-    } else if (ui->cbbSearchType->currentText() == "Category"){
-        listProduct.clear();
-        QList<E_Category *> listCategory = E_Category::searchCategoryByName(ui->ledSearch->text());
-        foreach (E_Category *item, listCategory) {
+    }
+    else if(ui->cbbSearchType->currentText() == "Category")
+    {
+        QList<E_Category *> listCategory = E_Category::searchCategoryByName(text);
+        foreach(E_Category *item, listCategory)
+        {
             listProduct.append(E_Product::searchByColumn(ui->cbbSearchType->currentData().toString()
-                                                         ,item->ctID));
+                               , item->ctID));
         }
     }
 

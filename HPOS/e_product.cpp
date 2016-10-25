@@ -22,6 +22,11 @@ E_Product *E_Product::getResultSet()
     product->description = query.value(query.record().indexOf("proDes")).toString();
     //get list picture.
     product->listPicture = E_Picture::getPictureByProductID(product->proID);
+
+    product->barcode = E_Barcode::getBarcodeByProID(product->proID);
+    product->barcode->manufacturer = E_Manufacturer::getManufacturerByPrefix(product->barcode->manufacturerPrefix);
+    product->barcode->country = E_Country::getCountryNameByPrefix(product->barcode->countryPrefix);
+    product->category = E_Category::getCategoryByID(product->ctID);
     return product;
 }
 
@@ -52,7 +57,7 @@ QList<E_Product *> E_Product::getAllProduct()
 
 }
 
-QList<E_Product *> E_Product::searchByColumn(QString column,QString searchText)
+QList<E_Product *> E_Product::searchByColumn(QString column, QString searchText)
 {
     QList <E_Product *> listProduct;
     Repository *productRepo = new E_Product();
@@ -61,8 +66,5 @@ QList<E_Product *> E_Product::searchByColumn(QString column,QString searchText)
     {
         listProduct.append((E_Product *)item);
     }
-    qDebug () << "prolist size " + listProduct.size();
     return listProduct;
-
 }
-

@@ -8,7 +8,7 @@
 
 class E_Product;
 namespace Ui {
-class S_InventoryManager;
+    class S_InventoryManager;
 }
 
 class S_InventoryManager : public QDialog
@@ -25,9 +25,9 @@ public:
 
 private slots:
 
-    void searchInventory();
+    void searchInventory(QString text);
 
-//    void searchByBarcode();
+    //    void searchByBarcode();
 
     void on_btnMenu_3_clicked();
 
