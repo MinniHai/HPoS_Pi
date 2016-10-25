@@ -96,6 +96,50 @@ void Repository::setSelectQuery(QString select, QString from,
     //TODO: database NULL
 }
 
+void Repository::setSelectLikeORQuery(QString select, QString from
+                                      , QString where1, QString equal1
+                                      , QString where2, QString equal2
+                                     )
+{
+    if(database)
+    {
+        if(database->open())
+        {
+            query = QSqlQuery(*database);
+            query.prepare("SELECT " + select + " FROM " + from + " WHERE "
+                          + where1 + " LIKE :equal1 OR "
+                          + where2 + " LIKE :equal2"
+                         );
+            query.bindValue(":equal1", "%" +  equal1 + "%");
+            query.bindValue(":equal2", "%" +  equal2 + "%");
+        }
+    }
+    //TODO: database NULL
+}
+void Repository::setSelectLikeORQuery(QString select, QString from
+                                      , QString where1, QString equal1
+                                      , QString where2, QString equal2
+                                      , QString where3, QString equal3
+                                     )
+{
+    if(database)
+    {
+        if(database->open())
+        {
+            query = QSqlQuery(*database);
+            query.prepare("SELECT " + select + " FROM " + from + " WHERE "
+                          + where1 + " LIKE :equal1 OR "
+                          + where2 + " LIKE :equal2 OR "
+                          + where3 + " LIKE :equal3 "
+                         );
+            query.bindValue(":equal1", "%" +  equal1 + "%");
+            query.bindValue(":equal2", "%" +  equal2 + "%");
+            query.bindValue(":equal3", "%" +  equal3 + "%");
+        }
+    }
+    //TODO: database NULL
+}
+
 void Repository::setSelectLikeQuery(QString select, QString from, QString where, QString equal)
 {
     if(database)

@@ -17,12 +17,10 @@ CREATE TABLE Role (
  
 CREATE TABLE User (
  userID INT NOT NULL AUTO_INCREMENT,
- username  NVARCHAR(20) NOT NULL unique,
  pinCode INT NOT NULL unique, 
  pictureUrl NVARCHAR(255) NULL,
  lastName NVARCHAR(15) NOT NULL,
  firstName NVARCHAR(15) NOT NULL,
- age INT NULL,
  DOB DATE NULL,
  idCard NVARCHAR(15) NULL,
  phone NVARCHAR(15) NULL,
@@ -188,8 +186,8 @@ CREATE TABLE Category (
  
 
 
-  INSERT INTO User ( lastname, firstname,  DOB,  roleID, username, pincode)
- VALUES ( 'admin', 'admin',  '1991-06-22',   '2','admin', '123123');  
+  INSERT INTO User ( lastname, firstname,  DOB,  roleID,  pincode)
+ VALUES ( 'admin', 'admin',  '1991-06-22',   '2', '123123');  
 
 -- Insert Company
 INSERT INTO `HPoS`.`Manufacturer` (`manuPrefix`, `manuName`, `address`, `phone`, `logoUrl`) VALUES ('4588', 'PepsiCo', '', '', '');

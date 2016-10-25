@@ -22,6 +22,15 @@ public:
                         QString where3, QString equal3);
 
     void setSelectLikeQuery(QString select, QString from, QString where, QString equal);
+    void setSelectLikeORQuery(QString select, QString from
+                              , QString where1, QString equal1
+                              , QString where2, QString equal2
+                             );
+    void setSelectLikeORQuery(QString select, QString from
+                              , QString where1, QString equal1
+                              , QString where2, QString equal2
+                              , QString where3, QString equal3
+                             );
 
     void setInsertQuery(QString into, QHashIterator<QString, QString> values);
 
