@@ -29,7 +29,7 @@ private slots:
 
     void on_btnHumanResource_clicked();
 
-    void on_btnManual_clicked();
+    void on_btnInventory_clicked();
     void on_btnCheckout_clicked();
 private:
     Ui::Menu *ui;

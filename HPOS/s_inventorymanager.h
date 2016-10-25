@@ -19,11 +19,16 @@ public:
     explicit S_InventoryManager(QWidget *parent = 0);
     ~S_InventoryManager();
     QList<E_Product *> listProduct;
-    void showScreen();
+    void setDataToTable();
     //void resizeEvent(QResizeEvent *event);
     QTableWidgetItem *createTableWidgetItem(const QString &text) const;
 
 private slots:
+
+    void searchInventory();
+
+//    void searchByBarcode();
+
     void on_btnMenu_3_clicked();
 
     void runKeyboard();
@@ -31,6 +36,7 @@ private slots:
     void on_btnBack_3_clicked();
 
     void on_btnNew_clicked();
+
 
 private:
     void resizeEvent(QResizeEvent *event);

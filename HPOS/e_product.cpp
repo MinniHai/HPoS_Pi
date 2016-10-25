@@ -51,3 +51,18 @@ QList<E_Product *> E_Product::getAllProduct()
     return listProduct;
 
 }
+
+QList<E_Product *> E_Product::searchByColumn(QString column,QString searchText)
+{
+    QList <E_Product *> listProduct;
+    Repository *productRepo = new E_Product();
+    productRepo->setSelectLikeQuery("*", "Product", column, searchText);
+    foreach(Repository *item, productRepo->getListEntityByQuery())
+    {
+        listProduct.append((E_Product *)item);
+    }
+    qDebug () << "prolist size " + listProduct.size();
+    return listProduct;
+
+}
+

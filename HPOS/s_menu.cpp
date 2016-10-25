@@ -3,6 +3,7 @@
 #include "s_checkout.h"
 #include "e_user.h"
 #include "session.h"
+#include "e_product.h"
 #include "s_usermanager.h"
 #include "s_inventorymanager.h"
 
@@ -91,11 +92,13 @@ void S_Menu::on_btnCheckout_clicked()
     this->close();
 }
 
-void S_Menu::on_btnManual_clicked()
+void S_Menu::on_btnInventory_clicked()
 {
-    S_InventoryManager inventory;
-    inventory.setModal(true);
-    inventory.showScreen();
-    inventory.exec();
+    S_InventoryManager *inventory = new S_InventoryManager;
+    inventory->setModal(true);
+    inventory->listProduct=E_Product::getAllProduct();
+    inventory->setDataToTable();
+    inventory->showFullScreen();
+    inventory->exec();
     this->hide();
 }

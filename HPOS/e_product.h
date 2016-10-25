@@ -17,7 +17,7 @@ public:
 
     E_Product();
     E_Product *getResultSet();
-    QList <E_Product *> getAllProduct();
+    static QList <E_Product *> getAllProduct();
     QString name;
     QString proID;
     double price;
@@ -25,6 +25,8 @@ public:
     int pictureID;
     int quantity;
     QString ctID;
+
+    static QList<E_Product *> searchByColumn(QString column,QString searchText);
 
 
     E_Barcode *barcode;

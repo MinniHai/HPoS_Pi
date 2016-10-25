@@ -66,7 +66,7 @@ QToolButton:hover
     border: 6px solid qlineargradient(spread:reflect, x1:0.653, y1:0.699136, x2:0.437227, y2:0.057, stop:0.159091 rgba(59, 59, 59, 255), stop:0.846591 rgba(143, 143, 143, 255));
 }
 
-QToolButton#btnManual
+QToolButton#btnInventory
 {
 	
 	background-color: qlineargradient(spread:reflect, x1:0.368818, y1:0.791, x2:0.58, y2:0.193182, stop:0.0170455 rgba(255, 0, 0, 255));
@@ -248,7 +248,7 @@ QToolButton#btnOrder
     </size>
    </property>
   </widget>
-  <widget class="QToolButton" name="btnManual">
+  <widget class="QToolButton" name="btnInventory">
    <property name="geometry">
     <rect>
      <x>240</x>

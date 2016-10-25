@@ -64,6 +64,8 @@ void Repository::setSelectLikeQuery(QString select, QString from, QString where,
         if(database->open())
         {
             query = QSqlQuery(*database);
+            qDebug() << "SELECT " + select + " FROM " + from + " WHERE "
+                        + where + " LIKE :equal";
             query.prepare("SELECT " + select + " FROM " + from + " WHERE "
                           + where + " LIKE :equal"
                          );

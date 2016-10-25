@@ -13,14 +13,25 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QDebug>
+#include <QVariant>
 
 S_InventoryManager::S_InventoryManager(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::S_InventoryManager)
 {
     ui->setupUi(this);
+    listProduct = E_Product::getAllProduct();
+    ui->cbbSearchType->addItem("Name", QVariant("proName"));
+    ui->cbbSearchType->addItem("Barcode", QVariant(""));
+    ui->cbbSearchType->addItem("Category", QVariant(""));
+    ui->cbbSearchType->addItem("Manufacturer", QVariant(""));
+
     connect(ui->ledSearch, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+    connect(ui->ledSearch,SIGNAL(textChanged(QString)),SLOT(searchInventory()));
+   // connect(ui->ledSearch,SIGNAL(textChanged(QString)),SLOT(searchByBarcode()));
+
 }
+
 
 S_InventoryManager::~S_InventoryManager()
 {
@@ -57,10 +68,11 @@ void S_InventoryManager::on_btnBack_3_clicked()
     this->close();
 }
 
-void S_InventoryManager::showScreen()
+void S_InventoryManager::setDataToTable()
 {
-    E_Product *product = new E_Product();
-    listProduct = product->getAllProduct();
+    ui->tblListInventory->clearContents();
+    ui->tblListInventory->setRowCount(0);
+
     if(!listProduct.isEmpty())
     {
         for(int i = 0; i < listProduct.size(); i++)
@@ -113,3 +125,30 @@ void S_InventoryManager::runKeyboard()
     keyboard->setWindowModality(Qt::WindowModal);
     keyboard->showFullScreen();
 }
+
+void S_InventoryManager::searchInventory()
+{
+
+    if (ui->cbbSearchType->currentText() == "Name") {
+
+        listProduct = E_Product::searchByColumn(ui->cbbSearchType->currentData().toString()
+                                                ,ui->ledSearch->text());
+
+    } else if (ui->cbbSearchType->currentText() == "Category"){
+        listProduct.clear();
+        QList<E_Category *> listCategory = E_Category::searchCategoryByName(ui->ledSearch->text());
+        foreach (E_Category *item, listCategory) {
+            listProduct.append(E_Product::searchByColumn(ui->cbbSearchType->currentData().toString()
+                                                         ,item->ctID));
+        }
+    }
+
+    setDataToTable();
+
+}
+
+//void S_InventoryManager::searchByBarcode()
+//{
+//    listProduct = E_Product::searchByName(ui->ledSearch->text());
+//    setDataToTable();
+//}
