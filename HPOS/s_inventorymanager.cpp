@@ -22,7 +22,7 @@ S_InventoryManager::S_InventoryManager(QWidget *parent) :
     ui->setupUi(this);
     ui->cbbSearchType->addItem("Name", QVariant("proName"));
     ui->cbbSearchType->addItem("Barcode", QVariant(""));
-    ui->cbbSearchType->addItem("Category", QVariant(""));
+    ui->cbbSearchType->addItem("Category", QVariant("ctID"));
     ui->cbbSearchType->addItem("Manufacturer", QVariant(""));
 
 
@@ -135,8 +135,6 @@ void S_InventoryManager::searchInventory(QString text)
 
         listProduct = E_Product::searchByColumn(ui->cbbSearchType->currentData().toString()
                                                 , text);
-        qDebug() << listProduct[0]->name;
-        qDebug() << listProduct.size();
 
     }
     else if(ui->cbbSearchType->currentText() == "Category")
@@ -144,8 +142,31 @@ void S_InventoryManager::searchInventory(QString text)
         QList<E_Category *> listCategory = E_Category::searchCategoryByName(text);
         foreach(E_Category *item, listCategory)
         {
-            listProduct.append(E_Product::searchByColumn(ui->cbbSearchType->currentData().toString()
-                               , item->ctID));
+            foreach(E_Product *pro, E_Product::getProductByColumn(
+                        ui->cbbSearchType->currentData().toString()
+                        , item->ctID))
+            {
+                if(!listProduct.contains(pro))
+                {
+                    listProduct.append(pro);
+                }
+            }
+        }
+    }
+    else if(ui->cbbSearchType->currentText() == "Barcode")
+    {
+        foreach(E_Barcode *item, E_Barcode::searchBarcode(text))
+        {
+            E_Product *pro = E_Product::getProductByID(item->proID);
+            if(listProduct.isEmpty())
+            {
+                listProduct.append(pro);
+            }
+            else if(!listProduct.contains(pro))
+            {
+                listProduct.append(pro);
+            }
+
         }
     }
 

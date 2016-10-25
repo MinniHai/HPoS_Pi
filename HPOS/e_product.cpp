@@ -56,6 +56,17 @@ QList<E_Product *> E_Product::getAllProduct()
     return listProduct;
 
 }
+QList <E_Product *> E_Product::getProductByColumn(QString column, QString searchText)
+{
+    QList <E_Product *> listProduct;
+    Repository *productRepo = new E_Product();
+    productRepo->setSelectQuery("*", "Product", column, searchText);
+    foreach(Repository *item, productRepo->getListEntityByQuery())
+    {
+        listProduct.append((E_Product *)item);
+    }
+    return listProduct;
+}
 
 QList<E_Product *> E_Product::searchByColumn(QString column, QString searchText)
 {

@@ -6,7 +6,7 @@ Repository::Repository()
     database = Utils::instance()->getDB();
 }
 
-void Repository::setInsertQuery(QString into, QHashIterator<QString, QString> values)
+void Repository::setInsertQuery(QString into, QHash<QString, QString> hash)
 {
     if(database)
     {
@@ -14,9 +14,10 @@ void Repository::setInsertQuery(QString into, QHashIterator<QString, QString> va
         {
             query = QSqlQuery(*database);
 
-            QString queryString = "INSERT " + into + " (";
-            QString valuesString = "";
+            QString queryString = "INSERT INTO " + into ;
+            QString valuesString = " VALUES ( ";
             QString column = "(";
+            QHashIterator<QString, QString> values(hash);
             while(values.hasNext())
             {
                 values.next();
@@ -83,14 +84,26 @@ void Repository::setSelectQuery(QString select, QString from,
         if(database->open())
         {
             query = QSqlQuery(*database);
-            query.prepare("SELECT " + select + " FROM " + from + " WHERE "
-                          + where1 + "=" + " :equal1" + " AND "
-                          + where2 + "=" + " :equal2" + " AND "
-                          + where3 + "=" + " :equal3"
-                         );
+            QString queryString = "SELECT " + select + " FROM " + from + " WHERE "
+                                  + where1 + " = :equal1";
+            if(!equal2.isEmpty())
+            {
+                queryString.append(" AND " + where2 + " = :equal2");
+            }
+            if(!equal3.isEmpty())
+            {
+                queryString.append(" AND " + where3 + " = :equal3 ");
+            }
+            query.prepare(queryString);
             query.bindValue(":equal1", equal1);
-            query.bindValue(":equal2", equal2);
-            query.bindValue(":equal3", equal3);
+            if(!equal2.isEmpty())
+            {
+                query.bindValue(":equal2",  equal2);
+            }
+            if(!equal3.isEmpty())
+            {
+                query.bindValue(":equal3", equal3);
+            }
         }
     }
     //TODO: database NULL
@@ -127,14 +140,28 @@ void Repository::setSelectLikeORQuery(QString select, QString from
         if(database->open())
         {
             query = QSqlQuery(*database);
-            query.prepare("SELECT " + select + " FROM " + from + " WHERE "
-                          + where1 + " LIKE :equal1 OR "
-                          + where2 + " LIKE :equal2 OR "
-                          + where3 + " LIKE :equal3 "
-                         );
+            QString queryString = "SELECT " + select + " FROM " + from + " WHERE "
+                                  + where1 + " LIKE :equal1";
+            if(!equal2.isEmpty())
+            {
+                queryString.append(" OR " + where2 + " LIKE :equal2");
+            }
+            if(!equal3.isEmpty())
+            {
+                queryString.append(" OR " + where3 + " LIKE :equal3 ");
+            }
+
+            qDebug() << queryString;
+            query.prepare(queryString);
             query.bindValue(":equal1", "%" +  equal1 + "%");
-            query.bindValue(":equal2", "%" +  equal2 + "%");
-            query.bindValue(":equal3", "%" +  equal3 + "%");
+            if(!equal2.isEmpty())
+            {
+                query.bindValue(":equal2", "%" +  equal2 + "%");
+            }
+            if(!equal3.isEmpty())
+            {
+                query.bindValue(":equal3", "%" +  equal3 + "%");
+            }
         }
     }
     //TODO: database NULL

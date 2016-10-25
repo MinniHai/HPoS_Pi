@@ -8,6 +8,7 @@
 
 class BarcodeScanner;
 class CustomeQlabel;
+class E_Product;
 
 namespace Ui {
     class Search;
@@ -50,6 +51,7 @@ private slots:
     void runKeyboard();
 
 private:
+    E_Product *product;
     void setBackToDefaul();
     BarcodeScanner *bc;
     QTimer *timer;

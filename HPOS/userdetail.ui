@@ -102,10 +102,13 @@ QLineEdit:hover
 }</string>
     </property>
     <property name="text">
-     <string>Manager</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
+    </property>
+    <property name="placeholderText">
+     <string>Role</string>
     </property>
     <property name="clearButtonEnabled">
      <bool>false</bool>
@@ -259,7 +262,7 @@ QLineEdit:hover
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
+      <y>-3</y>
       <width>312</width>
       <height>318</height>
      </rect>
@@ -343,7 +346,7 @@ QLineEdit:hover
      <item row="7" column="0">
       <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>Age</string>
+        <string>ID Card</string>
        </property>
       </widget>
      </item>
@@ -378,9 +381,9 @@ QLineEdit:hover
       </widget>
      </item>
      <item row="9" column="0">
-      <widget class="QLineEdit" name="ledAge">
+      <widget class="QLineEdit" name="ledIdCard">
        <property name="placeholderText">
-        <string>age</string>
+        <string>ID Cart</string>
        </property>
        <property name="clearButtonEnabled">
         <bool>true</bool>

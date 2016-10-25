@@ -370,7 +370,21 @@ QToolButton:hover{
    </attribute>
    <column>
     <property name="text">
-     <string>Username</string>
+     <string>FisrtName</string>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="textAlignment">
+     <set>AlignCenter</set>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>LastName</string>
     </property>
     <property name="font">
      <font>

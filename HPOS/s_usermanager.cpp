@@ -28,10 +28,11 @@ S_UserManager::~S_UserManager()
 void S_UserManager::resizeEvent(QResizeEvent *event)
 {
     int width =  480;
-    ui->tblListUser->setColumnWidth(0, width * 4 / 12);
-    ui->tblListUser->setColumnWidth(1, width * 2 / 12);
-    ui->tblListUser->setColumnWidth(2, width * 5 / 12);
-    ui->tblListUser->setColumnWidth(3, width * 0.95 / 12);
+    ui->tblListUser->setColumnWidth(0, width * 4 / 15);
+    ui->tblListUser->setColumnWidth(1, width * 4 / 15);
+    ui->tblListUser->setColumnWidth(2, width * 2 / 15);
+    ui->tblListUser->setColumnWidth(3, width * 4 / 15);
+    ui->tblListUser->setColumnWidth(4, width * 0.95 / 15);
     //TODO: scroll off
 }
 void S_UserManager::setDataToTable()
@@ -43,9 +44,10 @@ void S_UserManager::setDataToTable()
         for(int i = 0; i < listUser.size(); i++)
         {
             ui->tblListUser->insertRow(i);
-            ui->tblListUser->setItem(i, 0, createTableWidgetItem(listUser[i]->username));
-            ui->tblListUser->setItem(i, 1, createTableWidgetItem(listUser[i]->roleType->roleType));
-            ui->tblListUser->setItem(i, 2, createTableWidgetItem(listUser[i]->phone));
+            ui->tblListUser->setItem(i, 0, createTableWidgetItem(listUser[i]->firstname));
+            ui->tblListUser->setItem(i, 1, createTableWidgetItem(listUser[i]->lastname));
+            ui->tblListUser->setItem(i, 2, createTableWidgetItem(listUser[i]->roleType->roleType));
+            ui->tblListUser->setItem(i, 3, createTableWidgetItem(listUser[i]->phone));
             //
             QWidget *pWidget = new QWidget();
             QPushButton *btn_edit = new QPushButton();
@@ -57,7 +59,7 @@ void S_UserManager::setDataToTable()
             pLayout->setAlignment(Qt::AlignHCenter);
             pLayout->setContentsMargins(0, 0, 0, 0);
             pWidget->setLayout(pLayout);
-            ui->tblListUser->setCellWidget(i, 3, pWidget);
+            ui->tblListUser->setCellWidget(i, 4, pWidget);
 
 
         }

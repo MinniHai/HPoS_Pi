@@ -13,15 +13,17 @@ public:
 
     E_Barcode();
     E_Barcode *getResultSet();
-    static E_Barcode *getBarcode(QString countryPrefix, QString manufacturerPrefix, QString productPrefix);
+    void analysisBarcode(QString barcode);
+    static E_Barcode *getBarcode(QString barcode);
     static E_Barcode *getBarcodeByProID(QString proID);
-
+    static QList<E_Barcode *> searchBarcode(QString barcode);
     QString countryPrefix;
     QString manufacturerPrefix;
     QString productPrefix;
-    int checkDigit;
+    QString checkDigit;
     QString imDate;
     QString imTime;
+    QString proID;
 
     E_Product *product; //get by ID
     E_Manufacturer *manufacturer;//get by prefix

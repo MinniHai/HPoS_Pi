@@ -19,9 +19,8 @@ public:
     QString getUserName();
     void setUserName(QString username);
     static QList<E_User *> SearchByUserName(QString name);
+    static bool insertUser(QHash<QString, QString> user);
     //TODO: get;set;
-private:
-    Utils *utils;
     int userID;
 
     QString pwd;
@@ -31,8 +30,10 @@ private:
     QString age;
     QString DOB;
     QString idCard;
-
     QString roleID;
+private:
+    Utils *utils;
+
 };
 
 #endif // USER_H

@@ -16,7 +16,8 @@ E_User::E_User()
 E_User *E_User::getResultSet()
 {
     E_User *user = new E_User();
-    user->setUserName(query.value(query.record().indexOf("username")).toString());
+    user->lastname = (query.value(query.record().indexOf("lastName")).toString());
+    user->firstname = (query.value(query.record().indexOf("firstName")).toString());
     user->phone = (query.value(query.record().indexOf("phone")).toString());
     roleType = new E_Role();
     user->roleType = roleType->getRoleByID(query.value(query.record().indexOf("roleID")).toString());
@@ -56,16 +57,24 @@ void E_User::setUserName(QString username)
 {
     this->username = username;
 }
+
 QList<E_User *> E_User::SearchByUserName(QString name)
 {
     QList <E_User *> listUser;
 
     Repository *userRepo = new E_User();
-    userRepo->setSelectLikeQuery("*", "User", "username", name);
+    userRepo->setSelectLikeORQuery("*", "User", "lastName", name, "firstName", name);
     foreach(Repository *item, userRepo->getListEntityByQuery())
     {
         listUser.append((E_User *)item);
     }
     return listUser;
 
+}
+
+bool E_User::insertUser(QHash<QString, QString> user)
+{
+    Repository *userRepo = new E_User();
+    userRepo->setInsertQuery("User", user);
+    return userRepo->query.exec();
 }

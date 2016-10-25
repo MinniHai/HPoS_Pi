@@ -13,15 +13,21 @@ E_Category *E_Category::getResultSet()
     return category;
 }
 
-E_Category *E_Category::getCategoryByID(QString ctID)
+E_Category *E_Category:: getCategoryByID(QString ctID)
 {
     Repository *cateRepo = new E_Category();
     cateRepo->setSelectQuery("*", "Category", "ctID", ctID);
     return (E_Category *) cateRepo->getEntityByQuery();
 }
 
-QList<E_Category*> E_Category::searchCategoryByName(QString Name){
+QList<E_Category *> E_Category::searchCategoryByName(QString Name)
+{
     QList<E_Category *> listCategory;
-
+    Repository *cateRepo = new E_Category();
+    cateRepo->setSelectLikeQuery("*", "Category", "ctName", Name);
+    foreach(Repository *item, cateRepo->getListEntityByQuery())
+    {
+        listCategory.append((E_Category *)item);
+    }
     return listCategory;
 }

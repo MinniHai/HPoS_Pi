@@ -4,7 +4,7 @@
 #include <QDialog>
 
 namespace Ui {
-class S_UserDetail;
+    class S_UserDetail;
 }
 
 class S_UserDetail : public QDialog
@@ -21,6 +21,8 @@ private slots:
     void on_btnBack_clicked();
 
     void runKeyboard();
+
+    void on_btnSave_clicked();
 
 private:
     Ui::S_UserDetail *ui;

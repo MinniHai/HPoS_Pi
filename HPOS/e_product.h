@@ -14,7 +14,7 @@ class E_Product : public Repository
 {
 public:
     static E_Product *getProductByID(QString ID);
-
+    static QList <E_Product *> getProductByColumn(QString column, QString searchText);
     E_Product();
     E_Product *getResultSet();
     static QList <E_Product *> getAllProduct();
@@ -26,7 +26,7 @@ public:
     int quantity;
     QString ctID;
 
-    static QList<E_Product *> searchByColumn(QString column,QString searchText);
+    static QList<E_Product *> searchByColumn(QString column, QString searchText);
 
 
     E_Barcode *barcode;

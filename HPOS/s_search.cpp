@@ -24,7 +24,7 @@ using namespace std;
 
 S_Search *S_Search::instance()
 {
-    if (!s_instance)
+    if(!s_instance)
     {
         s_instance = new S_Search();
     }
@@ -63,7 +63,7 @@ S_Search::S_Search(QWidget *parent) :
 
 void S_Search::viewInfomation()
 {
-    if (e_barcode != NULL)
+    if(e_barcode != NULL)
     {
         S_Product *product = S_Product::instance();
         product->setModal(true);
@@ -89,7 +89,7 @@ void S_Search::on_btnPlus_clicked()
 
 void S_Search::on_btnMinus_clicked()
 {
-    if (number >= 1)
+    if(number >= 1)
     {
         number = value - 1;
         ui->lcdNumber->display(number);
@@ -123,7 +123,7 @@ void S_Search::setBackToDefaul()
                             " x1:0.773136, y1:0.347, x2:0.795, y2:0.0284091,"
                             " stop:0.0909091 rgba(248, 148, 3, 255), stop:0.761364"
                             " rgba(253, 169, 0, 255));");
-    if (timer->isActive())
+    if(timer->isActive())
     {
         timer->stop();
         //bc->releaseCam();
@@ -146,29 +146,22 @@ void S_Search::runKeyboard()
 
 void S_Search::searchByBarcode(QString barcode)
 {
-    qDebug() << "barcode : " + barcode;
-    QString countryPrefix = barcode.left(3);
-    QString manufacturerPrefix = barcode.mid(3, 4);
-    QString productPrefix = barcode.mid(7, 5);
-    QString checkDigit = barcode.right(1);
-    e_barcode = E_Barcode::getBarcode(countryPrefix, manufacturerPrefix, productPrefix);
-    if (e_barcode)
+    e_barcode = E_Barcode::getBarcode(barcode);
+    product = E_Product::getProductByID(e_barcode->proID);
+    if(product)
     {
-        e_barcode->checkDigit = checkDigit.toInt();
-        lbStatus->setText(e_barcode->product->name);
+        lbStatus->setText(product->name);
     }
     else
     {
         lbStatus->setText("not Fount");
     }
 
-    qDebug() << "Prefix :" + countryPrefix + "manu :" + manufacturerPrefix +
-             "pro :" + productPrefix + "check : " + checkDigit;
 }
 
 void S_Search::checkStatus()
 {
-    if (timer->isActive())
+    if(timer->isActive())
     {
         //        if(bc->getSymbols().length() > 1)
         //        {
@@ -207,9 +200,9 @@ bool S_Search::isValidBarcode(QString barcode)
 {
     int sum = 0;
 
-    for (int i = 0; i < barcode.length() - 1; i++)
+    for(int i = 0; i < barcode.length() - 1; i++)
     {
-        if (i % 2 == 0)
+        if(i % 2 == 0)
         {
             sum += barcode.at(i).digitValue() * 1;
         }
@@ -224,7 +217,7 @@ bool S_Search::isValidBarcode(QString barcode)
 void S_Search::on_btnCheckout_clicked()
 {
     //    isValidBarcode("5060214370028");
-    if (!timer->isActive())
+    if(!timer->isActive())
     {
         qDebug() << "set";
         //        bc->setSymbols("");
@@ -252,7 +245,7 @@ void S_Search::on_btnMenu_clicked()
 
 void S_Search::on_btnAdd_clicked()
 {
-    if (e_barcode != NULL)
+    if(e_barcode != NULL)
     {
         ShoppingCart *cart = ShoppingCart::instance();
         cart->addCart(e_barcode->product, 1);

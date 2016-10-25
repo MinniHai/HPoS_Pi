@@ -8,6 +8,7 @@
 #include <QVariant>
 #include <QList>
 #include <QHash>
+#include <QHashIterator>
 
 class Repository
 {
@@ -32,14 +33,14 @@ public:
                               , QString where3, QString equal3
                              );
 
-    void setInsertQuery(QString into, QHashIterator<QString, QString> values);
+    void setInsertQuery(QString into, QHash<QString, QString> hash);
 
     Repository *getEntityByQuery();
 
     QList<Repository *>getListEntityByQuery();
     virtual Repository *getResultSet() = 0;
-protected:
     QSqlQuery query;
+protected:
     QSqlDatabase *database;
 
 };
