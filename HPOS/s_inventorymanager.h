@@ -16,30 +16,31 @@ class S_InventoryManager : public QDialog
     Q_OBJECT
 
 public:
+    static S_InventoryManager *s_instance;
+    static S_InventoryManager *instance();
+
     explicit S_InventoryManager(QWidget *parent = 0);
     ~S_InventoryManager();
     QList<E_Product *> listProduct;
     void setDataToTable();
-    //void resizeEvent(QResizeEvent *event);
     QTableWidgetItem *createTableWidgetItem(const QString &text) const;
 
 private slots:
 
     void searchInventory(QString text);
 
-    //    void searchByBarcode();
-
-    void on_btnMenu_3_clicked();
+    void on_btnMenu_clicked();
 
     void runKeyboard();
 
-    void on_btnBack_3_clicked();
+    void on_btnBack_clicked();
 
     void on_btnNew_clicked();
-
+    void edit_clicked(int row);
 
 private:
-    void resizeEvent(QResizeEvent *event);
+
+    void resizeEvent(QResizeEvent *);
     Ui::S_InventoryManager *ui;
 };
 

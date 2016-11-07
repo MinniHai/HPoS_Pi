@@ -301,7 +301,7 @@ QToolButton:hover{
     </property>
     <property name="icon">
      <iconset resource="images.qrc">
-      <normaloff>:/images/images/search-icon.png</normaloff>:/images/images/search-icon.png</iconset>
+      <normaloff>:/images/images/keybroad_icon.png</normaloff>:/images/images/keybroad_icon.png</iconset>
     </property>
     <property name="iconSize">
      <size>

@@ -2,6 +2,7 @@
 #define SHOPPINGCART_H
 
 #include <QHash>
+#include <QList>
 
 class E_Product;
 class ShoppingCart
@@ -11,8 +12,14 @@ public:
     static ShoppingCart *instance();
     ShoppingCart();
 
-    QHash<E_Product *, int> cart;
+    ulong total;
+    ulong subTotal;
+    QList<E_Product *> cart;
+    QList<int> quantity;
     void addCart(E_Product *, int);
+    void cancelCart();
+    void removeCart(E_Product *product);
+    bool saveCarts();
 };
 
 #endif // SHOPPINGCART_H

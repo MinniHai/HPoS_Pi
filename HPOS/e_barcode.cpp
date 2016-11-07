@@ -10,16 +10,19 @@
 
 E_Barcode::E_Barcode()
 {
-
+    manufacturer = NULL;
+    country = NULL;
 }
 
 E_Barcode *E_Barcode::getResultSet()
 {
     E_Barcode *barcode = new E_Barcode();
-    barcode->countryPrefix = query.value(query.record().indexOf("countryPrefix")).toString();;
-    barcode->manufacturerPrefix = query.value(query.record().indexOf("manuPrefix")).toString();;
-    barcode->productPrefix = query.value(query.record().indexOf("productPrefix")).toString();;
-    barcode->proID = query.value(query.record().indexOf("proID")).toString();;
+    barcode->countryPrefix = query.value(query.record().indexOf("countryPrefix")).toString();
+    barcode->manufacturerPrefix = query.value(query.record().indexOf("manuPrefix")).toString();
+    barcode->productPrefix = query.value(query.record().indexOf("productPrefix")).toString();
+    barcode->manufacturer = E_Manufacturer::getManufacturerByPrefix(barcode->manufacturerPrefix);
+    barcode->country = E_Country::getCountryByPrefix(barcode->countryPrefix);
+    barcode->proID = query.value(query.record().indexOf("proID")).toString();
     barcode->imDate = query.value(query.record().indexOf("imDate")).toString();
     barcode->imTime = query.value(query.record().indexOf("imTime")).toString();
     return barcode;
@@ -115,5 +118,26 @@ QList<E_Barcode *> E_Barcode::getBarcodeByManuRefix(QString prefix)
     qDebug() << barcodeList.size();
     return barcodeList;
 
+}
 
+bool E_Barcode::insertBarcode(QHash<QString, QString> barcode)
+{
+    Repository *proRepo = new E_Barcode();
+    proRepo->setInsertQuery("Barcode", barcode);
+    return proRepo->query.exec();
+}
+
+
+bool E_Barcode::upateBarcode(QHash<QString, QString> hash, QString barcodeID)
+{
+    Repository *productRepo = new E_Barcode();
+    productRepo->setUpdateQuery("Barcode", hash, "barcodeID", barcodeID);
+    return productRepo->query.exec();
+}
+
+bool E_Barcode::deleteBarcode(QString barcodeID)
+{
+    Repository *userRepo = new E_Barcode();
+    userRepo->setDeleteQuery("Barcode", "barcodeID", barcodeID);
+    return userRepo->query.exec();
 }

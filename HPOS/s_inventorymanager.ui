@@ -54,7 +54,7 @@ QToolButton:hover
 background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y2:0.574, stop:0 rgba(255, 151, 0, 255), stop:0.75 rgba(255, 170, 0, 255));
 	
 }
-#btnMenu_3{
+#btnMenu{
 	background-color: qlineargradient(spread:pad, x1:0, y1:0.152818, x2:1, y2:0.932, stop:0 rgba(85, 170, 0, 255), stop:0.573864 rgba(47, 95, 0, 255));
 }
 </string>
@@ -80,7 +80,7 @@ background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QToolButton" name="btnBack_3">
+   <widget class="QToolButton" name="btnBack">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -133,7 +133,7 @@ QToolButton:hover{
      <rect>
       <x>60</x>
       <y>0</y>
-      <width>311</width>
+      <width>301</width>
       <height>41</height>
      </rect>
     </property>
@@ -240,7 +240,7 @@ QComboBox:hover,QPushButton:hover {
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QToolButton" name="btnMenu_3">
+   <widget class="QToolButton" name="btnMenu">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -300,7 +300,7 @@ QComboBox:hover,QPushButton:hover {
     </property>
     <property name="icon">
      <iconset resource="images.qrc">
-      <normaloff>:/images/images/delete.png</normaloff>:/images/images/delete.png</iconset>
+      <normaloff>:/images/images/report.png</normaloff>:/images/images/report.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -321,6 +321,9 @@ QComboBox:hover,QPushButton:hover {
      <width>480</width>
      <height>240</height>
     </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
    </property>
    <property name="layoutDirection">
     <enum>Qt::LeftToRight</enum>
@@ -356,7 +359,7 @@ QComboBox:hover,QPushButton:hover {
     <bool>true</bool>
    </property>
    <attribute name="horizontalHeaderVisible">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <attribute name="horizontalHeaderCascadingSectionResizes">
     <bool>false</bool>

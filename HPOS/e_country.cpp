@@ -1,5 +1,6 @@
 #include "e_country.h"
 #include "utils.h"
+
 E_Country::E_Country()
 {
 
@@ -14,9 +15,9 @@ E_Country *E_Country::getResultSet()
     return country;
 }
 
-E_Country *E_Country::getCountryNameByPrefix(QString prefix)
+E_Country *E_Country::getCountryByPrefix(QString prefix)
 {
     Repository *countryRepo = new E_Country();
-    countryRepo->setSelectQuery("*","Country","countryPrefix",prefix);
-    return (E_Country *)countryRepo;
+    countryRepo->setSelectQuery("*", "Country", "countryPrefix", prefix);
+    return (E_Country *)countryRepo->getEntityByQuery();
 }

@@ -31,3 +31,15 @@ QList<E_Category *> E_Category::searchCategoryByName(QString Name)
     }
     return listCategory;
 }
+
+QList<E_Category *> E_Category::getAllCategory()
+{
+    QList<E_Category *> listCategory;
+    Repository *cateRepo = new E_Category();
+    cateRepo->setSelectQuery("*", "Category");
+    foreach(Repository *item, cateRepo->getListEntityByQuery())
+    {
+        listCategory.append((E_Category *)item);
+    }
+    return listCategory;
+}

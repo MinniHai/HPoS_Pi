@@ -17,11 +17,13 @@ public:
     explicit S_Payment(QWidget *parent = 0);
     ~S_Payment();
 
+    void fillData();
 private slots:
     void on_btnBack_clicked();
 
     void on_btnCheckOK_clicked();
 
+    void calculate();
 private:
     Ui::Payment *ui;
 };

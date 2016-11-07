@@ -5,6 +5,7 @@
 #include<qsqldatabase.h>
 class Utils
 {
+
 public:
     static Utils *s_instance;
     static Utils *instance();
@@ -14,7 +15,11 @@ public:
     void showMessageBox();
     Utils();
     QSqlDatabase *database;
-protected:
+    QString getCurrentDate();
+    QString getCurrentTime();
+    QString getString(ulong number);
+    ulong getULong(QString number);
+
 private:
     bool is_Debug;
     QString dbDriver;
@@ -25,29 +30,5 @@ private:
     int dbPort;
 
 
-    /*for(int i = 0; i < 3; i++)
-    {
-        ui->table->insertRow(i);
-        ui->table->setItem(i, 0, new QTableWidgetItem("mot"));
-        ui->table->setItem(i, 1, new QTableWidgetItem("hai"));
-        QWidget *pWidget = new QWidget();
-        QPushButton *btn_edit = new QPushButton();
-        btn_edit->setText("Edit");
-        btn_edit->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-        //        btn_edit->setStyleSheet("background-color:black");
-        QHBoxLayout *pLayout = new QHBoxLayout(pWidget);
-        pLayout->addWidget(btn_edit);
-        pLayout->setAlignment(Qt::AlignHCenter);
-        pLayout->setContentsMargins(0, 0, 0, 0);
-        pWidget->setLayout(pLayout);
-        ui->table->setCellWidget(i, 2, pWidget);
-        connect(btn_edit, SIGNAL(clicked(bool)), SLOT(edit()));
-    }
-     *
-     *
-     *
-     *
-     *
-     */
 };
 #endif // UTILS_H

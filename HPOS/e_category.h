@@ -12,7 +12,8 @@ public:
 
     E_Category *getResultSet();
     static E_Category *getCategoryByID(QString ctID);
-    static QList<E_Category*> searchCategoryByName(QString Name);
+    static QList<E_Category *> searchCategoryByName(QString Name);
+    static QList<E_Category *> getAllCategory();
 
 };
 

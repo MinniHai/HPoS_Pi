@@ -6,6 +6,7 @@
 #include "e_product.h"
 #include "s_usermanager.h"
 #include "s_inventorymanager.h"
+#include "ui_menuScreen.h"
 
 S_Menu *S_Menu::s_instance;
 S_Menu *S_Menu::instance()
@@ -39,8 +40,7 @@ void S_Menu::showFull()
 {
     if(Session::instance()->getUserSession())
     {
-        ui->lblUser->setText(Session::instance()->getUserSession()->getUserName());
-        qDebug() << Session::instance()->getUserSession()->getUserName();
+        ui->lblUser->setText(Session::instance()->getUserSession()->firstname);
     }
     else
     {
@@ -66,7 +66,7 @@ void S_Menu::on_btnOrder_clicked()
 {
     S_Search *search = S_Search::instance();
     search->setModal(true);
-    search->checkStatus();
+    search->setState(S_Search::View);
     search->showFullScreen();
     this->close();
 }
@@ -77,7 +77,6 @@ void S_Menu::on_btnHumanResource_clicked()
     user->setModal(true);
     user->listUser = E_User::getAllUser();
     user->setDataToTable();
-    //    user->exec();
     user->showFullScreen();
     this->close();
 
@@ -88,17 +87,17 @@ void S_Menu::on_btnCheckout_clicked()
     S_Checkout *checkout = S_Checkout::instance();
     checkout->setModal(true);
     checkout->showDataToTable();
+    checkout->action = S_Checkout::Shopping;
     checkout->showFullScreen();
     this->close();
 }
 
 void S_Menu::on_btnInventory_clicked()
 {
-    S_InventoryManager *inventory = new S_InventoryManager;
+    S_InventoryManager *inventory = S_InventoryManager::instance();
     inventory->setModal(true);
-    inventory->listProduct=E_Product::getAllProduct();
+    inventory->listProduct = E_Product::getAllProduct();
     inventory->setDataToTable();
     inventory->showFullScreen();
-    inventory->exec();
-    this->hide();
+    this->close();
 }

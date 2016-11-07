@@ -35,6 +35,28 @@ Utils::Utils()
     database->setPassword(dbPwd);
 }
 
+QString Utils::getString(ulong number)
+{
+    return "";
+}
+
+ulong Utils::getULong(QString number)
+{
+    return 1;
+}
+
+QString Utils::getCurrentDate()
+{
+    QDateTime dateTime = QDateTime::currentDateTime();
+    return dateTime.toString("yyyy-MM-dd");
+}
+
+QString Utils::getCurrentTime()
+{
+    QDateTime dateTime = QDateTime::currentDateTime();
+    return dateTime.toString("hh:mm:ss");
+}
+
 QSqlDatabase *Utils::getDB()
 {
     if(database->isValid())
@@ -55,9 +77,7 @@ QSqlDatabase *Utils::getDB()
     }
 }
 
-
-
 void Utils::showMessageBox()
 {
-    QMessageBox::StandardButton box;
+    //    QMessageBox::StandardButton box;
 }

@@ -53,7 +53,7 @@ QToolButton:hover
 	background-color: qlineargradient(spread:pad, x1:0.528, y1:0.749227, x2:0.795, y2:0.209818, stop:0.1875 rgba(218, 0, 0, 255), stop:0.818182 rgba(232, 0, 0, 255));
 
 }
-#btnAdd{
+#btnClear{
 background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y2:0.574, stop:0 rgba(255, 151, 0, 255), stop:0.75 rgba(255, 170, 0, 255));
 	
 }
@@ -77,41 +77,14 @@ background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QLineEdit" name="ledRole">
+   <widget class="QComboBox" name="cbRoles">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>180</y>
+      <y>200</y>
       <width>151</width>
-      <height>61</height>
+      <height>41</height>
      </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">
-QLineEdit
-{
-
-	background-color: rgb(0, 0, 255);
-	font: 75 20pt &quot;MS Shell Dlg 2&quot;;
-	color: rgb(255, 255, 255);
-}
-QLineEdit:hover
-{
- border: 2px solid QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #d7801a);
-	
-}</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-    <property name="placeholderText">
-     <string>Role</string>
-    </property>
-    <property name="clearButtonEnabled">
-     <bool>false</bool>
     </property>
    </widget>
   </widget>
@@ -161,7 +134,7 @@ QLineEdit:hover
      </size>
     </property>
    </widget>
-   <widget class="QToolButton" name="btnAdd">
+   <widget class="QToolButton" name="btnClear">
     <property name="geometry">
      <rect>
       <x>120</x>
@@ -175,7 +148,7 @@ QLineEdit:hover
     </property>
     <property name="icon">
      <iconset resource="images.qrc">
-      <normaloff>:/images/images/AddNew.png</normaloff>:/images/images/AddNew.png</iconset>
+      <normaloff>:/images/images/Clear-icon.png</normaloff>:/images/images/Clear-icon.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -262,13 +235,13 @@ QLineEdit:hover
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>-3</y>
-      <width>312</width>
-      <height>318</height>
+      <y>0</y>
+      <width>317</width>
+      <height>450</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="11" column="0">
+     <item row="12" column="0">
       <widget class="QLineEdit" name="ledDOB">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -289,21 +262,21 @@ QLineEdit:hover
         <string/>
        </property>
        <property name="placeholderText">
-        <string>dd/mm/yyyy</string>
+        <string>yyyy-MM-dd</string>
        </property>
        <property name="clearButtonEnabled">
         <bool>true</bool>
        </property>
       </widget>
      </item>
-     <item row="14" column="0">
+     <item row="20" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Pin Code</string>
        </property>
       </widget>
      </item>
-     <item row="13" column="0">
+     <item row="19" column="0">
       <widget class="QLineEdit" name="ledPhone">
        <property name="placeholderText">
         <string>phone number</string>
@@ -315,6 +288,9 @@ QLineEdit:hover
      </item>
      <item row="2" column="0" colspan="2">
       <widget class="QLineEdit" name="ledFirstName">
+       <property name="focusPolicy">
+        <enum>Qt::StrongFocus</enum>
+       </property>
        <property name="styleSheet">
         <string notr="true"/>
        </property>
@@ -329,7 +305,7 @@ QLineEdit:hover
        </property>
       </widget>
      </item>
-     <item row="12" column="0">
+     <item row="18" column="0">
       <widget class="QLabel" name="label_6">
        <property name="text">
         <string>Phone</string>
@@ -343,7 +319,7 @@ QLineEdit:hover
        </property>
       </widget>
      </item>
-     <item row="7" column="0">
+     <item row="8" column="0">
       <widget class="QLabel" name="label_5">
        <property name="text">
         <string>ID Card</string>
@@ -373,14 +349,14 @@ QLineEdit:hover
        </property>
       </widget>
      </item>
-     <item row="10" column="0">
+     <item row="11" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
         <string>Birth of Day</string>
        </property>
       </widget>
      </item>
-     <item row="9" column="0">
+     <item row="10" column="0">
       <widget class="QLineEdit" name="ledIdCard">
        <property name="placeholderText">
         <string>ID Cart</string>
@@ -390,13 +366,68 @@ QLineEdit:hover
        </property>
       </widget>
      </item>
-     <item row="15" column="0">
+     <item row="21" column="0">
       <widget class="QLineEdit" name="ledPinCode">
+       <property name="echoMode">
+        <enum>QLineEdit::PasswordEchoOnEdit</enum>
+       </property>
        <property name="placeholderText">
         <string>Pin code</string>
        </property>
        <property name="clearButtonEnabled">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="22" column="0">
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>Password</string>
+       </property>
+      </widget>
+     </item>
+     <item row="14" column="0">
+      <widget class="QLineEdit" name="ledActiveTime">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_10">
+       <property name="text">
+        <string>State</string>
+       </property>
+      </widget>
+     </item>
+     <item row="13" column="0">
+      <widget class="QLabel" name="label_11">
+       <property name="text">
+        <string>ActiveTime</string>
+       </property>
+      </widget>
+     </item>
+     <item row="23" column="0">
+      <widget class="QLineEdit" name="ledPwd">
+       <property name="echoMode">
+        <enum>QLineEdit::PasswordEchoOnEdit</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QComboBox" name="cbState"/>
+     </item>
+     <item row="17" column="0">
+      <widget class="QLineEdit" name="ledEndTime">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="16" column="0">
+      <widget class="QLabel" name="label_12">
+       <property name="text">
+        <string>EndTime</string>
        </property>
       </widget>
      </item>

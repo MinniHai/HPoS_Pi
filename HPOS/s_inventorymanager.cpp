@@ -15,6 +15,18 @@
 #include <QDebug>
 #include <QVariant>
 
+S_InventoryManager *S_InventoryManager::s_instance;
+
+
+S_InventoryManager *S_InventoryManager::instance()
+{
+    if(!s_instance)
+    {
+        s_instance = new S_InventoryManager();
+    }
+    return s_instance;
+}
+
 S_InventoryManager::S_InventoryManager(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::S_InventoryManager)
@@ -25,12 +37,15 @@ S_InventoryManager::S_InventoryManager(QWidget *parent) :
     ui->cbbSearchType->addItem("Category", QVariant("ctID"));
     ui->cbbSearchType->addItem("Manufacturer", QVariant(""));
 
+    ui->tblListInventory->setSelectionMode(QAbstractItemView::MultiSelection);
+    ui->tblListInventory->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     ui->cbbSearchType->setCurrentIndex(ui->cbbSearchType->findText("Name"));
 
+    ui->btnDelete->setEnabled(false);
+    listProduct = E_Product::getAllProduct();
     connect(ui->ledSearch, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
     connect(ui->ledSearch, SIGNAL(textChanged(QString)), SLOT(searchInventory(QString)));
-    // connect(ui->ledSearch,SIGNAL(textChanged(QString)),SLOT(searchByBarcode()));
 
 }
 
@@ -40,16 +55,16 @@ S_InventoryManager::~S_InventoryManager()
     delete ui;
 }
 
-void S_InventoryManager::on_btnMenu_3_clicked()
+void S_InventoryManager::on_btnMenu_clicked()
 {
-    S_Menu menu;
-    menu.setModal(true);
-    menu.showFullScreen();
-    menu.exec();
-    this->hide();
+    S_Menu *menu = S_Menu::instance();
+    menu->setModal(true);
+    menu->showFull();
+    menu->showFullScreen();
+    this->close();
 }
 
-void S_InventoryManager::resizeEvent(QResizeEvent *event)
+void S_InventoryManager::resizeEvent(QResizeEvent *)
 {
     int width =  480;
     ui->tblListInventory->setColumnWidth(0, width * 5.5 / 19);
@@ -61,12 +76,11 @@ void S_InventoryManager::resizeEvent(QResizeEvent *event)
 
 }
 
-void S_InventoryManager::on_btnBack_3_clicked()
+void S_InventoryManager::on_btnBack_clicked()
 {
-    S_Menu menu;
-    menu.setModal(true);
-    //menu.showFullScreen();
-    menu.exec();
+    S_Menu *menu = S_Menu::instance();
+    menu->setModal(true);
+    menu->showFull();
     this->close();
 }
 
@@ -77,6 +91,7 @@ void S_InventoryManager::setDataToTable()
 
     if(!listProduct.isEmpty())
     {
+        QSignalMapper *mapper = new QSignalMapper(this);
         for(int i = 0; i < listProduct.size(); i++)
         {
             ui->tblListInventory->insertRow(i);
@@ -97,8 +112,22 @@ void S_InventoryManager::setDataToTable()
             pLayout->setContentsMargins(0, 0, 0, 0);
             pWidget->setLayout(pLayout);
             ui->tblListInventory->setCellWidget(i, 5, pWidget);
+            mapper->setMapping(btn_edit, i);
+            connect(btn_edit, SIGNAL(clicked(bool)), mapper, SLOT(map()));
         }
+        connect(mapper, SIGNAL(mapped(int)), this, SLOT(edit_clicked(int)));
     }
+}
+
+void S_InventoryManager::edit_clicked(int row)
+{
+    S_Product *productScreen = S_Product::instance();
+    productScreen->action = S_Product::Update;
+    E_Product *product = listProduct.at(row);
+    productScreen->viewInformation(product);
+    productScreen->setEnabled(true);
+    productScreen->showFullScreen();
+    this->close();
 }
 
 QTableWidgetItem *S_InventoryManager::createTableWidgetItem(const QString &text) const
@@ -111,11 +140,15 @@ QTableWidgetItem *S_InventoryManager::createTableWidgetItem(const QString &text)
 
 void S_InventoryManager::on_btnNew_clicked()
 {
-    S_Product product;
-    product.setModal(true);
-    product.showFullScreen();
-    product.exec();
-    this->hide();
+    //    S_Product *product = S_Product::instance();
+    //    product->setModal(true);
+    //    product->showFullScreen();
+    //    this->close();
+    S_Search *searchScreen = S_Search::instance();
+    searchScreen->setModal(true);
+    searchScreen->showFullScreen();
+    searchScreen->setState(S_Search::Insert);
+    this->close();
 }
 
 void S_InventoryManager::runKeyboard()
@@ -158,11 +191,7 @@ void S_InventoryManager::searchInventory(QString text)
         foreach(E_Barcode *item, E_Barcode::searchBarcode(text))
         {
             E_Product *pro = E_Product::getProductByID(item->proID);
-            if(listProduct.isEmpty())
-            {
-                listProduct.append(pro);
-            }
-            else if(!listProduct.contains(pro))
+            if(!listProduct.contains(pro))
             {
                 listProduct.append(pro);
             }
@@ -177,26 +206,15 @@ void S_InventoryManager::searchInventory(QString text)
             foreach(E_Barcode *item, E_Barcode::getBarcodeByManuRefix(manuItem->manuPrefix))
             {
                 E_Product *pro = E_Product::getProductByID(item->proID);
-                if(listProduct.isEmpty())
+                if(!listProduct.contains(pro))
                 {
                     listProduct.append(pro);
-                }
-                else if(!listProduct.contains(pro))
-                {
-                    listProduct.append(pro);
+                    qDebug() << "append";
                 }
 
             }
         }
 
     }
-
     setDataToTable();
-
 }
-
-//void S_InventoryManager::searchByBarcode()
-//{
-//    listProduct = E_Product::searchByName(ui->ledSearch->text());
-//    setDataToTable();
-//}

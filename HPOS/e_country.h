@@ -12,7 +12,7 @@ public:
     QString description;
 
     E_Country();
-    static E_Country *getCountryNameByPrefix(QString prefix);
+    static E_Country *getCountryByPrefix(QString prefix);
     E_Country *getResultSet();
 };
 

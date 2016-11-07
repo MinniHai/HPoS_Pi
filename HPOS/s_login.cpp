@@ -3,6 +3,7 @@
 #include "session.h"
 #include "s_menu.h"
 #include "keyboard.h"
+#include <QMessageBox>
 
 S_Login *S_Login::s_instance;
 S_Login *S_Login::instance()
@@ -35,18 +36,27 @@ void S_Login::login()
         user  = user->getUserByPincode(ui->ledPassword->text());
         if(user != NULL)
         {
-            Session::instance()->setUserSession((E_User *)user);
-            qDebug() << Session::instance()->getUserSession()->getUserName();
-            // chuyển màn hình sang main menu
-            S_Menu *menu = S_Menu::instance();
-            menu->setModal(true);
-            menu->showFull();
-            this->close();
-            menu->exec();
+            if(user->stateID == Active)
+            {
+                Session::instance()->setUserSession((E_User *)user);
+                // chuyển màn hình sang main menu
+                S_Menu *menu = S_Menu::instance();
+                menu->setModal(true);
+                menu->showFull();
+                this->close();
+            }
+            else
+            {
+                QMessageBox msBox;
+                msBox.setText("Your account is not actived.");
+                msBox.exec();
+            }
         }
         else
         {
-            //TODO: Add notification :Login Fail.
+            QMessageBox msBox;
+            msBox.setText("Login Failed.Pincode is unvalid.");
+            msBox.exec();
         }
     }
 }

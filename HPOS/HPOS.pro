@@ -29,7 +29,6 @@ SOURCES += main.cpp\
     e_user.cpp \
     e_product.cpp \
     e_picture.cpp \
-    e_manifacturer.cpp \
     e_country.cpp \
     e_barcode.cpp \
     e_invoice.cpp \
@@ -39,7 +38,12 @@ SOURCES += main.cpp\
     repository.cpp \
     s_shoppingcart.cpp \
     s_usermanager.cpp \
-    s_inventorymanager.cpp
+    s_inventorymanager.cpp \
+    e_manufacturer.cpp \
+    e_role.cpp \
+    s_userdetail.cpp \
+    e_state.cpp \
+    invoiceprinter.cpp
 
 HEADERS  += \
     utils.h \
@@ -69,7 +73,11 @@ HEADERS  += \
     repository.h \
     s_shoppingcart.h \
     s_usermanager.h \
-    s_inventorymanager.h
+    s_inventorymanager.h \
+    e_role.h \
+    s_userdetail.h \
+    e_state.h \
+    invoiceprinter.h
 
 FORMS    += \
     keyboard.ui \
@@ -83,35 +91,42 @@ FORMS    += \
     loginScreen.ui \
     shoppingCartScreen.ui \
     s_usermanager.ui \
-    s_inventorymanager.ui
+    s_inventorymanager.ui \
+    userdetail.ui
 
 RESOURCES += \
     images.qrc
 
-#CONFIG += build_ubuntu
-#build_ubuntu{
+CONFIG += build_ubuntu
+build_ubuntu{
 
-#    INCLUDEPATH += /opt/opencv/include/opencv
+    INCLUDEPATH += /opt/opencv/include/opencv
+    #INCLUDEPATH += /opt/cuteRP
 
-#    INCLUDEPATH += /opt/zbar/include
+    INCLUDEPATH += /opt/zbar/include
 
-#    LIBS += /opt/opencv/lib/*.so
+    LIBS += /opt/opencv/lib/*.so
 
-#    LIBS += /opt/opencv/lib/*.so.2.4
+    LIBS += /opt/opencv/lib/*.so.2.4
 
-#    LIBS += /opt/zbar/lib/*.so
+    LIBS += /opt/zbar/lib/*.so
 
-#}
+   # LIBS += -L/opt/cuteRP/lib -lCuteReport -lCuteReportWidgets
 
-#build_arm{
-#INCLUDEPATH += /opt/zbar.arm/include
-#INCLUDEPATH += /opt/opencv2.4.13/include
-#INCLUDEPATH += $$[QT_SYSROOT]/usr/local/include
-#LIBS += -L$$[QT_SYSROOT]/usr/local/lib -lwiringPi
-#LIBS += /opt/zbar.arm/lib/*.so
-#LIBS += /opt/opencv2.4.13/lib/*.so
-#LIBS += /opt/opencv2.4.13/lib/*.so.2.4
-#LIBS += /opt/opencv2.4.13/lib/*.so.2.4.13
+}
 
-#}
+build_arm{
+INCLUDEPATH += /opt/zbar.arm/include
+INCLUDEPATH += /opt/opencv2.4.13/include
+INCLUDEPATH += $$[QT_SYSROOT]/usr/local/include
+LIBS += -L$$[QT_SYSROOT]/usr/local/lib -lwiringPi
+LIBS += /opt/zbar.arm/lib/*.so
+LIBS += /opt/opencv2.4.13/lib/*.so
+LIBS += /opt/opencv2.4.13/lib/*.so.2.4
+LIBS += /opt/opencv2.4.13/lib/*.so.2.4.13
+
+}
+DEPENDPATH += $$INCLUDEPATH
+DISTFILES += \
+    HPOS.pro.user
 

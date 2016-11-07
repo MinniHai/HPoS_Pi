@@ -2,7 +2,7 @@
 #ifndef BARCODESCANNER_H
 #define BARCODESCANNER_H
 
-/*
+
 #include "opencv/cv.h"
 #include "opencv/highgui.h"
 #include "opencv2/highgui/highgui.hpp"
@@ -12,7 +12,7 @@
 #include "zbar/Image.h"
 #include "zbar/ImageScanner.h"
 #include "zbar/Video.h"
-*/
+
 #include <QDebug>
 #include <QTimer>
 #include <QLabel>
@@ -22,31 +22,39 @@ class BarcodeScanner : public QObject
     Q_OBJECT
 public:
     BarcodeScanner();
-    /*
+
+    static BarcodeScanner *s_instance;
+    static BarcodeScanner *instance();
+
     ~BarcodeScanner();
     void scanBarcode();
     void setLableScan(QLabel *scan);
     void setTimer(QTimer *timer);
     void releaseCam();
+    void capturePicture(QString imagePath, QLabel *label);
+    void movePicture(QString inputPath, QString outputPath);
     void checkCam();
     QString getSymbols()
     {
         return symbols;
     }
     void setSymbols(QString blank);
-    */
+
+    QTimer *timer;
+    bool isCapture;
+    QString imagePath;
 private slots:
-    //void processFrame();
+    void processFrame();
+    void processFrameForCapture();
 
 private:
 
-    //IplImage *src;
+    IplImage *src;
     QImage img_show;
 
     QLabel *lblScan;
-    //    int scanSymbol(IplImage *src);
+    int scanSymbol(IplImage *src);
     QString symbols;
-    QTimer *timer;
 };
 
 #endif // SCANNER_H

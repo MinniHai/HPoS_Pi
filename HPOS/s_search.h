@@ -23,15 +23,29 @@ public:
     static S_Search *instance();
     bool isValidBarcode(QString barcode);
     QLineEdit *txtSearch;
+    enum  Action
+    {
+        Update, Insert, View, Shopping
+    };
 
     explicit S_Search(QWidget *parent = 0);
-    void searchByBarcode(QString barcode);
+    bool searchByBarcode(QString barcode);
+    void scanBarcode();
+    Action action;
+
+    void setState(Action newAction);
     CustomeQlabel *lbStatus;
     CustomeQlabel *lbScan;
     ~S_Search();
+signals:
+
 public slots:
+
     void checkStatus();
-    void viewInfomation();
+
+    void viewInformation();
+
+    void setBackToDefaul();
 
 private slots:
     void on_btnPlus_clicked();
@@ -50,9 +64,11 @@ private slots:
 
     void runKeyboard();
 
+    void on_btnSearch_clicked();
+
 private:
+    bool isScanned;
     E_Product *product;
-    void setBackToDefaul();
     BarcodeScanner *bc;
     QTimer *timer;
     int value ;

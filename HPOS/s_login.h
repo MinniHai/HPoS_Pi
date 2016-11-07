@@ -17,6 +17,14 @@ public:
     static S_Login *s_instance;
     static S_Login *instance();
 
+    enum State
+    {
+        Active = 1,
+        Pendding = 2,
+        Suppend  = 3,
+        End   = 4
+    };
+
     explicit S_Login(QWidget *parent = 0);
     ~S_Login();
 

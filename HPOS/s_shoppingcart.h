@@ -4,7 +4,7 @@
 #include <QDialog>
 
 namespace Ui {
-    class ShoppingCart;
+    class ShoppingCartScreen;
 }
 
 class S_ShoppingCart : public QDialog
@@ -12,11 +12,13 @@ class S_ShoppingCart : public QDialog
     Q_OBJECT
 
 public:
+    static S_ShoppingCart *s_instance;
+    static S_ShoppingCart *instance();
     explicit S_ShoppingCart(QWidget *parent = 0);
     ~S_ShoppingCart();
 
 private:
-    Ui::ShoppingCart *ui;
+    Ui::ShoppingCartScreen *ui;
 };
 
 #endif // LISTPRODUCT_H

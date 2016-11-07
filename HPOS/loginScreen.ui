@@ -115,7 +115,7 @@ QPushButton#btnLogin:hover
      </font>
     </property>
     <property name="title">
-     <string>Password</string>
+     <string>PinCode</string>
     </property>
     <widget class="QLineEdit" name="ledPassword">
      <property name="geometry">

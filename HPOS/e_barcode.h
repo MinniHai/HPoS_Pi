@@ -18,6 +18,10 @@ public:
     static E_Barcode *getBarcodeByProID(QString proID);
     static QList<E_Barcode *> searchBarcode(QString barcode);
     static QList<E_Barcode *> getBarcodeByManuRefix(QString prefix);
+    static bool insertBarcode(QHash<QString, QString> barcode);
+    static bool upateBarcode(QHash<QString, QString> hash, QString barcodeID);
+    static bool deleteBarcode(QString barcodeID);
+
     QString countryPrefix;
     QString manufacturerPrefix;
     QString productPrefix;

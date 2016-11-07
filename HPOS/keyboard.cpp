@@ -151,6 +151,8 @@ void Keyboard::setLineEdit(QLineEdit *line)
     outputLineEdit = line;
     ui->lineEdit->setEchoMode(line->echoMode());
     ui->lineEdit->setText(outputLineEdit->text());
+    ui->lineEdit->setValidator(line->validator());
+    ui->lineEdit->setInputMask(line->inputMask());
     ui->lineEdit->setPlaceholderText(line->placeholderText());
 }
 

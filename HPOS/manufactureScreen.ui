@@ -184,7 +184,7 @@ color: rgb(255, 255, 255);</string>
     </property>
     <property name="icon">
      <iconset resource="images.qrc">
-      <normaloff>:/images/images/AddNew.png</normaloff>:/images/images/AddNew.png</iconset>
+      <normaloff>:/images/images/Clear-icon.png</normaloff>:/images/images/Clear-icon.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -244,25 +244,6 @@ QLineEdit:hover
    </property>
    <property name="text">
     <string>12324</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lblLogo">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>40</y>
-     <width>181</width>
-     <height>181</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(181, 181, 181);</string>
-   </property>
-   <property name="text">
-    <string>Logo</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -379,6 +360,22 @@ QLineEdit:hover
      </rect>
     </property>
    </widget>
+  </widget>
+  <widget class="QFrame" name="frame_4">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>40</y>
+     <width>181</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
   </widget>
  </widget>
  <resources>

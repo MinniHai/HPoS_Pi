@@ -32,8 +32,16 @@ public:
                               , QString where2, QString equal2
                               , QString where3, QString equal3
                              );
+    void setSelectLikeANDQuery(QString select, QString from
+                               , QString where1, QString equal1
+                               , QString where2, QString equal2
+                               , QString where3, QString equal3
+                              );
+    void setUpdateQuery(QString into, QHash<QString, QString> hash , QString where, QString equal);
 
     void setInsertQuery(QString into, QHash<QString, QString> hash);
+
+    void setDeleteQuery(QString table, QString where, QString equal);
 
     Repository *getEntityByQuery();
 

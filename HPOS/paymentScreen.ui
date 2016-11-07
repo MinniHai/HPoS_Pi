@@ -203,39 +203,20 @@ background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QLabel" name="lblTakeCash_3">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>0</y>
-      <width>71</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="images.qrc">:/images/images/checkout.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-   </widget>
    <widget class="QLabel" name="lblCash_3">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>180</x>
       <y>0</y>
-      <width>231</width>
+      <width>185</width>
       <height>51</height>
      </rect>
     </property>
     <property name="text">
-     <string>$ 284.000</string>
+     <string>1000000</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
    <widget class="QToolButton" name="btnBack">
@@ -283,6 +264,32 @@ QToolButton:hover{
      <size>
       <width>120</width>
       <height>120</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>0</y>
+      <width>41</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="images.qrc">
+      <normaloff>:/images/images/cash.png</normaloff>:/images/images/cash.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>45</width>
+      <height>45</height>
      </size>
     </property>
    </widget>
@@ -340,7 +347,7 @@ QToolButton:hover{
      <bool>false</bool>
     </property>
     <property name="placeholderText">
-     <string>$300.000</string>
+     <string/>
     </property>
    </widget>
   </widget>
@@ -397,7 +404,7 @@ QToolButton:hover{
      <bool>true</bool>
     </property>
     <property name="placeholderText">
-     <string>$16.000</string>
+     <string/>
     </property>
    </widget>
   </widget>

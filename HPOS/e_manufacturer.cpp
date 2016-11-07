@@ -31,6 +31,12 @@ QList<E_Manufacturer *> E_Manufacturer::searchByName(QString name)
     {
         listManufacture.append((E_Manufacturer *)item);
     }
-    qDebug() << listManufacture.size();
     return listManufacture;
+}
+
+bool E_Manufacturer::insertManufacturer(QHash<QString, QString> manufactuerer)
+{
+    Repository *manuRepo = new E_Manufacturer();
+    manuRepo->setInsertQuery("Manufacturer", manufactuerer);
+    return manuRepo->query.exec();
 }

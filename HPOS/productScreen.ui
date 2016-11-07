@@ -53,7 +53,7 @@ QToolButton:hover
 	background-color: qlineargradient(spread:pad, x1:0.528, y1:0.749227, x2:0.795, y2:0.209818, stop:0.1875 rgba(218, 0, 0, 255), stop:0.818182 rgba(232, 0, 0, 255));
 
 }
-#btnAdd{
+#btnClear{
 background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y2:0.574, stop:0 rgba(255, 151, 0, 255), stop:0.75 rgba(255, 170, 0, 255));
 	
 }
@@ -108,7 +108,7 @@ background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y
      </size>
     </property>
    </widget>
-   <widget class="QToolButton" name="btnAdd">
+   <widget class="QToolButton" name="btnClear">
     <property name="geometry">
      <rect>
       <x>120</x>
@@ -122,7 +122,7 @@ background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y
     </property>
     <property name="icon">
      <iconset resource="images.qrc">
-      <normaloff>:/images/images/AddNew.png</normaloff>:/images/images/AddNew.png</iconset>
+      <normaloff>:/images/images/Clear-icon.png</normaloff>:/images/images/Clear-icon.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -207,7 +207,7 @@ QToolButton:hover{
      <rect>
       <x>70</x>
       <y>0</y>
-      <width>350</width>
+      <width>409</width>
       <height>42</height>
      </rect>
     </property>
@@ -299,46 +299,44 @@ QComboBox:hover,QPushButton:hover {
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>180</y>
+      <y>179</y>
       <width>151</width>
-      <height>61</height>
+      <height>62</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">
 QLineEdit
 {
-
 	background-color: rgb(0, 0, 255);
 	font: 75 20pt &quot;MS Shell Dlg 2&quot;;
+	border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 0));
 	color: rgb(255, 255, 255);
-	padding-left:30px;
+	padding-right:27px;
 }
-QLineEdit:hover
-{
- border: 2px solid QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #d7801a);
-	
-}</string>
+</string>
     </property>
     <property name="text">
-     <string>100.000</string>
+     <string>1000</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>190</y>
-      <width>21</width>
-      <height>41</height>
+      <x>120</x>
+      <y>187</y>
+      <width>28</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">font: 28pt &quot;MS Shell Dlg 2&quot;;
-color: rgb(255, 255, 255);</string>
+     <string notr="true">color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
-     <string>$</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;VND&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
   </widget>
@@ -356,6 +354,9 @@ color: rgb(255, 255, 255);</string>
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
    </property>
    <property name="styleSheet">
     <string notr="true">#scrollArea{
@@ -392,15 +393,48 @@ QLineEdit:hover
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>312</width>
-      <height>397</height>
+      <width>317</width>
+      <height>373</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
+     <item row="2" column="0" colspan="2">
+      <widget class="QLineEdit" name="ledQuantity">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
      <item row="10" column="0">
       <widget class="QLabel" name="label_6">
        <property name="text">
         <string>Description</string>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="0" colspan="2">
+      <widget class="QTextEdit" name="tetDescription">
+       <property name="styleSheet">
+        <string notr="true">border-radius:10px;
+height:80px;
+</string>
+       </property>
+       <property name="html">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Category</string>
        </property>
       </widget>
      </item>
@@ -423,23 +457,6 @@ QToolButton:hover
        </property>
        <property name="text">
         <string>+</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0" colspan="2">
-      <widget class="QLineEdit" name="ledQuantity">
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Quantity</string>
        </property>
       </widget>
      </item>
@@ -473,29 +490,13 @@ QToolButton:hover
        </property>
       </widget>
      </item>
-     <item row="11" column="0" colspan="2">
-      <widget class="QTextEdit" name="tetDescription">
-       <property name="styleSheet">
-        <string notr="true">border-radius:10px;
-height:80px;
-</string>
-       </property>
-       <property name="html">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-     </item>
      <item row="9" column="0" colspan="2">
       <widget class="QComboBox" name="cbCategory"/>
      </item>
-     <item row="8" column="0">
-      <widget class="QLabel" name="label">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>Category</string>
+        <string>Quantity</string>
        </property>
       </widget>
      </item>
@@ -523,7 +524,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>btnAddManufacture</tabstop>
   <tabstop>tetDescription</tabstop>
   <tabstop>btnMenu</tabstop>
-  <tabstop>btnAdd</tabstop>
+  <tabstop>btnClear</tabstop>
   <tabstop>btnSave</tabstop>
   <tabstop>btnBack</tabstop>
  </tabstops>

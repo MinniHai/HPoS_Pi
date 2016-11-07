@@ -36,5 +36,16 @@
         <file>images/delete.png</file>
         <file>images/searchicon.png</file>
         <file>images/Thumbs.db</file>
+        <file>images/Clear-icon.png</file>
+        <file>images/NotFound.png</file>
+        <file>images/NotFound_1.png</file>
+        <file>images/keybroad_icon.png</file>
+        <file>images/camera.png</file>
+        <file>images/xbutton.png</file>
+        <file>images/search-barcode.png</file>
+        <file>images/delete cart.png</file>
+        <file>images/cancel.png</file>
+        <file>images/sub Cart.png</file>
+        <file>images/cash.png</file>
     </qresource>
 </RCC>

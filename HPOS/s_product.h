@@ -2,8 +2,11 @@
 #define PRODUCT_H
 
 #include <QDialog>
+#include <QList>
 class E_Product;
+class E_Barcode;
 class CustomeQlabel;
+class E_Category;
 
 namespace Ui {
     class Product;
@@ -17,19 +20,44 @@ public:
     static S_Product *s_instance;
     static S_Product *instance();
 
+    enum Action
+    {
+        Update, Insert, View, InsertMore, UpdateCart
+    };
+
+    Action action;
     explicit S_Product(QWidget *parent = 0);
     ~S_Product();
 
+
+    QList<E_Product *>productList;
     E_Product *product;
+    E_Barcode *barcode;
     void setProduct(E_Product *product);
     void setEnabled(bool);
-    void viewInformation(E_Product *product);
+    void setBarcode(E_Barcode *barcode);
+    void clearAll();
+    void viewInformation(E_Product *productTmp);
+    void refreshManufacturer();
+    void setQuantityText(int quantity);
+
+public slots:
+    void viewInformation(int currentIndext);
+    void capture();
 private slots:
+
     void on_btnMenu_clicked();
 
     void on_btnAddManufacture_clicked();
 
+    void on_btnClear_clicked();
+
+    void on_btnSave_clicked();
+
+    void on_btnBack_clicked();
+
 private:
+    QList<E_Category *> cateList;
     CustomeQlabel *image;
     Ui::Product *ui;
 };

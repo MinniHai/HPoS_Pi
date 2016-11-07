@@ -10,6 +10,7 @@ E_Picture *E_Picture::getResultSet()
 {
     E_Picture *picture = new E_Picture();
     picture->picUrl = query.value(query.record().indexOf("picUrl")).toString();
+    picture->proID = query.value(query.record().indexOf("proID")).toString();
     return picture;
 }
 
@@ -23,4 +24,11 @@ QList<E_Picture *> E_Picture::getPictureByProductID(QString ID)
         listPicture.append((E_Picture *)item);
     }
     return listPicture;
+}
+
+bool E_Picture::insertPicture(QHash<QString, QString> picture)
+{
+    Repository *picRepo = new E_Picture();
+    picRepo->setInsertQuery("Picture", picture);
+    return picRepo->query.exec();
 }
