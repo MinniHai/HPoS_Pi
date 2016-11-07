@@ -23,12 +23,26 @@ CREATE TABLE User (
  firstName NVARCHAR(15) NOT NULL,
  DOB DATE NULL,
  idCard NVARCHAR(15) NULL,
+ stateID int not null,
  phone NVARCHAR(15) NULL,
  roleID INT NOT NULL,
+ pwd nvarchar(32) not null,
+ activeTime datetime NULL,
+ endTime datetime null,
  PRIMARY KEY (userID),
  CONSTRAINT fk_User_Role 
  FOREIGN KEY (roleID)
- REFERENCES Role (roleID)
+ REFERENCES Role (roleID),
+  CONSTRAINT fk_User_State 
+ FOREIGN KEY (stateID)
+ REFERENCES State (stateID)
+);
+
+Create table State(
+stateID int not null AUTO_INCREMENT,
+state NVARCHAR (20) NOT NULL,
+description NVARCHAR (255) NULL,
+primary key(stateID)
 );
 
 
@@ -40,8 +54,8 @@ CREATE TABLE Invoice (
  ivDate DATE NOT NULL,
  ivTime TIME NOT NULL,
  subtotal DOUBLE NOT NULL,
- tax FLOAT NOT NULL,
- discount FLOAT NOT NULL,
+ tax FLOAT NULL,
+ discount FLOAT NULL,
  total DOUBLE NOT NULL,
  PRIMARY KEY (ivID),
  CONSTRAINT fk_Invoice_User 
@@ -85,7 +99,7 @@ CREATE TABLE InvoiceDetail (
  ivID INT NOT NULL,
  proID INT NOT NULL,
  quantity INT NOT NULL,
- subtotal INT NOT NULL,
+ subtotal double NOT NULL,
  PRIMARY KEY (dtID),
  CONSTRAINT fk_InvoiceDetail_Product
  FOREIGN KEY (proID)
@@ -185,9 +199,15 @@ CREATE TABLE Category (
  -- User data
  
 
+INSERT INTO `HPoS`.`State` (`state`) VALUES ('Active');
+INSERT INTO `HPoS`.`State` (`state`) VALUES ('Pendding');
+INSERT INTO `HPoS`.`State` (`state`) VALUES ('Suppend');
+INSERT INTO `HPoS`.`State` (`state`) VALUES ('End');
 
-  INSERT INTO User ( lastname, firstname,  DOB,  roleID,  pincode)
- VALUES ( 'admin', 'admin',  '1991-06-22',   '2', '123123');  
+
+
+  INSERT INTO User ( lastname, firstname,  DOB,  roleID,  pincode, stateID,pwd)
+ VALUES ( 'admin', 'admin',  '1991-06-22',   '1', '123123','1','123123');  
 
 -- Insert Company
 INSERT INTO `HPoS`.`Manufacturer` (`manuPrefix`, `manuName`, `address`, `phone`, `logoUrl`) VALUES ('4588', 'PepsiCo', '', '', '');
@@ -202,8 +222,8 @@ INSERT INTO `HPoS`.`ActionType` (`actionType`) VALUES ('Modify Employee');
 INSERT INTO `HPoS`.`ActionType` (`actionType`) VALUES ('Remove Employee');
 
 -- Insert Product 
-INSERT INTO `HPoS`.`Product` (`proName`, `proPrice`, `proDes`,`quantity`,`ctID`) VALUES ('Aquafina', '6', NULL,'41','15');
-INSERT INTO `HPoS`.`Product` (`proName`, `proPrice`, `proDes`, `quantity`,`ctID`) VALUES ('Raspberry Pi 3', '1200', '', '10','6');
+INSERT INTO `HPoS`.`Product` (`proName`, `proPrice`, `proDes`,`quantity`,`ctID`) VALUES ('Aquafina', '6000', NULL,'41','14');
+INSERT INTO `HPoS`.`Product` (`proName`, `proPrice`, `proDes`, `quantity`,`ctID`) VALUES ('Raspberry Pi 3', '1200000', '', '10','6');
 
 -- Insert Barcode
 INSERT INTO `HPoS`.`Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `checkDigit`, `imDate`, `imTime`) VALUES ('1', '893', '4588', '06305', '3', '2016-10-12', '16:32:00');
@@ -237,9 +257,10 @@ INSERT INTO `HPoS`.`Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPr
  VALUES (NULL, 'Book');
  INSERT INTO Category (ctID, ctName)
  VALUES (NULL, 'Wine');
+  INSERT INTO `HPoS`.`Category` (`ctName`) VALUES ('Water');
  INSERT INTO Category (ctID, ctName)
  VALUES (NULL, 'Other');
- INSERT INTO `HPoS`.`Category` (`ctName`) VALUES ('Water');
+
 
 
 INSERT INTO Country (countryPrefix, description, countryName) VALUES
