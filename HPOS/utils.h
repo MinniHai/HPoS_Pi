@@ -5,7 +5,6 @@
 #include<qsqldatabase.h>
 class Utils
 {
-
 public:
     static Utils *s_instance;
     static Utils *instance();
