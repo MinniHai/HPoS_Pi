@@ -50,7 +50,7 @@ S_UserDetail::S_UserDetail(QWidget *parent) :
     QRegExp date("((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])");
     QRegExpValidator *dateVal = new QRegExpValidator(date);
     ui->ledDOB->setValidator(dateVal);
-    ui->ledDOB->setInputMask("9999-99-99");
+//    ui->ledDOB->setInputMask("9999-99-99");
     fillRolesData();
 
     connect(ui->ledFirstName, SIGNAL(selectionChanged()), SLOT(runKeyboard()));

@@ -18,12 +18,16 @@ public:
     ~S_Payment();
 
     void fillData();
+    QString getCash();
+    QString getExchange();
 private slots:
     void on_btnBack_clicked();
 
     void on_btnCheckOK_clicked();
 
     void calculate();
+    void on_btnPrint_clicked();
+
 private:
     Ui::Payment *ui;
 };

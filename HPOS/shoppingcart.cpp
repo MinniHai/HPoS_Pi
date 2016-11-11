@@ -14,6 +14,7 @@ ShoppingCart::ShoppingCart()
 {
     subTotal = 0;
     total = 0;
+    tax = 0;
 }
 
 ShoppingCart *ShoppingCart::instance()

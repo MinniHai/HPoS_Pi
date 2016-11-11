@@ -39,6 +39,9 @@
 #include "ui_keyboard.h"
 #include "utils.h"
 #include <QtGui>
+#include <QRegExp>
+#include <QRegExpValidator>
+#include <QValidator>
 
 
 Keyboard *Keyboard::s_instance;
@@ -109,10 +112,8 @@ Keyboard::Keyboard(QWidget *parent) :
 void Keyboard::keyboardHandler()
 {
     QPushButton *button = (QPushButton *)sender();
-    // if(Utils::instance()->isDebug()) qDebug() << "pressed " << button->text();
 
     QString inputText = button->text();
-
 
     if(inputText == "Space")
     {
@@ -141,8 +142,6 @@ void Keyboard::keyboardHandler()
 
 
     ui->lineEdit->setText(outputText);
-    //if(Utils::instance()->isDebug()) qDebug()<<  ui->lineEdit->text();
-
 
 }
 
@@ -151,8 +150,8 @@ void Keyboard::setLineEdit(QLineEdit *line)
     outputLineEdit = line;
     ui->lineEdit->setEchoMode(line->echoMode());
     ui->lineEdit->setText(outputLineEdit->text());
-    ui->lineEdit->setValidator(line->validator());
-    ui->lineEdit->setInputMask(line->inputMask());
+//    ui->lineEdit->setValidator(line->validator());
+//    ui->lineEdit->setInputMask(line->inputMask());
     ui->lineEdit->setPlaceholderText(line->placeholderText());
 }
 
@@ -283,10 +282,6 @@ void Keyboard::on_lineEdit_textChanged(const QString &arg1)
 
 void Keyboard::on_lineEdit_returnPressed()
 {
-    if(Utils::instance()->isDebugging())
-    {
-        qDebug() << "return";
-    }
     outputLineEdit->setText(outputText);
     outputText = "";
     ui->lineEdit->setText(outputText);

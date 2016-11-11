@@ -4,6 +4,9 @@
 #include "s_menu.h"
 #include "shoppingcart.h"
 #include <QMessageBox>
+#include <qtrpt.h>
+#include <QtPrintSupport/QPrinter>
+#include <QPrinterInfo>
 
 S_Payment::S_Payment(QWidget *parent) :
     QDialog(parent),
@@ -26,6 +29,14 @@ S_Payment *S_Payment::instance()
 S_Payment::~S_Payment()
 {
     delete ui;
+}
+
+QString S_Payment::getCash(){
+    return ui->ledPayment->text();
+}
+
+QString S_Payment::getExchange(){
+    return ui->ledBalance->text();
 }
 
 void S_Payment::calculate()
@@ -63,4 +74,11 @@ void S_Payment::on_btnCheckOK_clicked()
     {
         QMessageBox::warning(this, "Warning", "Not Enought Money for Cash");
     }
+}
+
+void S_Payment::on_btnPrint_clicked()
+{
+    QtRPT *printer = S_Checkout::instance()->printer;
+    printer->printPDF("/mnt/hgfs/Capstone/HPoS_Pi/HPOS/Report/demo.pdf",false);
+    QMessageBox::information(this, "Payment", "Done");
 }

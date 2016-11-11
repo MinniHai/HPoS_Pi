@@ -208,7 +208,7 @@ background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y
      <rect>
       <x>180</x>
       <y>0</y>
-      <width>185</width>
+      <width>211</width>
       <height>51</height>
      </rect>
     </property>
@@ -311,7 +311,7 @@ QToolButton:hover{
     </font>
    </property>
    <property name="title">
-    <string>Payment</string>
+    <string>Cash</string>
    </property>
    <widget class="QLineEdit" name="ledPayment">
     <property name="geometry">
@@ -368,7 +368,7 @@ QToolButton:hover{
     </font>
    </property>
    <property name="title">
-    <string>Balance</string>
+    <string>Exchange</string>
    </property>
    <widget class="QLineEdit" name="ledBalance">
     <property name="geometry">

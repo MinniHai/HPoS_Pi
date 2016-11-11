@@ -4,10 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
+QT       += core gui sql widgets
+QT += printsupport
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets 
 TARGET = HPOS
 TEMPLATE = app
 QTPLUGIN += qsqlmysql
@@ -95,23 +94,24 @@ FORMS    += \
     userdetail.ui
 
 RESOURCES += \
-    images.qrc
+    images.qrc \
+    report.qrc
+INCLUDEPATH += $$PWD
+include($$PWD/QtRptProject/QtRPT/QtRPT.pri)
 
 CONFIG += build_ubuntu
 build_ubuntu{
 
     INCLUDEPATH += /opt/opencv/include/opencv
-    #INCLUDEPATH += /opt/cuteRP
 
     INCLUDEPATH += /opt/zbar/include
-
     LIBS += /opt/opencv/lib/*.so
 
     LIBS += /opt/opencv/lib/*.so.2.4
 
     LIBS += /opt/zbar/lib/*.so
 
-   # LIBS += -L/opt/cuteRP/lib -lCuteReport -lCuteReportWidgets
+
 
 }
 
@@ -126,7 +126,7 @@ LIBS += /opt/opencv2.4.13/lib/*.so.2.4
 LIBS += /opt/opencv2.4.13/lib/*.so.2.4.13
 
 }
-DEPENDPATH += $$INCLUDEPATH
+
 DISTFILES += \
     HPOS.pro.user
 

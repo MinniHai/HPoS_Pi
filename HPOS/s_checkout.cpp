@@ -15,6 +15,7 @@
 #include <QHeaderView>
 #include <QMainWindow>
 #include <QSignalMapper>
+#include <QVariant>
 
 
 S_Checkout *S_Checkout::s_instance;
@@ -37,8 +38,41 @@ S_Checkout::S_Checkout(QWidget *parent) :
     ui->tableWidget->setSelectionMode(QAbstractItemView::MultiSelection);
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+    printer = new QtRPT(this);
+    printer->loadReport(":/Report/demoRP.xml");
+    connect(printer, SIGNAL(setValue(const int, const QString, QVariant&, const int))
+            , this, SLOT(setValue(const int, const QString, QVariant&, const int)));
 
 }
+
+
+void S_Checkout::setValue(const int recNo, const QString paramName,
+                          QVariant &paramValue, const int reportPage){
+    (void) reportPage;
+    if(paramName == "Name") {
+        paramValue = ui->tableWidget->item(recNo,0)->text();
+    } else
+    if(paramName == "Price") {
+        paramValue = ui->tableWidget->item(recNo,1)->text();
+    } else
+    if(paramName == "Quantity") {
+        paramValue = ui->tableWidget->item(recNo,2)->text();
+    } else
+    if(paramName == "SubTotal") {
+        paramValue = ui->tableWidget->item(recNo,3)->text();
+    } else if (paramName == "Sub") {
+        paramValue = QString::number(ShoppingCart::instance()->subTotal);
+    } else if (paramName == "Tax") {
+        paramValue = QString::number(ShoppingCart::instance()->tax);
+    } else if (paramName == "Total") {
+        paramValue = QString::number(ShoppingCart::instance()->total);
+    } else if (paramName == "Cash") {
+        paramValue = S_Payment::instance()->getCash();
+    } else if (paramName == "Exchange") {
+        paramValue = S_Payment::instance()->getExchange();
+    }
+}
+
 
 void S_Checkout::showDataToTable()
 {
@@ -163,6 +197,8 @@ void S_Checkout::on_btnCheckOK_clicked()
     payment->setModal(true);
     payment->fillData();
     payment->showFullScreen();
+    printer->recordCount.append(ui->tableWidget->rowCount());
+    
     this->close();
 
 }

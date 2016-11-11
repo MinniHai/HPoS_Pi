@@ -4,6 +4,9 @@
 #include <QDialog>
 #include <QTableWidgetItem>
 #include <QResizeEvent>
+#include <qtrpt.h>
+#include <QtPrintSupport/QPrinter>
+#include <QPrinterInfo>
 
 namespace Ui {
     class Checkout;
@@ -26,10 +29,17 @@ public:
     QTableWidgetItem *createTableWidgetItem(const QString &text) const;
     void showDataToTable();
     explicit S_Checkout(QWidget *parent = 0);
+
+    QtRPT *printer ;
     ~S_Checkout();
 
     Action action;
 private slots:
+    void setValue(const int recNo,
+                  const QString paramName,
+                  QVariant &paramValue,
+                  const int reportPage);
+
     void edit_clicked(int row);
     void cell_click(int row, int column);
     void on_btnBack_clicked();

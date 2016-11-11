@@ -3,7 +3,6 @@
 
 #include <QString>
 #include <QIcon>
-#include <string>
 #include "e_barcode.h"
 #include "e_product.h"
 #include "s_product.h"
@@ -15,6 +14,7 @@
 #include "keyboard.h"
 #include <QLabel>
 #include <QMessageBox>
+#include <QIntValidator>
 #include "customeqlabel.h"
 #include "s_inventorymanager.h"
 
@@ -54,6 +54,7 @@ S_Search::S_Search(QWidget *parent) :
 
     isScanned = false;
     value = 1 ;
+    txtSearch->setValidator(new QIntValidator);
 
     number = 1;
     isSet = false;
@@ -179,8 +180,12 @@ void S_Search::search_textChange(const QString &value)
         }
         else if(action == Insert)
         {
+
             ui->btnAdd->setIcon(QIcon(":/images/images/AddNew.png"));
         }
+    } else {
+        lbStatus->setText(value);
+        lbScan->setPixmap(QPixmap(":/images/images/NotFound.png"));
     }
 }
 
@@ -215,6 +220,7 @@ void S_Search::on_btnBack_clicked()
 void S_Search::setBackToDefaul()
 {
     value = 1;
+//    txtSearch->setText("");
     ui->lcdNumber->display(value);
     lbStatus->setStyleSheet("background-color: qlineargradient(spread:pad,"
                             " x1:0.773136, y1:0.347, x2:0.795, y2:0.0284091,"
@@ -261,7 +267,7 @@ bool S_Search::searchByBarcode(QString barcode)
     }
     else
     {
-        lbStatus->setText(bc->getSymbols());
+        lbStatus->setText(barcode);
         lbScan->setPixmap(QPixmap(":/images/images/NotFound.png"));
 
     }
@@ -334,7 +340,7 @@ void S_Search::scanBarcode()
 bool S_Search::isValidBarcode(QString barcode)
 {
     int sum = 0;
-
+if(barcode.length()>1){
     for(int i = 0; i < barcode.length() - 1; i++)
     {
         if(i % 2 == 0)
@@ -347,6 +353,8 @@ bool S_Search::isValidBarcode(QString barcode)
         }
     }
     return ((((sum / 10) + 1) * 10 - sum) == barcode.at(barcode.length() - 1).digitValue() ? true : false); //"s= " + ((sum / 10) + 1) * 10 - sum;
+}
+return false;
 }
 
 void S_Search::on_btnCheckout_clicked()

@@ -55,7 +55,7 @@ void S_Login::login()
         else
         {
             QMessageBox msBox;
-            msBox.setText("Login Failed.Pincode is unvalid.");
+            msBox.setText("Login Failed.Pincode is invalid.");
             msBox.exec();
         }
     }

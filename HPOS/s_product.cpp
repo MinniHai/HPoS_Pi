@@ -100,12 +100,12 @@ void S_Product::capture()
     else
     {
         QString path  = "Image/Product/"
-                        + product->name
-                        + "_"
-                        + Utils::instance()->getCurrentDate()
-                        + "_"
-                        + Utils::instance()->getCurrentTime()
-                        + ".png";
+                + product->name
+                + "_"
+                + Utils::instance()->getCurrentDate()
+                + "_"
+                + Utils::instance()->getCurrentTime()
+                + ".png";
         QDir dir("Image/Product");
         if(!dir.exists())
         {
@@ -291,7 +291,7 @@ void S_Product::on_btnSave_clicked()
         {
             ShoppingCart::instance()->subTotal -= product->price * ShoppingCart::instance()->quantity[ShoppingCart::instance()->cart.indexOf(product)];
             ShoppingCart::instance()->quantity[ShoppingCart::instance()->cart.indexOf(product)] =
-                ui->ledQuantity->text().toInt();
+                    ui->ledQuantity->text().toInt();
             ShoppingCart::instance()->subTotal += product->price * ShoppingCart::instance()->quantity[ShoppingCart::instance()->cart.indexOf(product)];
             on_btnBack_clicked();
         }
@@ -376,15 +376,7 @@ void S_Product::on_btnSave_clicked()
 }
 void S_Product::on_btnBack_clicked()
 {
-    if(action != Update)
-    {
-        S_Search *searchScreen = S_Search::instance();
-        searchScreen->setModal(true);
-        searchScreen->setBackToDefaul();
-        searchScreen->showFullScreen();
-        this->close();
-    }
-    else if(action == UpdateCart)
+    if(action == UpdateCart)
     {
         S_Checkout *checkout = S_Checkout::instance();
         checkout->setModal(true);
@@ -392,7 +384,14 @@ void S_Product::on_btnBack_clicked()
         checkout->showFullScreen();
         this->close();
     }
-    else
+    else if(action != Update)
+    {
+        S_Search *searchScreen = S_Search::instance();
+        searchScreen->setModal(true);
+        searchScreen->setBackToDefaul();
+        searchScreen->showFullScreen();
+        this->close();
+    }else
     {
         S_InventoryManager *inventoryScreen = S_InventoryManager::instance();
         inventoryScreen->setModal(true);

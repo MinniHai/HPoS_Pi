@@ -12,6 +12,7 @@ public:
     static ShoppingCart *instance();
     ShoppingCart();
 
+    ulong tax;
     ulong total;
     ulong subTotal;
     QList<E_Product *> cart;
