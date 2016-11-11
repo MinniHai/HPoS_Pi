@@ -31,6 +31,7 @@ E_User *E_User::getResultSet()
     user->endTime = query.value(query.record().indexOf("endTime")).toString();
     user->picUrl = query.value(query.record().indexOf("pictureUrl")).toString();
     user->pwd = query.value(query.record().indexOf("pwd")).toString();
+    user->roleID = query.value(query.record().indexOf("roleID")).toInt();
 
     user->state = E_State::getStateByID(QString::number(user->stateID));
     user->roleType = E_Role::getRoleByID(query.value(query.record().indexOf("roleID")).toString());

@@ -38,10 +38,7 @@ QFrame#frame
 {
 		background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y2:0.574, stop:0 rgba(255, 151, 0, 255), stop:0.75 rgba(255, 170, 0, 255));
 }
-QToolButton#btnHumanResource
-{
-	background-color: qlineargradient(spread:reflect, x1:0.653, y1:0.699136, x2:0.437227, y2:0.057, stop:0.159091 rgba(85, 170, 0, 255), stop:0.846591 rgba(97, 194, 0, 255))
-}
+
 QToolButton
 {
    
@@ -66,11 +63,6 @@ QToolButton:hover
     border: 6px solid qlineargradient(spread:reflect, x1:0.653, y1:0.699136, x2:0.437227, y2:0.057, stop:0.159091 rgba(59, 59, 59, 255), stop:0.846591 rgba(143, 143, 143, 255));
 }
 
-QToolButton#btnInventory
-{
-	
-	background-color: qlineargradient(spread:reflect, x1:0.368818, y1:0.791, x2:0.58, y2:0.193182, stop:0.0170455 rgba(255, 0, 0, 255));
-}
 QToolButton#btnOrder
 {
 	background-color: qlineargradient(spread:reflect, x1:0.386, y1:0.943227, x2:0.324, y2:0.426091, stop:0.159091 rgba(255, 255, 0, 255), stop:0.846591 rgba(238, 238, 0, 255));
@@ -232,7 +224,7 @@ QToolButton#btnOrder
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: qlineargradient(spread:reflect, x1:0.653, y1:0.699136, x2:0.437227, y2:0.057, stop:0.159091 rgba(85, 170, 0, 255), stop:0.846591 rgba(97, 194, 0, 255))</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>...</string>

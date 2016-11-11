@@ -17,6 +17,7 @@ public:
     QSqlDatabase *database;
     QString getCurrentDate();
     QString getCurrentTime();
+    QString getCurrentDateTime();
     QString getString(ulong number);
     ulong getULong(QString number);
 

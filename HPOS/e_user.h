@@ -33,7 +33,7 @@ public:
     QString age;
     QString DOB;
     QString idCard;
-    QString roleID;
+    int roleID;
     QString picUrl;
 
     int stateID;

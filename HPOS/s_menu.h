@@ -22,6 +22,7 @@ public:
     explicit S_Menu(QWidget *parent = 0);
     ~S_Menu();
     void showFull();
+    void setRole(bool isAdmin);
 private slots:
     void on_btnLogout_clicked();
     void getTimer();
@@ -31,6 +32,7 @@ private slots:
 
     void on_btnInventory_clicked();
     void on_btnCheckout_clicked();
+
 private:
     Ui::Menu *ui;
 };

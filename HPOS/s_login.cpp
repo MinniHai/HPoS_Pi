@@ -39,10 +39,12 @@ void S_Login::login()
             if(user->stateID == Active)
             {
                 Session::instance()->setUserSession((E_User *)user);
+
                 // chuyển màn hình sang main menu
                 S_Menu *menu = S_Menu::instance();
                 menu->setModal(true);
                 menu->showFull();
+                menu->setRole(Session::instance()->getUserSession()->roleID == 1 ? true:false);
                 this->close();
             }
             else

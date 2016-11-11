@@ -57,6 +57,12 @@ QString Utils::getCurrentTime()
     return dateTime.toString("hh:mm:ss");
 }
 
+QString Utils::getCurrentDateTime()
+{
+    QDateTime dateTime = QDateTime::currentDateTime();
+    return dateTime.toString("yyyy-MM-dd hh:mm:ss");
+}
+
 QSqlDatabase *Utils::getDB()
 {
     if(database->isValid())

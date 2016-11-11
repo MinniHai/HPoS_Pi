@@ -50,7 +50,7 @@ S_UserDetail::S_UserDetail(QWidget *parent) :
     QRegExp date("((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])");
     QRegExpValidator *dateVal = new QRegExpValidator(date);
     ui->ledDOB->setValidator(dateVal);
-//    ui->ledDOB->setInputMask("9999-99-99");
+    //    ui->ledDOB->setInputMask("9999-99-99");
     fillRolesData();
 
     connect(ui->ledFirstName, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
@@ -90,8 +90,8 @@ void S_UserDetail::capture()
         if(!user->userID.isEmpty())
         {
             path = "Image/User/"
-                   + user->userID
-                   + ".png";
+                    + user->userID
+                    + ".png";
         }
         else
         {
@@ -116,8 +116,8 @@ void S_UserDetail::fillDataUserDetail()
         ui->ledPinCode->setText(user->pincode);
         ui->ledDOB->setText(user->DOB);
         ui->cbRoles->setCurrentIndex(ui->cbRoles->findText(user->roleType->roleType));
-        ui->ledActiveTime->setText(user->activeTime);
-        ui->ledEndTime->setText(user->endTime);
+        ui->ledActiveTime->setText(user->activeTime.replace("T"," "));
+        ui->ledEndTime->setText(user->endTime.replace("T"," "));
         ui->cbState->setCurrentIndex(ui->cbState->findText(user->state->state));
         ui->ledPwd->setText(user->pwd);
         if(!user->picUrl.isEmpty())
@@ -151,6 +151,8 @@ void S_UserDetail::clearAll()
     ui->ledPinCode->setText("");
     ui->ledDOB->setText("");
     ui->cbRoles->setCurrentIndex(1);
+    ui->ledActiveTime->setText("");
+    ui->ledEndTime->setText("");
     image->setEnabled(true);
     image->setPixmap(QPixmap(":/images/images/camera.png").scaled(QSize(120, 120)));
 }
@@ -191,14 +193,23 @@ void S_UserDetail::on_btnSave_clicked()
     userHash.insert("pinCode", ui->ledPinCode->text());
     userHash.insert("roleID", ui->cbRoles->currentData().toString());
     userHash.insert("idCard", ui->ledIdCard->text());
-    userHash.insert("DOB", ui->ledDOB->text());
+    if(!ui->ledDOB->text().isEmpty())
+        userHash.insert("DOB", ui->ledDOB->text());
     userHash.insert("pwd", ui->ledPwd->text());
     userHash.insert("stateID", ui->cbState->currentData().toString());
+    userHash.insert("pictureUrl", user->picUrl);
+    if(ui->cbState->currentData().toInt() == 1 && user->activeTime.isEmpty()){
+        userHash.insert("activeTime", Utils::instance()->getCurrentDateTime());
+    }
+    if(ui->cbState->currentData().toInt() == 4 && user->endTime.isEmpty()) {
+        userHash.insert("endTime",Utils::instance()->getCurrentDateTime());
+    }
+
     if(action == Insert)
     {
         QString newPath =  "Image/User/"
-                           + QString::number(E_User::getMaxID() + 1)
-                           + ".png";
+                + QString::number(E_User::getMaxID() + 1)
+                + ".png";
         userHash.insert("pictureUrl", newPath);
         BarcodeScanner::instance()->movePicture(user->picUrl, newPath);
         user->picUrl = newPath;
@@ -224,7 +235,6 @@ void S_UserDetail::on_btnSave_clicked()
     {
         if(E_User::upateUser(userHash, this->user->userID))
         {
-            userHash.insert("pictureUrl", user->picUrl);
             QMessageBox box ;
             box.setText("Update Done!");
             QPushButton *ok = box.addButton(QMessageBox::Ok);

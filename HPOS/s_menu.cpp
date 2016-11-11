@@ -19,7 +19,6 @@ S_Menu *S_Menu::instance()
 }
 
 
-
 S_Menu::S_Menu(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Menu)
@@ -80,6 +79,20 @@ void S_Menu::on_btnHumanResource_clicked()
     user->showFullScreen();
     this->close();
 
+}
+
+void S_Menu::setRole(bool isAdmin) {
+    ui->btnHumanResource->setEnabled(isAdmin);
+    ui->btnInventory->setEnabled(isAdmin);
+    if(isAdmin){
+        ui->btnHumanResource->setStyleSheet("background-color: qlineargradient(spread:reflect, x1:0.653, y1:0.699136, x2:0.437227, y2:0.057, stop:0.159091 rgba(85, 170, 0, 255), stop:0.846591 rgba(97, 194, 0, 255))");
+        ui->btnInventory->setStyleSheet("background-color: qlineargradient(spread:reflect, x1:0.368818, y1:0.791, x2:0.58, y2:0.193182, stop:0.0170455 rgba(255, 0, 0, 255));");
+    }
+    else
+    {
+        ui->btnHumanResource->setStyleSheet("background-color: rgb(198, 200, 184)");
+        ui->btnInventory->setStyleSheet("background-color: rgb(198, 200, 184)");
+    }
 }
 
 void S_Menu::on_btnCheckout_clicked()
