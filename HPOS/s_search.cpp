@@ -220,6 +220,7 @@ void S_Search::on_btnBack_clicked()
 void S_Search::setBackToDefaul()
 {
     value = 1;
+    number = 1;
 //    txtSearch->setText("");
     ui->lcdNumber->display(value);
     lbStatus->setStyleSheet("background-color: qlineargradient(spread:pad,"

@@ -55,8 +55,8 @@ void ShoppingCart::removeCart(E_Product *product)
     if(cart.contains(product))
     {
         subTotal -= cart[cart.indexOf(product)]->price * quantity[(cart.indexOf(product))];
-        quantity.removeOne(cart.indexOf(product));
-        cart.removeOne(product);
+        quantity.removeAt(cart.indexOf(product));
+        cart.removeAt(cart.indexOf(product));
     }
 }
 
