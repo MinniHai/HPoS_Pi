@@ -200,8 +200,8 @@ CREATE TABLE Category (
  
 
 INSERT INTO `HPoS`.`State` (`state`) VALUES ('Active');
-INSERT INTO `HPoS`.`State` (`state`) VALUES ('Pendding');
-INSERT INTO `HPoS`.`State` (`state`) VALUES ('Suppend');
+INSERT INTO `HPoS`.`State` (`state`) VALUES ('Pending');
+INSERT INTO `HPoS`.`State` (`state`) VALUES ('Suspend');
 INSERT INTO `HPoS`.`State` (`state`) VALUES ('End');
 
 
