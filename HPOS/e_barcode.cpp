@@ -76,6 +76,7 @@ void E_Barcode::analysisBarcode(QString barcode)
 E_Barcode *E_Barcode::getBarcode(QString barcode)
 {
     E_Barcode *barcodeRepository = new E_Barcode();
+    barcodeRepository->barcode = barcode;
     barcodeRepository->analysisBarcode(barcode);
     barcodeRepository->setSelectQuery("*", "Barcode",
                                       "countryPrefix", barcodeRepository->countryPrefix,

@@ -78,7 +78,14 @@ void S_Payment::on_btnCheckOK_clicked()
 
 void S_Payment::on_btnPrint_clicked()
 {
-    QtRPT *printer = S_Checkout::instance()->printer;
-    printer->printPDF("/mnt/hgfs/Capstone/HPoS_Pi/HPOS/Report/demo.pdf",false);
+    S_Checkout::instance()->print();
     QMessageBox::information(this, "Payment", "Done");
+}
+
+void S_Payment::on_btnMenu_clicked()
+{
+    S_Menu *menu = S_Menu::instance();
+    menu->setModal(true);
+    menu->showFull();
+    this->close();
 }

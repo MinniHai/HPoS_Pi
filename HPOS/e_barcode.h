@@ -29,6 +29,7 @@ public:
     QString imDate;
     QString imTime;
     QString proID;
+    QString barcode;
 
     E_Product *product; //get by ID
     E_Manufacturer *manufacturer;//get by prefix

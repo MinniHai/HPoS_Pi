@@ -29,14 +29,17 @@ public:
     };
 
     explicit S_Search(QWidget *parent = 0);
-    bool searchByBarcode(QString barcode);
+    void searchByBarcode(QString barcode);
     void scanBarcode();
     Action action;
 
     void setState(Action newAction);
     CustomeQlabel *lbStatus;
     CustomeQlabel *lbScan;
+    QToolButton *btnNext;
+    QToolButton *btnPre;
     ~S_Search();
+    bool isOpen;
 signals:
 
 public slots:
@@ -47,7 +50,12 @@ public slots:
 
     void setBackToDefaul();
 
+    void on_btnAdd_clicked();
 private slots:
+    void btnPre_clicked();
+
+    void btnNext_clicked();
+
     void on_btnPlus_clicked();
 
     void on_btnMinus_clicked();
@@ -58,7 +66,6 @@ private slots:
 
     void on_btnMenu_clicked();
 
-    void on_btnAdd_clicked();
 
     void search_textChange(const QString &);
 
@@ -68,12 +75,23 @@ private slots:
 
 private:
     bool isScanned;
+    QList<E_Product *> listProduct;
+    void showProduct();
+    void stopScanning();
+    void suppendCam();
     E_Product *product;
     BarcodeScanner *bc;
     QTimer *timer;
     int value ;
     int number;
+    int index;
     bool isSet;
+    static void statusButtonOK(void) ;
+    static void statusButtonNO(void);
+    static void statusOKFalling(void);
+    static void statusOKRaising(void);
+    static void statusNOFalling(void);
+    static void statusNORaising(void);
     Ui::Search *ui;
 };
 

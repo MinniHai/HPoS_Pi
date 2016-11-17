@@ -29,6 +29,7 @@ public:
     QTableWidgetItem *createTableWidgetItem(const QString &text) const;
     void showDataToTable();
     explicit S_Checkout(QWidget *parent = 0);
+    void print();
 
     QtRPT *printer ;
     ~S_Checkout();

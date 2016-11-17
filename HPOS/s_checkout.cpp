@@ -39,12 +39,17 @@ S_Checkout::S_Checkout(QWidget *parent) :
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     printer = new QtRPT(this);
-    printer->loadReport(":/Report/demoRP.xml");
-    connect(printer, SIGNAL(setValue(const int, const QString, QVariant&, const int))
-            , this, SLOT(setValue(const int, const QString, QVariant&, const int)));
-
 }
 
+void S_Checkout::print(){
+    printer->loadReport(":/Report/nghi.xml");
+    printer->recordCount.append(ui->tableWidget->rowCount());
+    connect(printer, SIGNAL(setValue(const int, const QString, QVariant&, const int))
+            , this, SLOT(setValue(const int, const QString, QVariant&, const int)));
+    printer->printPDF("/mnt/hgfs/Capstone/HPoS_Pi/HPOS/Report/demo.pdf",false);
+    disconnect(printer, SIGNAL(setValue(const int, const QString, QVariant&, const int))
+            , this, SLOT(setValue(const int, const QString, QVariant&, const int)));
+}
 
 void S_Checkout::setValue(const int recNo, const QString paramName,
                           QVariant &paramValue, const int reportPage){
@@ -53,10 +58,10 @@ void S_Checkout::setValue(const int recNo, const QString paramName,
         paramValue = ui->tableWidget->item(recNo,0)->text();
     } else
     if(paramName == "Price") {
-        paramValue = ui->tableWidget->item(recNo,1)->text();
+        paramValue = ui->tableWidget->item(recNo,2)->text();
     } else
     if(paramName == "Quantity") {
-        paramValue = ui->tableWidget->item(recNo,2)->text();
+        paramValue = ui->tableWidget->item(recNo,1)->text();
     } else
     if(paramName == "SubTotal") {
         paramValue = ui->tableWidget->item(recNo,3)->text();
@@ -197,8 +202,8 @@ void S_Checkout::on_btnCheckOK_clicked()
     payment->setModal(true);
     payment->fillData();
     payment->showFullScreen();
-    printer->recordCount.append(ui->tableWidget->rowCount());
-    
+
+
     this->close();
 
 }
@@ -208,7 +213,6 @@ void S_Checkout::on_btnMenu_clicked()
     S_Menu *menu = S_Menu::instance();
     menu->setModal(true);
     menu->showFull();
-    //    menu.exec();
     this->close();
 }
 

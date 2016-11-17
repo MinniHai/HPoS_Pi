@@ -28,6 +28,8 @@ private slots:
     void calculate();
     void on_btnPrint_clicked();
 
+    void on_btnMenu_clicked();
+
 private:
     Ui::Payment *ui;
 };

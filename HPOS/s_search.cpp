@@ -5,6 +5,7 @@
 #include <QIcon>
 #include "e_barcode.h"
 #include "e_product.h"
+#include "e_picture.h"
 #include "s_product.h"
 #include "barcodescanner.h"
 #include "shoppingcart.h"
@@ -17,12 +18,19 @@
 #include <QIntValidator>
 #include "customeqlabel.h"
 #include "s_inventorymanager.h"
+#include "wiringPi.h"
+#include <QToolButton>
 
 using namespace std;
+
+#define BUTTON_OK 29
+#define BUTTON_NO 28
+
 E_Barcode *e_barcode;
 
 S_Search *S_Search::s_instance;
-
+bool isOKDown;
+bool isNODown;
 
 
 S_Search *S_Search::instance()
@@ -44,31 +52,96 @@ S_Search::S_Search(QWidget *parent) :
     timer = new QTimer(this);
     lbStatus = new CustomeQlabel("", ui->frame_2);
     lbStatus->setObjectName("lbStatus");
-    lbStatus->setGeometry(50, 0, 351, 41);
+    lbStatus->setGeometry(50, 0, 310, 40);
     lbStatus->setAlignment(Qt::AlignCenter);
+    isOpen = false;
 
     lbScan = new CustomeQlabel("", ui->frame_3);
     lbScan->setObjectName("lbScan");
     lbScan->setGeometry(0, 0, 400, 240);
     lbScan->setAlignment(Qt::AlignCenter);
 
+    btnPre = new QToolButton(ui->frame_3);
+    btnPre->setGeometry(0,60,40,121);
+    btnPre->setIcon(QIcon(":/images/images/pre.png"));
+    btnPre->setStyleSheet("border-top-right-radius:34px;"
+                          "border-bottom-right-radius:34px;");
+
+    btnNext = new QToolButton(ui->frame_3);
+    btnNext->setGeometry(360,60,40,121);
+    btnNext->setIcon(QIcon(":/images/images/next.png"));
+    btnNext->setStyleSheet("border-top-left-radius:34px;"
+                           "border-bottom-left-radius:34px;");
     isScanned = false;
-    value = 1 ;
     txtSearch->setValidator(new QIntValidator);
 
-    number = 1;
     isSet = false;
+    isOKDown = false;
 
     connect(lbScan, SIGNAL(clicked()), SLOT(viewInformation()));
     connect(timer, SIGNAL(timeout()), SLOT(checkStatus()));
     connect(ui->btnSearch, SIGNAL(clicked(bool)), SLOT(runKeyboard()));
     connect(txtSearch, SIGNAL(textChanged(QString)), SLOT(search_textChange(QString)));
-    setBackToDefaul();
+    connect(btnNext,SIGNAL(clicked()),SLOT(btnNext_clicked()));
+    connect(btnPre,SIGNAL(clicked()),SLOT(btnPre_clicked()));
+    stopScanning();
+    if(wiringPiSetup()<0)qDebug()<<"cannot setup";
+
+    if(wiringPiISR(BUTTON_NO,INT_EDGE_FALLING,&statusButtonNO) < 0) qDebug() << "error";
+    if(wiringPiISR(BUTTON_OK,INT_EDGE_RISING,&statusButtonOK) < 0) qDebug() << "error";
+
+}
+
+void S_Search::statusButtonNO(){
+    if(digitalRead(BUTTON_NO) == 1) statusNORaising();
+    else statusNOFalling();
+}
+
+void S_Search::statusButtonOK(){
+    if(digitalRead(BUTTON_OK) == 1 && isOKDown == false) statusOKRaising();
+    else statusOKFalling();
+}
+
+void S_Search::statusOKFalling() {
+    S_Search::instance()->on_btnAdd_clicked();
+    isOKDown = true;
+}
+
+void S_Search::statusOKRaising(){
+//    S_Search::instance()->on_btnAdd_clicked();
+    isOKDown = false;
+}
+void S_Search::statusNOFalling() {
+
+}
+
+void S_Search::statusNORaising(){
+
+}
+
+void S_Search::btnPre_clicked(){
+    qDebug() << "pre";
+    if(index == 0) {
+        index = listProduct.size()-1;
+    } else {
+        index--;
+    }
+    showProduct();
+}
+
+void S_Search::btnNext_clicked(){
+    qDebug() << "Next";
+    if(index == listProduct.size()-1) {
+        index =0 ;
+    } else {
+        index++;
+    }
+    showProduct();
 }
 
 void S_Search::viewInformation()
 {
-    if(isScanned)
+    if(product)
     {
         S_Product *productScreen = S_Product::instance();
 
@@ -81,7 +154,7 @@ void S_Search::viewInformation()
                 productScreen->viewInformation(product);
                 productScreen->setEnabled(false);
                 productScreen->showFullScreen();
-                this->close();
+                isOpen = false;this->close();
             }
         }
         else if(action == Insert)
@@ -102,7 +175,7 @@ void S_Search::viewInformation()
             }
             productScreen->setEnabled(true);
             productScreen->showFullScreen();
-            this->close();
+            isOpen = false;this->close();
         }
     }
 }
@@ -110,7 +183,8 @@ void S_Search::viewInformation()
 void S_Search::setState(Action newAction)
 {
     this->action = newAction;
-    setBackToDefaul();
+    isOpen = true;
+    stopScanning();
 }
 
 S_Search::~S_Search()
@@ -167,31 +241,27 @@ void S_Search::on_btnMinus_clicked()
 
 void S_Search::search_textChange(const QString &value)
 {
-    //    lbStatus->setText(value);
     if(isValidBarcode(value))
     {
-        isScanned = searchByBarcode(value);
-        if(action == View || action == Shopping)
-        {
-            if(isScanned)
-            {
-                ui->btnAdd->setIcon(QIcon(":/images/images/add.png"));
+        foreach (E_Product *item, listProduct) {
+            if(value == item->barcode->barcode) {
+                index = listProduct.indexOf(item);
+                showProduct();
+                return;
             }
         }
-        else if(action == Insert)
-        {
-
-            ui->btnAdd->setIcon(QIcon(":/images/images/AddNew.png"));
-        }
-    } else {
-        lbStatus->setText(value);
-        lbScan->setPixmap(QPixmap(":/images/images/NotFound.png"));
+        searchByBarcode(value);
     }
+    index = listProduct.size()-1;
+    showProduct();
 }
 
 void S_Search::on_btnBack_clicked()
 {
     if(isScanned)
+    {
+        stopScanning();
+    }else if (!listProduct.isEmpty())
     {
         setBackToDefaul();
     }
@@ -204,7 +274,7 @@ void S_Search::on_btnBack_clicked()
         S_Checkout *checkout = S_Checkout::instance();
         checkout->setModal(true);
         checkout->showFullScreen();
-        this->close();
+        isOpen = false;this->close();
     }
     else
     {
@@ -212,7 +282,58 @@ void S_Search::on_btnBack_clicked()
         inventoryScreen->setModal(true);
         inventoryScreen->showFullScreen();
         inventoryScreen->setDataToTable();
-        this->close();
+        isOpen = false;this->close();
+    }
+}
+
+void S_Search::suppendCam()
+{
+    if(timer->isActive())
+    {
+        timer->stop();
+        bc->releaseCam();
+    }
+
+    lbStatus->setStyleSheet("background-color: qlineargradient(spread:pad,"
+                            " x1:0.773136, y1:0.347, x2:0.795, y2:0.0284091,"
+                            " stop:0.0909091 rgba(248, 148, 3, 255), stop:0.761364"
+                            " rgba(253, 169, 0, 255));");
+    if(!bc->listBarcode.isEmpty()) {
+        foreach (QString item, bc->listBarcode) {
+            searchByBarcode(item);
+        }
+        bc->listBarcode.clear();
+        isScanned = false;
+
+    }
+    if(!listProduct.isEmpty()) {
+        showProduct();
+    } else {
+        setBackToDefaul();
+    }
+}
+void S_Search::stopScanning() {
+    if(timer->isActive())
+    {
+        timer->stop();
+        bc->releaseCam();
+    }
+
+    lbStatus->setStyleSheet("background-color: qlineargradient(spread:pad,"
+                            " x1:0.773136, y1:0.347, x2:0.795, y2:0.0284091,"
+                            " stop:0.0909091 rgba(248, 148, 3, 255), stop:0.761364"
+                            " rgba(253, 169, 0, 255));");
+    if(!bc->listBarcode.isEmpty()) {
+        foreach (QString item, bc->listBarcode) {
+            searchByBarcode(item);
+        }
+        bc->listBarcode.clear();
+        isScanned = false;
+        ui->lbQty->setText(QString::number(listProduct.size()));
+        index = listProduct.size()-1;
+        showProduct();
+    }else {
+        setBackToDefaul();
     }
 }
 
@@ -221,17 +342,15 @@ void S_Search::setBackToDefaul()
 {
     value = 1;
     number = 1;
-//    txtSearch->setText("");
+    index = 0;
+    isScanned = false;
+    listProduct.clear();
+    ui->lbQty->setText(QString::number(listProduct.size()));
+    btnNext->setVisible(false);
+    btnPre->setVisible(false);
+    ui->btnCheckout->setIcon(QIcon(":/images/images/checkout.png"));
     ui->lcdNumber->display(value);
-    lbStatus->setStyleSheet("background-color: qlineargradient(spread:pad,"
-                            " x1:0.773136, y1:0.347, x2:0.795, y2:0.0284091,"
-                            " stop:0.0909091 rgba(248, 148, 3, 255), stop:0.761364"
-                            " rgba(253, 169, 0, 255));");
-    if(timer->isActive())
-    {
-        timer->stop();
-        bc->releaseCam();
-    }
+
     bc->checkCam();
     lbStatus->setText(bc->getSymbols());
     isScanned = false;
@@ -249,64 +368,78 @@ void S_Search::runKeyboard()
     keyboard->setLineEdit(txtSearch);
     keyboard->setWindowModality(Qt::WindowModal);
     keyboard->show();
-    setBackToDefaul();
+    suppendCam();
+
 }
 
-bool S_Search::searchByBarcode(QString barcode)
+void S_Search::searchByBarcode(QString barcode)
 {
-    qDebug() << barcode;
-    e_barcode = E_Barcode::getBarcode(barcode);
-    if(e_barcode)
+    E_Barcode *e_barc = E_Barcode::getBarcode(barcode);
+
+    E_Product *prd = new E_Product();
+    prd->barcode = e_barc;
+    if(e_barc)
     {
-        product = E_Product::getProductByID(e_barcode->proID);
-        if(product)
-        {
-            lbStatus->setText(product->name);
-            ui->lcdNumber->display(1);
-            return true;
+        prd = E_Product::getProductByID(e_barc->proID);
+       if(!prd) {
+           prd = new E_Product();
+       }
+       e_barc->barcode = barcode;
+       prd->barcode = e_barc;
+    } else {
+        e_barc = new E_Barcode();
+        e_barc->barcode = barcode;
+        prd->barcode = e_barc;
+    }
+    bool isExist = false;
+    foreach (E_Product *item, listProduct) {
+        if(item->barcode->barcode == barcode) {
+            isExist = true;
+            break;
         }
     }
-    else
-    {
-        lbStatus->setText(barcode);
-        lbScan->setPixmap(QPixmap(":/images/images/NotFound.png"));
+    if(!isExist)
+    listProduct.append(prd);
 
+}
+
+void S_Search::showProduct()
+{
+    product = listProduct[index];
+    if(product->name.length() > 1){
+        lbStatus->setText(product->name);
+        if(!product->listPicture.isEmpty())
+            lbScan->setPixmap(QPixmap(QDir::currentPath() + "/" + product->listPicture[0]->picUrl).scaled(lbScan->size()));
+        ui->lcdNumber->display(value);
+    } else {
+        lbStatus->setText(product->barcode->barcode);
+        lbScan->setPixmap(QPixmap(":/images/images/NotFound.png"));
     }
-    return false;
+    if(action == View || action == Shopping)
+    {
+        ui->btnAdd->setIcon(QIcon(":/images/images/add.png"));
+    }
+    else if(action == Insert)
+    {
+        ui->btnAdd->setIcon(QIcon(":/images/images/AddNew.png"));
+    }
+    if(listProduct.size() > 1) {
+        btnPre->setVisible(true);
+        btnNext->setVisible(true);
+    } else {
+        btnPre->setVisible(false);
+        btnNext->setVisible(false);
+    }
+
 }
 
 void S_Search::checkStatus()
 {
     if(timer->isActive())
     {
-        if(bc->getSymbols().length() > 1)
+        if(!bc->timer->isActive())
         {
-            if(isValidBarcode(bc->getSymbols()))
-            {
-                timer->stop();
-                lbStatus->setStyleSheet("background-color: qlineargradient(spread:pad,"
-                                        " x1:0.773136, y1:0.347, x2:0.795, y2:0.0284091,"
-                                        " stop:0.0909091 rgba(248, 148, 3, 255), stop:0.761364"
-                                        " rgba(253, 169, 0, 255));");
-                isScanned = searchByBarcode(bc->getSymbols());
-                if(action == View || action == Shopping)
-                {
-                    if(isScanned)
-                    {
-                        ui->btnAdd->setIcon(QIcon(":/images/images/add.png"));
-                    }
-                }
-                else if(action == Insert)
-                {
-                    isScanned = true;
-                    ui->btnAdd->setIcon(QIcon(":/images/images/AddNew.png"));
-                }
-            }
-            else
-            {
-                scanBarcode();
-            }
-
+            stopScanning();
         }
         else
         {
@@ -320,11 +453,17 @@ void S_Search::checkStatus()
                 lbStatus->setStyleSheet("");
             }
             isSet = !isSet;
+            if(!bc->listBarcode.isEmpty()) {
+                foreach (QString item, bc->listBarcode) {
+                    searchByBarcode(item);
+                }
+                ui->lbQty->setText(QString::number(listProduct.size()));
+//                bc->listBarcode.clear();
+            }
         }
     }
     else
     {
-
         //TODO: Set default picture
     }
 }
@@ -334,28 +473,31 @@ void S_Search::scanBarcode()
 {
     qDebug() << "set";
     bc->setSymbols("");
+    bc->qty = this->number;
+    bc->listBarcode.clear();
     bc->setLableScan(lbScan);
     bc->scanBarcode();
+    isScanned = true;
 }
 
 bool S_Search::isValidBarcode(QString barcode)
 {
     int sum = 0;
-if(barcode.length()>1){
-    for(int i = 0; i < barcode.length() - 1; i++)
-    {
-        if(i % 2 == 0)
+    if(barcode.length()>1){
+        for(int i = 0; i < barcode.length() - 1; i++)
         {
-            sum += barcode.at(i).digitValue() * 1;
+            if(i % 2 == 0)
+            {
+                sum += barcode.at(i).digitValue() * 1;
+            }
+            else
+            {
+                sum += barcode.at(i).digitValue() * 3;
+            }
         }
-        else
-        {
-            sum += barcode.at(i).digitValue() * 3;
-        }
+        return ((((sum / 10) + 1) * 10 - sum) == barcode.at(barcode.length() - 1).digitValue() ? true : false); //"s= " + ((sum / 10) + 1) * 10 - sum;
     }
-    return ((((sum / 10) + 1) * 10 - sum) == barcode.at(barcode.length() - 1).digitValue() ? true : false); //"s= " + ((sum / 10) + 1) * 10 - sum;
-}
-return false;
+    return false;
 }
 
 void S_Search::on_btnCheckout_clicked()
@@ -366,7 +508,9 @@ void S_Search::on_btnCheckout_clicked()
     checkout->action = S_Checkout::View;
     checkout->showDataToTable();
     checkout->showFullScreen();
-    this->close();
+    stopScanning();
+    isOpen = false;
+    isOpen = false;this->close();
 }
 
 void S_Search::on_btnMenu_clicked()
@@ -374,13 +518,16 @@ void S_Search::on_btnMenu_clicked()
     S_Menu *menu = S_Menu::instance();
     menu->setModal(true);
     menu->showFull();
-    setBackToDefaul();
-    this->close();
+    bc->releaseCam();
+    bc->listBarcode.clear();
+    stopScanning();
+    isOpen = false;this->close();
 }
 
 void S_Search::on_btnAdd_clicked()
 {
-    if(isScanned)
+    qDebug() << "click";
+    if(!listProduct.isEmpty())
     {
         if(action == View || action == Shopping)
         {
@@ -391,7 +538,16 @@ void S_Search::on_btnAdd_clicked()
                     ShoppingCart *cart = ShoppingCart::instance();
                     cart->addCart(product, ui->lcdNumber->intValue());
                     qDebug() << "add cart";
-                    setBackToDefaul();
+                    if(listProduct.size() == 1) {
+                        setBackToDefaul();
+                    } else  {
+                        btnPre_clicked();
+                        if(index == listProduct.size())            {
+                            listProduct.removeAt(0);
+                        } else {
+                            listProduct.removeAt(index + 1);
+                        }
+                    }
                 }
                 else
                 {
@@ -413,7 +569,7 @@ void S_Search::on_btnAdd_clicked()
         }
         else
         {
-            qDebug() << "timer not Active";
+            suppendCam();
         }
     }
 }

@@ -99,7 +99,7 @@ RESOURCES += \
 INCLUDEPATH += $$PWD
 include($$PWD/QtRptProject/QtRPT/QtRPT.pri)
 
-CONFIG += build_ubuntu
+CONFIG += build_arm
 build_ubuntu{
 
     INCLUDEPATH += /opt/opencv/include/opencv
@@ -116,9 +116,12 @@ build_ubuntu{
 }
 
 build_arm{
+
 INCLUDEPATH += /opt/zbar.arm/include
 INCLUDEPATH += /opt/opencv2.4.13/include
 INCLUDEPATH += $$[QT_SYSROOT]/usr/local/include
+INCLUDEPATH += /usr/include/c++/4.9
+
 LIBS += -L$$[QT_SYSROOT]/usr/local/lib -lwiringPi
 LIBS += /opt/zbar.arm/lib/*.so
 LIBS += /opt/opencv2.4.13/lib/*.so

@@ -72,46 +72,48 @@ S_Product::S_Product(QWidget *parent) :
     connect(image, SIGNAL(clicked()), SLOT(capture()));
 }
 
+
 void S_Product::capture()
 {
-
-    BarcodeScanner *capturer = BarcodeScanner::instance();
-    if(capturer->timer->isActive())
-    {
-        E_Picture *picture = new E_Picture();
-        capturer->isCapture = true;
-        picture->picUrl = capturer->imagePath;
-        picture->proID = product->proID;
-        QHash<QString, QString> pictureHash ;
-        pictureHash.insert("picUrl", picture->picUrl);
-        pictureHash.insert("proID", picture->proID);
-        if(E_Picture::insertPicture(pictureHash))
+    if(action == Update || action == Insert || action == InsertMore) {
+        BarcodeScanner *capturer = BarcodeScanner::instance();
+        if(capturer->timer->isActive())
         {
-            if(!product->listPicture.isEmpty())
+            E_Picture *picture = new E_Picture();
+            capturer->isCapture = true;
+            picture->picUrl = capturer->imagePath;
+            picture->proID = product->proID;
+            QHash<QString, QString> pictureHash ;
+            pictureHash.insert("picUrl", picture->picUrl);
+            pictureHash.insert("proID", picture->proID);
+            if(E_Picture::insertPicture(pictureHash))
             {
-                product->listPicture.append(picture);
-                image->clear();
-                image->setPixmap(QPixmap(QDir::rootPath() + product->listPicture.at(0)->picUrl).scaled(image->size()));
-                image->repaint();
-                image->show();
+                if(!product->listPicture.isEmpty())
+                {
+                    product->listPicture.append(picture);
+                    image->clear();
+                    image->setPixmap(QPixmap(QDir::rootPath() + product->listPicture.at(0)->picUrl).scaled(image->size()));
+                    image->repaint();
+                    image->show();
+                }
             }
         }
-    }
-    else
-    {
-        QString path  = "Image/Product/"
-                + product->name
-                + "_"
-                + Utils::instance()->getCurrentDate()
-                + "_"
-                + Utils::instance()->getCurrentTime()
-                + ".png";
-        QDir dir("Image/Product");
-        if(!dir.exists())
+        else
         {
-            dir.mkpath(".");
+            QString path  = "Image/Product/"
+                    + product->name
+                    + "_"
+                    + Utils::instance()->getCurrentDate()
+                    + "_"
+                    + Utils::instance()->getCurrentTime()
+                    + ".png";
+            QDir dir("Image/Product");
+            if(!dir.exists())
+            {
+                dir.mkpath(".");
+            }
+            capturer->capturePicture(path, image);
         }
-        capturer->capturePicture(path, image);
     }
 }
 
@@ -168,11 +170,12 @@ void S_Product::viewInformation(E_Product *productTmp)
 {
     this->product = productTmp;
 
-    if(action == View || action == Update || action == UpdateCart)
+    if(action == View || action == Update || action == UpdateCart || action == InsertMore)
     {
         ui->cbProductName->clear();
         ui->cbProductName->addItem(productTmp->name, QVariant(productTmp->proID));
         ui->ledQuantity->setText(QString::number(productTmp->quantity));
+        qDebug() << productTmp->name;
     }
     else
     {

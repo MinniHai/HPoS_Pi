@@ -47,5 +47,7 @@
         <file>images/cancel.png</file>
         <file>images/sub Cart.png</file>
         <file>images/cash.png</file>
+        <file>images/next.png</file>
+        <file>images/pre.png</file>
     </qresource>
 </RCC>

@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>Report/demoRP.xml</file>
+        <file>Report/nghi.xml</file>
     </qresource>
 </RCC>
