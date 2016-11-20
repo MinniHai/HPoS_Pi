@@ -359,7 +359,7 @@ QComboBox:hover,QPushButton:hover {
     <bool>true</bool>
    </property>
    <attribute name="horizontalHeaderVisible">
-    <bool>false</bool>
+    <bool>true</bool>
    </attribute>
    <attribute name="horizontalHeaderCascadingSectionResizes">
     <bool>false</bool>
@@ -387,7 +387,7 @@ QComboBox:hover,QPushButton:hover {
      </font>
     </property>
     <property name="textAlignment">
-     <set>AlignCenter</set>
+     <set>AlignHCenter|AlignVCenter|AlignCenter</set>
     </property>
    </column>
    <column>
@@ -401,7 +401,7 @@ QComboBox:hover,QPushButton:hover {
      </font>
     </property>
     <property name="textAlignment">
-     <set>AlignCenter</set>
+     <set>AlignHCenter|AlignVCenter|AlignCenter</set>
     </property>
    </column>
    <column>
@@ -415,7 +415,7 @@ QComboBox:hover,QPushButton:hover {
      </font>
     </property>
     <property name="textAlignment">
-     <set>AlignCenter</set>
+     <set>AlignHCenter|AlignVCenter|AlignCenter</set>
     </property>
    </column>
    <column>
@@ -429,7 +429,7 @@ QComboBox:hover,QPushButton:hover {
      </font>
     </property>
     <property name="textAlignment">
-     <set>AlignCenter</set>
+     <set>AlignHCenter|AlignVCenter|AlignCenter</set>
     </property>
    </column>
    <column>
@@ -443,7 +443,7 @@ QComboBox:hover,QPushButton:hover {
      </font>
     </property>
     <property name="textAlignment">
-     <set>AlignCenter</set>
+     <set>AlignHCenter|AlignVCenter|AlignCenter</set>
     </property>
    </column>
    <column>
@@ -451,7 +451,7 @@ QComboBox:hover,QPushButton:hover {
      <string/>
     </property>
     <property name="textAlignment">
-     <set>AlignCenter</set>
+     <set>AlignHCenter|AlignVCenter|AlignCenter</set>
     </property>
    </column>
   </widget>

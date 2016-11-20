@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QList>
+#include "customelineedit.h"
 class E_Product;
 class E_Barcode;
 class CustomeQlabel;
@@ -46,6 +47,8 @@ public slots:
     void capture();
 private slots:
 
+    void runKeyboard();
+
     void on_btnMenu_clicked();
 
     void on_btnAddManufacture_clicked();
@@ -57,6 +60,7 @@ private slots:
     void on_btnBack_clicked();
 
 private:
+    CustomeLineEdit *cbPro;
     QList<E_Category *> cateList;
     CustomeQlabel *image;
     Ui::Product *ui;

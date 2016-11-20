@@ -42,7 +42,8 @@ SOURCES += main.cpp\
     e_role.cpp \
     s_userdetail.cpp \
     e_state.cpp \
-    invoiceprinter.cpp
+    invoiceprinter.cpp \
+    customelineedit.cpp
 
 HEADERS  += \
     utils.h \
@@ -76,7 +77,8 @@ HEADERS  += \
     e_role.h \
     s_userdetail.h \
     e_state.h \
-    invoiceprinter.h
+    invoiceprinter.h \
+    customelineedit.h
 
 FORMS    += \
     keyboard.ui \

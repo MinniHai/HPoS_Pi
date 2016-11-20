@@ -51,6 +51,8 @@ public slots:
     void setBackToDefaul();
 
     void on_btnAdd_clicked();
+
+    void statusButtonOK();
 private slots:
     void btnPre_clicked();
 
@@ -86,7 +88,7 @@ private:
     int number;
     int index;
     bool isSet;
-    static void statusButtonOK(void) ;
+//    static void statusButtonOK(void) ;
     static void statusButtonNO(void);
     static void statusOKFalling(void);
     static void statusOKRaising(void);

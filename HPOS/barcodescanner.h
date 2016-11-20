@@ -35,7 +35,7 @@ public:
     void releaseCam();
     void capturePicture(QString imagePath, QLabel *label);
     void movePicture(QString inputPath, QString outputPath);
-    void checkCam();
+    bool checkCam();
     bool isValidBarcode(QString barcode);
     QList<IplImage *> getListBarcode (IplImage *image);
     QList<QString> listBarcode;

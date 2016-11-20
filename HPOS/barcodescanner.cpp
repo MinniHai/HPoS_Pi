@@ -123,7 +123,7 @@ QList<IplImage *> BarcodeScanner::getListBarcode (IplImage *image)
 }
 
 
-void BarcodeScanner::checkCam()
+bool BarcodeScanner::checkCam()
 {
     if(capture == 0)
     {
@@ -131,13 +131,17 @@ void BarcodeScanner::checkCam()
         if(capture)
         {
             symbols = "Camera Allready!";
+            cvReleaseCapture(&capture);
+            return true;
         }
         else
         {
             symbols = "Cannot connect to Camera!";
+            cvReleaseCapture(&capture);
+            return false;
         }
-        cvReleaseCapture(&capture);
     }
+    return false;
 }
 
 

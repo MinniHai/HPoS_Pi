@@ -235,9 +235,9 @@ QLineEdit:hover
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
-      <width>317</width>
-      <height>450</height>
+      <y>-153</y>
+      <width>315</width>
+      <height>392</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -352,14 +352,14 @@ QLineEdit:hover
      <item row="11" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Birth of Day</string>
+        <string>Day Of Birth</string>
        </property>
       </widget>
      </item>
      <item row="10" column="0">
       <widget class="QLineEdit" name="ledIdCard">
        <property name="placeholderText">
-        <string>ID Cart</string>
+        <string>ID Card</string>
        </property>
        <property name="clearButtonEnabled">
         <bool>true</bool>

@@ -14,7 +14,56 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
+   <string notr="true">QLineEdit{text-align: center;
+}
+#cbProductName 
+{
+    border: 2px solid darkgray;
+    selection-background-color: qlineargradient(spread:pad, x1:0.63, y1:0.829546, x2:0.852182, y2:0.232, stop:0 rgba(255, 170, 0, 255), stop:1 rgba(255, 220, 19, 255)) ;
+text-align: center;
+}
+#cbProductName::down-arrow
+{
+	
+	
+	image: url(:/images/images/down-arrow.png);
+}
+#cbProductName:hover,QPushButton:hover {
+     border: 2px solid qlineargradient(spread:pad, x1:0.63, y1:0.829546, x2:0.852182, y2:0.232, stop:0 rgba(255, 170, 0, 255), stop:1 rgba(255, 220, 19, 255)) ;
+ }
+
+   #cbProductName {
+    	border: 4px qlineargradient(spread:pad, x1:0.63, y1:0.829546, 			x2:0.852182, y2:0.232, stop:0 rgba(255, 170, 0, 0), stop:1 rgba(255, 220, 19, 0));
+    	border-radius: 10px;
+		
+    	background:qlineargradient(spread:pad, x1:0.63, y1:0.829546, x2:0.852182, y2:0.232, stop:0 rgba(255, 170, 0, 255), stop:1 rgba(255, 220, 19, 255)) ;
+		
+	height:40px;
+	width: 350px;
+	font: 20pt &quot;MS Shell Dlg 2&quot;;
+    padding: 1px 2px 1px 40px;
+   	text-align: center;
+    }
+  #cbProductName::drop-down
+{
+     subcontrol-origin: padding;
+     subcontrol-position: top right;
+     width: 15px;
+
+     border-left-width: 0px;
+     border-left-color: darkgray;
+     border-left-style: solid; /* just a single line */
+     border-top-right-radius: 3px; /* same radius as the QComboBox */
+     border-bottom-right-radius: 3px;
+ }
+ 
+     
+     
+    
+
+
+
+
 #frame_3
 {
 		background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y2:0.574, stop:0 rgba(255, 151, 0, 255), stop:0.75 rgba(255, 170, 0, 255));
@@ -207,75 +256,11 @@ QToolButton:hover{
      <rect>
       <x>70</x>
       <y>0</y>
-      <width>409</width>
-      <height>42</height>
+      <width>370</width>
+      <height>40</height>
      </rect>
     </property>
-    <property name="cursor">
-     <cursorShape>ArrowCursor</cursorShape>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QLineEdit{
-	text-align: center;
-}
-QComboBox QAbstractItemView
-{
-    border: 2px solid darkgray;
-    selection-background-color: qlineargradient(spread:pad, x1:0.63, y1:0.829546, x2:0.852182, y2:0.232, stop:0 rgba(255, 170, 0, 255), stop:1 rgba(255, 220, 19, 255)) ;
-text-align: center;
-}
-QComboBox::down-arrow
-{
-	
-	
-	image: url(:/images/images/down-arrow.png);
-}
-QComboBox:hover,QPushButton:hover {
-     border: 2px solid qlineargradient(spread:pad, x1:0.63, y1:0.829546, x2:0.852182, y2:0.232, stop:0 rgba(255, 170, 0, 255), stop:1 rgba(255, 220, 19, 255)) ;
- }
-
-    QComboBox {
-    	border: 4px qlineargradient(spread:pad, x1:0.63, y1:0.829546, 			x2:0.852182, y2:0.232, stop:0 rgba(255, 170, 0, 0), stop:1 rgba(255, 220, 19, 0));
-    	border-radius: 10px;
-		
-    	background:qlineargradient(spread:pad, x1:0.63, y1:0.829546, x2:0.852182, y2:0.232, stop:0 rgba(255, 170, 0, 255), stop:1 rgba(255, 220, 19, 255)) ;
-		
-	height:40px;
-	width: 350px;
-	font: 20pt &quot;MS Shell Dlg 2&quot;;
-    padding: 1px 2px 1px 40px;
-   	text-align: center;
-    }
-  QComboBox::drop-down
-{
-     subcontrol-origin: padding;
-     subcontrol-position: top right;
-     width: 15px;
-
-     border-left-width: 0px;
-     border-left-color: darkgray;
-     border-left-style: solid; /* just a single line */
-     border-top-right-radius: 3px; /* same radius as the QComboBox */
-     border-bottom-right-radius: 3px;
- }
- 
-     
-     
-    </string>
-    </property>
-    <property name="inputMethodHints">
-     <set>Qt::ImhLatinOnly</set>
-    </property>
     <property name="editable">
-     <bool>true</bool>
-    </property>
-    <property name="sizeAdjustPolicy">
-     <enum>QComboBox::AdjustToContents</enum>
-    </property>
-    <property name="duplicatesEnabled">
-     <bool>false</bool>
-    </property>
-    <property name="frame">
      <bool>true</bool>
     </property>
    </widget>
@@ -317,7 +302,7 @@ QLineEdit
 </string>
     </property>
     <property name="text">
-     <string>1000</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -393,8 +378,8 @@ QLineEdit:hover
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>317</width>
-      <height>373</height>
+      <width>315</width>
+      <height>347</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -515,7 +500,6 @@ QToolButton:hover
   </widget>
  </widget>
  <tabstops>
-  <tabstop>cbProductName</tabstop>
   <tabstop>scrollArea</tabstop>
   <tabstop>ledPrice</tabstop>
   <tabstop>ledQuantity</tabstop>

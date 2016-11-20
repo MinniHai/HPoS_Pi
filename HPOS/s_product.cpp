@@ -19,6 +19,8 @@
 #include "barcodescanner.h"
 #include "customeqlabel.h"
 #include "utils.h"
+#include "keyboard.h"
+
 #include <QMessageBox>
 #include <QPushButton>
 
@@ -66,17 +68,33 @@ S_Product::S_Product(QWidget *parent) :
     QScrollArea *scrollArea = ui->scrollArea;
     scrollArea->setWidget(parent);
     QScroller::grabGesture(scrollArea, QScroller::TouchGesture);
-    ui->cbProductName->setFixedSize(370, 40);
-    ui->cbProductName->lineEdit()->setAlignment(Qt::AlignCenter);
+
+//    ui->cbProductName = new CustomeComboBox(ui->frame_3);
+    ui->cbProductName->setGeometry(70,0,370,40);
+    ui->cbProductName->setEditable(true);
+//    ui->cbProductName->setObjectName("ui->cbProductName");
+    cbPro = (CustomeLineEdit *)ui->cbProductName->lineEdit();
+    connect(cbPro,SIGNAL(clicked()),SLOT(runKeyboard()));
+//    ui->cbProductName->setFixedSize(370, 40);
+//    ui->cbProductName->lineEdit()->setAlignment(Qt::AlignCenter);
     connect(ui->cbProductName, SIGNAL(currentIndexChanged(int)), SLOT(viewInformation(int)));
     connect(image, SIGNAL(clicked()), SLOT(capture()));
+    connect(ui->ledCountry, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+    connect(ui->ledManufacture, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+    connect(ui->ledPrice, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+    connect(ui->ledQuantity, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+    connect(ui->tetDescription, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+//    connect(ui->cbProductName,SIGNAL(),SLOT(runKeyboard()));
 }
+
+
 
 
 void S_Product::capture()
 {
     if(action == Update || action == Insert || action == InsertMore) {
         BarcodeScanner *capturer = BarcodeScanner::instance();
+
         if(capturer->timer->isActive())
         {
             E_Picture *picture = new E_Picture();
@@ -391,7 +409,7 @@ void S_Product::on_btnBack_clicked()
     {
         S_Search *searchScreen = S_Search::instance();
         searchScreen->setModal(true);
-        searchScreen->setBackToDefaul();
+//        searchScreen->setBackToDefaul();
         searchScreen->showFullScreen();
         this->close();
     }else
@@ -402,4 +420,12 @@ void S_Product::on_btnBack_clicked()
         inventoryScreen->setDataToTable();
         this->close();
     }
+}
+
+void S_Product::runKeyboard()
+{
+    QLineEdit *line = (QLineEdit *)sender();
+    Keyboard *keyboard = Keyboard::instance();
+    keyboard->setLineEdit(line);
+    keyboard->showFullScreen();
 }
