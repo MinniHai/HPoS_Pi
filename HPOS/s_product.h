@@ -46,12 +46,11 @@ public slots:
     void viewInformation(int currentIndext);
     void capture();
 private slots:
-
     void runKeyboard();
 
     void on_btnMenu_clicked();
 
-    void on_btnAddManufacture_clicked();
+    void btnAddManufacture_click();
 
     void on_btnClear_clicked();
 
@@ -59,11 +58,23 @@ private slots:
 
     void on_btnBack_clicked();
 
+    void on_btnKeyboard_clicked();
+
 private:
+    void fillLayout();
+
+    QLineEdit *lineName;
     CustomeLineEdit *cbPro;
     QList<E_Category *> cateList;
     CustomeQlabel *image;
     Ui::Product *ui;
+    CustomeLineEdit *ledCountry;
+    CustomeLineEdit *ledManufacture;
+    CustomeLineEdit *ledPrice;
+    CustomeLineEdit *ledQuantity;
+    QComboBox *cbCategory;
+    QToolButton *btnAddManufacture;
+
 };
 
 #endif // PRODUCT_H

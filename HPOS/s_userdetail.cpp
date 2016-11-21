@@ -14,6 +14,7 @@
 #include "utils.h"
 #include "barcodescanner.h"
 #include <QRegExpValidator>
+#include <QGridLayout>
 
 
 S_UserDetail *S_UserDetail::s_instance;
@@ -35,6 +36,16 @@ S_UserDetail::S_UserDetail(QWidget *parent) :
     ui->setupUi(this);
 
     listState = E_State::getAllState();
+    ledDOB = new CustomeLineEdit();
+    ledFirstName = new CustomeLineEdit();
+    ledIdCard = new CustomeLineEdit();
+    ledLastName  = new CustomeLineEdit();
+    ledPinCode = new CustomeLineEdit();
+    ledPhone = new CustomeLineEdit();
+
+    cbState = new QComboBox();
+    ledActiveTime = new QLineEdit();
+    ledEndTime = new QLineEdit();
 
     foreach(E_State *item, listState)
     {
@@ -51,15 +62,43 @@ S_UserDetail::S_UserDetail(QWidget *parent) :
     QRegExpValidator *dateVal = new QRegExpValidator(date);
     ui->ledDOB->setValidator(dateVal);
     //    ui->ledDOB->setInputMask("9999-99-99");
-    fillRolesData();
-
-    connect(ui->ledFirstName, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
-    connect(ui->ledLastName, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
-    connect(ui->ledIdCard, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
-    connect(ui->ledDOB, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
-    connect(ui->ledPhone, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
-    connect(ui->ledPinCode, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
     connect(image, SIGNAL(clicked()), SLOT(capture()));
+    fillRolesData();
+    fillLayout();
+}
+
+void S_UserDetail::fillLayout(){
+
+    QGridLayout *grid = new QGridLayout();
+    grid->addWidget(new QLabel("First Name"),0,0);
+    ledFirstName->setPlaceholderText("Enter FirstName");
+    grid->addWidget(ledFirstName,1,0);
+    grid->addWidget(new QLabel("Last Name"),2,0);
+    ledLastName->setPlaceholderText("Enter LastName");
+    grid->addWidget(ledLastName,3,0);
+    grid->addWidget(new QLabel("ID CARD"),4,0);
+    ledIdCard->setPlaceholderText("Enter ID Card");
+    grid->addWidget(ledIdCard,5,0);
+    grid->addWidget(new QLabel("Day Of Birth"),6,0);
+    ledDOB->setPlaceholderText("Form : yyyy-mm-dd");
+    grid->addWidget(ledDOB,7,0);
+    grid->addWidget(new QLabel("State"),8,0);
+    grid->addWidget(cbState,9,0);
+    grid->addWidget(new QLabel("Active Time"),10,0);
+    ledActiveTime->setDisabled(true);
+    grid->addWidget(ledActiveTime,11,0);
+    ledEndTime->setDisabled(true);
+    grid->addWidget(new QLabel("End Time"),12,0);
+    grid->addWidget(ledEndTime,13,0);
+    grid->addWidget(new QLabel("PIN Code"),14,0);
+    ledPinCode->setEchoMode(QLineEdit::PasswordEchoOnEdit);
+    ledPinCode->setPlaceholderText("Enter PIN Code");
+    grid->addWidget(ledPinCode,15,0);
+    ledPwd->setPlaceholderText("Enter Password");
+    ledPwd->setEchoMode(QLineEdit::PasswordEchoOnEdit);
+    grid->addWidget(new QLabel("Password"),16,0);
+    grid->addWidget(ledPwd,17,0);
+    ui->scrollArea->setLayout(grid);
 }
 
 void S_UserDetail::setUserDetail(E_User *user)

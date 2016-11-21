@@ -51,6 +51,7 @@ void S_Menu::showFull()
 
 void S_Menu::on_btnLogout_clicked()
 {
+    //TODO: logout
     close();
 
 }

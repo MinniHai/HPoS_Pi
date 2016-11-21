@@ -43,7 +43,6 @@ S_InventoryManager::S_InventoryManager(QWidget *parent) :
     ui->cbbSearchType->setCurrentIndex(ui->cbbSearchType->findText("Name"));
 
     ui->btnDelete->setEnabled(false);
-    listProduct = E_Product::getAllProduct();
     connect(ui->ledSearch, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
     connect(ui->ledSearch, SIGNAL(textChanged(QString)), SLOT(searchInventory(QString)));
 
@@ -88,6 +87,8 @@ void S_InventoryManager::setDataToTable()
 {
     ui->tblListInventory->clearContents();
     ui->tblListInventory->setRowCount(0);
+    listProduct.clear();
+    listProduct = E_Product::getAllProduct();
 
     if(!listProduct.isEmpty())
     {
@@ -106,11 +107,13 @@ void S_InventoryManager::setDataToTable()
             btn_edit->setText("Edit");
             btn_edit->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
             //        btn_edit->setStyleSheet("background-color:black");
+
             QHBoxLayout *pLayout = new QHBoxLayout(pWidget);
             pLayout->addWidget(btn_edit);
             pLayout->setAlignment(Qt::AlignHCenter);
             pLayout->setContentsMargins(0, 0, 0, 0);
             pWidget->setLayout(pLayout);
+            pWidget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
             ui->tblListInventory->setCellWidget(i, 5, pWidget);
             mapper->setMapping(btn_edit, i);
             connect(btn_edit, SIGNAL(clicked(bool)), mapper, SLOT(map()));

@@ -18,7 +18,7 @@
 #include <QIntValidator>
 #include "customeqlabel.h"
 #include "s_inventorymanager.h"
-#include "wiringPi.h"
+//#include "wiringPi.h"
 #include <QToolButton>
 
 using namespace std;
@@ -86,23 +86,23 @@ S_Search::S_Search(QWidget *parent) :
     connect(btnNext,SIGNAL(clicked()),SLOT(btnNext_clicked()));
     connect(btnPre,SIGNAL(clicked()),SLOT(btnPre_clicked()));
     stopScanning();
-    if(wiringPiSetup()<0)qDebug()<<"cannot setup";
+//    if(wiringPiSetup()<0)qDebug()<<"cannot setup";
 
-    pinMode(BUTTON_OK,INPUT);
-    QTimer *buttonTimer = new QTimer(this);
-    connect(buttonTimer,SIGNAL(timeout()),SLOT(statusButtonOK()));
-    buttonTimer->start(1000/15);
+//    pinMode(BUTTON_OK,INPUT);
+//    QTimer *buttonTimer = new QTimer(this);
+//    connect(buttonTimer,SIGNAL(timeout()),SLOT(statusButtonOK()));
+//    buttonTimer->start(1000/15);
 
 }
 
 void S_Search::statusButtonNO(){
-    if(digitalRead(BUTTON_NO) == 1) statusNORaising();
-    else statusNOFalling();
+//    if(digitalRead(BUTTON_NO) == 1) statusNORaising();
+//    else statusNOFalling();
 }
 
 void S_Search::statusButtonOK(){
-    if(digitalRead(BUTTON_OK) == 1) statusOKRaising();
-    else statusOKFalling();
+//    if(digitalRead(BUTTON_OK) == 1) statusOKRaising();
+//    else statusOKFalling();
 }
 
 void S_Search::statusOKFalling() {

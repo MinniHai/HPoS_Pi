@@ -27,6 +27,7 @@
 #include <QDir>
 #include <QVariant>
 #include <QDateTime>
+#include <QGridLayout>
 
 S_Product *S_Product::s_instance;
 S_Product *S_Product::instance()
@@ -50,18 +51,35 @@ S_Product::S_Product(QWidget *parent) :
     image->setObjectName("image");
     image->setAlignment(Qt::AlignCenter);
     image->setPixmap(QPixmap(":/images/images/camera.png").scaled(QSize(120, 120)));
+    ledCountry = new CustomeLineEdit();
+    ledManufacture = new CustomeLineEdit();
 
-    ui->cbCategory->addItem("");
+    ledPrice = new CustomeLineEdit(ui->frame);
+    ledPrice->setGeometry(0,179,154,62);
+    ledPrice->setObjectName("ledPrice");
+    ledPrice->setAlignment(Qt::AlignRight);
+    QLabel *priceLabel = new QLabel(ui->frame);
+    priceLabel->setGeometry(120,187,28,51);
+    priceLabel->setStyleSheet("color: rgb(255, 255, 255);");
+    priceLabel->setText("VND");
+
+    ledQuantity = new CustomeLineEdit();
+    btnAddManufacture = new QToolButton();
+    btnAddManufacture->setObjectName("btnAddManufacture");
+    btnAddManufacture->setFixedWidth(29);
+    btnAddManufacture->setText("+");
+    cbCategory = new QComboBox();
+//    cbCategory->addItem("");
 
     QRegExp date("(\\d\\d\\d\\d)");
     QRegExpValidator *dateVal = new QRegExpValidator(date);
-    ui->ledQuantity->setValidator(dateVal);
+    ledQuantity->setValidator(dateVal);
     cateList = E_Category::getAllCategory();
     if(!cateList.isEmpty())
     {
         foreach(E_Category *item, cateList)
         {
-            ui->cbCategory->addItem(item->categoryName, QVariant(item->ctID));
+            cbCategory->addItem(item->categoryName, QVariant(item->ctID));
         }
 
     }
@@ -70,25 +88,44 @@ S_Product::S_Product(QWidget *parent) :
     QScroller::grabGesture(scrollArea, QScroller::TouchGesture);
 
 //    ui->cbProductName = new CustomeComboBox(ui->frame_3);
-    ui->cbProductName->setGeometry(70,0,370,40);
+    ui->cbProductName->setGeometry(70,0,350,40);
     ui->cbProductName->setEditable(true);
 //    ui->cbProductName->setObjectName("ui->cbProductName");
     cbPro = (CustomeLineEdit *)ui->cbProductName->lineEdit();
-    connect(cbPro,SIGNAL(clicked()),SLOT(runKeyboard()));
 //    ui->cbProductName->setFixedSize(370, 40);
-//    ui->cbProductName->lineEdit()->setAlignment(Qt::AlignCenter);
+    ui->cbProductName->lineEdit()->setAlignment(Qt::AlignCenter);
     connect(ui->cbProductName, SIGNAL(currentIndexChanged(int)), SLOT(viewInformation(int)));
+
+    connect(btnAddManufacture,SIGNAL(pressed()),SLOT(btnAddManufacture_click()));
     connect(image, SIGNAL(clicked()), SLOT(capture()));
-    connect(ui->ledCountry, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
-    connect(ui->ledManufacture, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
-    connect(ui->ledPrice, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
-    connect(ui->ledQuantity, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
-    connect(ui->tetDescription, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
-//    connect(ui->cbProductName,SIGNAL(),SLOT(runKeyboard()));
+
+//    connect(ledCountry, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+//    connect(ledManufacture, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+//    connect(ledQuantity, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+
+    connect(ledPrice, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+//    connect(ui->tetDescription, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+    lineName = ui->cbProductName->lineEdit();
+    lineName->setPlaceholderText("Name Of Product");
+    fillLayout();
 }
 
+void S_Product::fillLayout(){
 
+    QGridLayout *grid = new QGridLayout();
 
+    grid->addWidget(new QLabel("Quantity"),0,0);
+    grid->addWidget(ledQuantity,1,0);
+    grid->addWidget(new QLabel("Country"),2,0);
+    grid->addWidget(ledCountry,3,0);
+    grid->addWidget(new QLabel("Manufacturer"),4,0);
+    grid->addWidget(ledManufacture,5,0);
+    grid->addWidget(btnAddManufacture,5,1);
+
+    grid->addWidget(new QLabel("Category"),6,0);
+    grid->addWidget(cbCategory,7,0);
+    ui->scrollArea->setLayout(grid);
+}
 
 void S_Product::capture()
 {
@@ -159,20 +196,20 @@ void S_Product::setBarcode(E_Barcode *barcode)
 void S_Product::setEnabled(bool isEnable)
 {
     ui->cbProductName->setEnabled(isEnable);
-    ui->cbCategory->setEnabled(isEnable);
-    ui->btnAddManufacture->setEnabled(isEnable);
-    ui->ledCountry->setEnabled(isEnable);
-    ui->ledManufacture->setEnabled(isEnable);
-    ui->ledPrice->setEnabled(isEnable);
+    cbCategory->setEnabled(isEnable);
+    btnAddManufacture->setEnabled(isEnable);
+    ledCountry->setEnabled(isEnable);
+    ledManufacture->setEnabled(isEnable);
+    ledPrice->setEnabled(isEnable);
     if(action != UpdateCart)
     {
-        ui->ledQuantity->setEnabled(isEnable);
+        ledQuantity->setEnabled(isEnable);
     }
     else
     {
-        ui->ledQuantity->setEnabled(true);
+        ledQuantity->setEnabled(true);
     }
-    ui->tetDescription->setEnabled(isEnable);
+//    ui->tetDescription->setEnabled(isEnable);
 }
 
 void S_Product::viewInformation(int currentIndext)
@@ -184,15 +221,27 @@ void S_Product::viewInformation(int currentIndext)
     }
 }
 
+
+
 void S_Product::viewInformation(E_Product *productTmp)
 {
+    if(action == Insert || action == InsertMore || action == Update) {
+        ui->btnKeyboard->setVisible(true);
+    } else {
+        ui->btnKeyboard->setVisible(false);
+    }
     this->product = productTmp;
+    if(action == View || action == Update || action == UpdateCart)
+    {
+        ledQuantity->setText(QString::number(productTmp->quantity));
+    } else {
+        ledQuantity->setText(QString::number(1));
+    }
 
     if(action == View || action == Update || action == UpdateCart || action == InsertMore)
     {
         ui->cbProductName->clear();
         ui->cbProductName->addItem(productTmp->name, QVariant(productTmp->proID));
-        ui->ledQuantity->setText(QString::number(productTmp->quantity));
         qDebug() << productTmp->name;
     }
     else
@@ -201,34 +250,34 @@ void S_Product::viewInformation(E_Product *productTmp)
     }
     if(productTmp->price > 0)
     {
-        ui->ledPrice->setText(QString::number(productTmp->price));
+        ledPrice->setText(QString::number(productTmp->price));
     }
     if(productTmp->barcode->country)
     {
-        ui->ledCountry->setText(productTmp->barcode->country->name);
+        ledCountry->setText(productTmp->barcode->country->name);
     }
     else
     {
-        ui->ledCountry->setText("");
+        ledCountry->setText("");
     }
 
     if(productTmp->barcode->manufacturer)
     {
-        ui->ledManufacture->setText(productTmp->barcode->manufacturer->manuName);
+        ledManufacture->setText(productTmp->barcode->manufacturer->manuName);
     }
     else
     {
-        ui->ledManufacture->setText("");
+        ledManufacture->setText("");
     }
-    ui->tetDescription->setText(productTmp->description);
+//    ui->tetDescription->setText(productTmp->description);
 
     if(productTmp->category)
     {
-        ui->cbCategory->setCurrentIndex(ui->cbCategory->findText(productTmp->category->categoryName));
+        cbCategory->setCurrentIndex(cbCategory->findText(productTmp->category->categoryName));
     }
     else
     {
-        ui->cbCategory->setCurrentIndex(0);
+        cbCategory->setCurrentIndex(0);
     }
 
     if(!productTmp->listPicture.isEmpty())
@@ -242,12 +291,12 @@ void S_Product::viewInformation(E_Product *productTmp)
 
 void S_Product::clearAll()
 {
-    ui->ledCountry->setText("");
-    ui->ledManufacture->setText("");
-    ui->ledPrice->setText("");
-    ui->ledQuantity->setText("");
-    ui->tetDescription->setText("");
-    ui->cbCategory->setCurrentIndex(0);
+    ledCountry->setText("");
+    ledManufacture->setText("");
+    ledPrice->setText("");
+    ledQuantity->setText("");
+//    ui->tetDescription->setText("");
+    cbCategory->setCurrentIndex(0);
 }
 
 S_Product::~S_Product()
@@ -273,10 +322,10 @@ void S_Product::on_btnMenu_clicked()
 
 void S_Product::refreshManufacturer()
 {
-    ui->ledManufacture->setText(product->barcode->manufacturer->manuName);
+    ledManufacture->setText(product->barcode->manufacturer->manuName);
 }
 
-void S_Product::on_btnAddManufacture_clicked()
+void S_Product::btnAddManufacture_click()
 {
     S_Manufacture *manufacture = S_Manufacture::instance();
     manufacture->setModal(true);
@@ -301,18 +350,18 @@ void S_Product::on_btnClear_clicked()
 
 void S_Product::setQuantityText(int quantity)
 {
-    ui->ledQuantity->setText(QString::number(quantity));
+    ledQuantity->setText(QString::number(quantity));
 }
 
 void S_Product::on_btnSave_clicked()
 {
     if(action == UpdateCart)
     {
-        if(ui->ledQuantity->text().toInt() < product->quantity)
+        if(ledQuantity->text().toInt() < product->quantity)
         {
             ShoppingCart::instance()->subTotal -= product->price * ShoppingCart::instance()->quantity[ShoppingCart::instance()->cart.indexOf(product)];
             ShoppingCart::instance()->quantity[ShoppingCart::instance()->cart.indexOf(product)] =
-                    ui->ledQuantity->text().toInt();
+                    ledQuantity->text().toInt();
             ShoppingCart::instance()->subTotal += product->price * ShoppingCart::instance()->quantity[ShoppingCart::instance()->cart.indexOf(product)];
             on_btnBack_clicked();
         }
@@ -321,14 +370,14 @@ void S_Product::on_btnSave_clicked()
             QMessageBox::warning(this, "Warning", "Not enough items for sale. Max: " + QString::number(product->quantity));
         }
     }
-    else
+    else if(ledPrice->text().toInt() > 0)
     {
         QHash<QString, QString> proHash;
         proHash.insert("proName", ui->cbProductName->currentText());
-        proHash.insert("proPrice", ui->ledPrice->text());
-        proHash.insert("quantity", ui->ledQuantity->text());
-        proHash.insert("ctID", ui->cbCategory->currentData().toString());
-        proHash.insert("proDes", ui->tetDescription->toPlainText());
+        proHash.insert("proPrice", ledPrice->text());
+        proHash.insert("quantity", ledQuantity->text());
+        proHash.insert("ctID", cbCategory->currentData().toString());
+//        proHash.insert("proDes", ui->tetDescription->toPlainText());
         if(action == Insert)
         {
             if(E_Product::insertProduct(proHash))
@@ -387,12 +436,26 @@ void S_Product::on_btnSave_clicked()
         else if(action == InsertMore)
         {
             proHash.clear();
-            proHash.insert("quantity", QString::number(ui->ledQuantity->text().toInt() + product->quantity));
+            proHash.insert("quantity", QString::number(ledQuantity->text().toInt() + product->quantity));
             if(E_Product::upateProduct(proHash, product->proID))
             {
                 qDebug() << "Insert more product : Ok";
+                QMessageBox box ;
+                box.setText("Insert more product :Done!");
+                QPushButton *ok = box.addButton(QMessageBox::Ok);
+                box.exec();
+                if(box.clickedButton() == ok)
+                {
+                    on_btnBack_clicked();
+                }
+            }
+            else
+            {
+                QMessageBox::warning(this, "Warning", "Something was wrong.");
             }
         }
+    } else {
+        QMessageBox::warning(this, "Warning", "Quantity must be larger than 0.");
     }
 }
 void S_Product::on_btnBack_clicked()
@@ -416,8 +479,8 @@ void S_Product::on_btnBack_clicked()
     {
         S_InventoryManager *inventoryScreen = S_InventoryManager::instance();
         inventoryScreen->setModal(true);
-        inventoryScreen->showFullScreen();
         inventoryScreen->setDataToTable();
+        inventoryScreen->showFullScreen();
         this->close();
     }
 }
@@ -427,5 +490,14 @@ void S_Product::runKeyboard()
     QLineEdit *line = (QLineEdit *)sender();
     Keyboard *keyboard = Keyboard::instance();
     keyboard->setLineEdit(line);
+    keyboard->showFullScreen();
+}
+
+void S_Product::on_btnKeyboard_clicked()
+{
+    QLineEdit *line = lineName;
+    Keyboard *keyboard = Keyboard::instance();
+    keyboard->setLineEdit(line);
+
     keyboard->showFullScreen();
 }

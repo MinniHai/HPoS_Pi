@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "customeqlabel.h"
+#include "customelineedit.h"
 
 class E_User;
 class E_State;
@@ -52,6 +53,20 @@ private slots:
     void capture();
 
 private:
+    void fillLayout();
+    CustomeLineEdit *ledFirstName;
+    CustomeLineEdit *ledLastName;
+    CustomeLineEdit *ledIdCard;
+    CustomeLineEdit *ledDOB;
+    CustomeLineEdit *ledPhone;
+    CustomeLineEdit *ledPinCode;
+    CustomeLineEdit *ledPwd;
+
+    QComboBox *cbState;
+    QLineEdit *ledActiveTime;
+    QLineEdit *ledEndTime;
+
+
     Ui::S_UserDetail *ui;
     void fillRolesData();
     void fillDataUserDetail();
