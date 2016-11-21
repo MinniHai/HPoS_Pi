@@ -46,6 +46,8 @@ S_InventoryManager::S_InventoryManager(QWidget *parent) :
     connect(ui->ledSearch, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
     connect(ui->ledSearch, SIGNAL(textChanged(QString)), SLOT(searchInventory(QString)));
 
+    listProduct.clear();
+    listProduct = E_Product::getAllProduct();
 }
 
 
@@ -87,8 +89,6 @@ void S_InventoryManager::setDataToTable()
 {
     ui->tblListInventory->clearContents();
     ui->tblListInventory->setRowCount(0);
-    listProduct.clear();
-    listProduct = E_Product::getAllProduct();
 
     if(!listProduct.isEmpty())
     {
@@ -214,10 +214,8 @@ void S_InventoryManager::searchInventory(QString text)
                     listProduct.append(pro);
                     qDebug() << "append";
                 }
-
             }
         }
-
     }
     setDataToTable();
 }

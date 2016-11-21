@@ -51,10 +51,10 @@ S_Product::S_Product(QWidget *parent) :
     image->setObjectName("image");
     image->setAlignment(Qt::AlignCenter);
     image->setPixmap(QPixmap(":/images/images/camera.png").scaled(QSize(120, 120)));
+
     ledCountry = new CustomeLineEdit();
-    ledCountry->setClearButtonEnabled(true);
     ledManufacture = new CustomeLineEdit();
-    ledManufacture->setDisabled(true);
+
     ledPrice = new CustomeLineEdit(ui->frame);
     ledPrice->setGeometry(0,179,154,62);
     ledPrice->setObjectName("ledPrice");
@@ -202,8 +202,8 @@ void S_Product::setEnabled(bool isEnable)
     ui->cbProductName->setEnabled(isEnable);
     cbCategory->setEnabled(isEnable);
     btnAddManufacture->setEnabled(isEnable);
-    ledCountry->setEnabled(isEnable);
-    ledManufacture->setEnabled(isEnable);
+    ledCountry->setEnabled(false);
+    ledManufacture->setEnabled(false);
     ledPrice->setEnabled(isEnable);
     if(action != UpdateCart)
     {
@@ -476,13 +476,13 @@ void S_Product::on_btnBack_clicked()
     {
         S_Search *searchScreen = S_Search::instance();
         searchScreen->setModal(true);
-//        searchScreen->setBackToDefaul();
         searchScreen->showFullScreen();
         this->close();
     }else
     {
         S_InventoryManager *inventoryScreen = S_InventoryManager::instance();
         inventoryScreen->setModal(true);
+        inventoryScreen->listProduct = E_Product::getAllProduct();
         inventoryScreen->setDataToTable();
         inventoryScreen->showFullScreen();
         this->close();

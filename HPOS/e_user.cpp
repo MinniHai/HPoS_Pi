@@ -64,7 +64,7 @@ QList<E_User *> E_User::getAllUser()
     QList <E_User *> listUser;
 
     Repository *userRepo = new E_User();
-    userRepo->setSelectQuery("*", "User");
+    userRepo->setSelectQuery("*", "User","stateID","1");
     foreach(Repository *item, userRepo->getListEntityByQuery())
     {
         listUser.append((E_User *)item);
