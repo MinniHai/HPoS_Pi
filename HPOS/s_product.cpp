@@ -235,10 +235,13 @@ void S_Product::viewInformation(E_Product *productTmp)
         ui->btnKeyboard->setVisible(false);
     }
     this->product = productTmp;
-    if(action == View || action == Update || action == UpdateCart)
+    if(action == View || action == Update  )
     {
         ledQuantity->setText(QString::number(productTmp->quantity));
-    } else {
+    } if(action == UpdateCart){
+        ledQuantity->setText(QString::number(ShoppingCart::instance()->quantity[ShoppingCart::instance()->cart.indexOf(productTmp)]));
+    }
+    else {
         ledQuantity->setText(QString::number(1));
     }
 
