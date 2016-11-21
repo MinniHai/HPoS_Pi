@@ -36,11 +36,12 @@ public:
     E_Barcode *barcode;
     void setProduct(E_Product *product);
     void setEnabled(bool);
-    void setBarcode(E_Barcode *barcode);
+    void setProductInsert(E_Product *pro);
     void clearAll();
     void viewInformation(E_Product *productTmp);
     void refreshManufacturer();
     void setQuantityText(int quantity);
+    CustomeQlabel *image;
 
 public slots:
     void viewInformation(int currentIndext);
@@ -66,7 +67,6 @@ private:
     QLineEdit *lineName;
     CustomeLineEdit *cbPro;
     QList<E_Category *> cateList;
-    CustomeQlabel *image;
     Ui::Product *ui;
     CustomeLineEdit *ledCountry;
     CustomeLineEdit *ledManufacture;

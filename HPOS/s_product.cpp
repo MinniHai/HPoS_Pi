@@ -89,24 +89,16 @@ S_Product::S_Product(QWidget *parent) :
     scrollArea->setWidget(parent);
     QScroller::grabGesture(scrollArea, QScroller::TouchGesture);
 
-//    ui->cbProductName = new CustomeComboBox(ui->frame_3);
     ui->cbProductName->setGeometry(70,0,350,40);
     ui->cbProductName->setEditable(true);
-//    ui->cbProductName->setObjectName("ui->cbProductName");
     cbPro = (CustomeLineEdit *)ui->cbProductName->lineEdit();
-//    ui->cbProductName->setFixedSize(370, 40);
     ui->cbProductName->lineEdit()->setAlignment(Qt::AlignCenter);
-    connect(ui->cbProductName, SIGNAL(currentIndexChanged(int)), SLOT(viewInformation(int)));
+//    connect(ui->cbProductName, SIGNAL(currentIndexChanged(int)), SLOT(viewInformation(int)));
 
     connect(btnAddManufacture,SIGNAL(pressed()),SLOT(btnAddManufacture_click()));
     connect(image, SIGNAL(clicked()), SLOT(capture()));
 
-//    connect(ledCountry, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
-//    connect(ledManufacture, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
-//    connect(ledQuantity, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
-
     connect(ledPrice, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
-//    connect(ui->tetDescription, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
     lineName = ui->cbProductName->lineEdit();
     lineName->setPlaceholderText("Name Of Product");
     fillLayout();
@@ -176,25 +168,27 @@ void S_Product::capture()
     }
 }
 
-void S_Product::setBarcode(E_Barcode *barcode)
+void S_Product::setProductInsert(E_Product *pro)
 {
-    this->barcode = barcode;
+    disconnect(ui->cbProductName, SIGNAL(currentIndexChanged(int)),this, SLOT(viewInformation(int)));
     ui->cbProductName->clear();
-    product = new E_Product();
+
+    product = pro;
     product->proID = E_Product::getMaxID().toInt() + 1;
-    product->barcode = barcode;
     product->barcode->country = E_Country::getCountryByPrefix(product->barcode->countryPrefix);
     product->barcode->manufacturer = E_Manufacturer::getManufacturerByPrefix(product->barcode->manufacturerPrefix);
     ui->cbProductName->addItem(product->name);
     productList.clear();
     productList.append(product);
-    foreach(E_Barcode *item, E_Barcode::getBarcodeByManuRefix(barcode->manufacturerPrefix))
+
+    foreach(E_Barcode *item, E_Barcode::getBarcodeByManuRefix(product->barcode->manufacturerPrefix))
     {
         E_Product *pro = E_Product::getProductByID(item->proID);
         productList.append(pro);
         ui->cbProductName->addItem(pro->name , QVariant(product->proID));
     }
     viewInformation(product);
+    connect(ui->cbProductName, SIGNAL(currentIndexChanged(int)), SLOT(viewInformation(int)));
 }
 
 void S_Product::setEnabled(bool isEnable)
@@ -202,8 +196,7 @@ void S_Product::setEnabled(bool isEnable)
     ui->cbProductName->setEnabled(isEnable);
     cbCategory->setEnabled(isEnable);
     btnAddManufacture->setEnabled(isEnable);
-    ledCountry->setEnabled(false);
-    ledManufacture->setEnabled(false);
+
     ledPrice->setEnabled(isEnable);
     if(action != UpdateCart)
     {
@@ -229,13 +222,15 @@ void S_Product::viewInformation(int currentIndext)
 
 void S_Product::viewInformation(E_Product *productTmp)
 {
+    ledCountry->setEnabled(true);
+    ledManufacture->setEnabled(true);
     if(action == Insert || action == InsertMore || action == Update) {
         ui->btnKeyboard->setVisible(true);
     } else {
         ui->btnKeyboard->setVisible(false);
     }
     this->product = productTmp;
-    if(action == View || action == Update  )
+    if(action == View || action == Update)
     {
         ledQuantity->setText(QString::number(productTmp->quantity));
     } if(action == UpdateCart){
@@ -294,6 +289,8 @@ void S_Product::viewInformation(E_Product *productTmp)
         image->repaint();
         image->show();
     }
+    ledCountry->setEnabled(false);
+    ledManufacture->setEnabled(false);
 }
 
 void S_Product::clearAll()

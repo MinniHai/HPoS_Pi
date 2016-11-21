@@ -169,7 +169,7 @@ void S_Search::viewInformation()
         }
         else if(action == Insert)
         {
-            if(product)
+            if(!product->name.isEmpty())
             {
                 qDebug() << "UPDATE";
                 productScreen->action = S_Product::InsertMore;
@@ -179,13 +179,14 @@ void S_Search::viewInformation()
             {
                 qDebug() << "Insert";
                 productScreen->action = S_Product::Insert;
-                E_Barcode *barcode = new E_Barcode();
-                barcode->analysisBarcode(bc->getSymbols());
-                productScreen->setBarcode(barcode);
+                listProduct[index]->barcode->analysisBarcode(listProduct[index]->barcode->barcode);
+                productScreen->setProductInsert(listProduct[index]);
             }
             productScreen->setEnabled(true);
+            productScreen->image->setFocus();
             productScreen->showFullScreen();
-            isOpen = false;this->close();
+            isOpen = false;
+            this->close();
         }
     }
 }
