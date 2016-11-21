@@ -37,11 +37,19 @@ S_UserDetail::S_UserDetail(QWidget *parent) :
 
     listState = E_State::getAllState();
     ledDOB = new CustomeLineEdit();
+    ledDOB->setClearButtonEnabled(true);
     ledFirstName = new CustomeLineEdit();
+    ledFirstName->setClearButtonEnabled(true);
     ledIdCard = new CustomeLineEdit();
+    ledIdCard->setClearButtonEnabled(true);
     ledLastName  = new CustomeLineEdit();
+    ledLastName->setClearButtonEnabled(true);
     ledPinCode = new CustomeLineEdit();
+    ledPinCode->setClearButtonEnabled(true);
     ledPhone = new CustomeLineEdit();
+    ledPhone->setClearButtonEnabled(true);
+    ledPwd = new CustomeLineEdit();
+    ledPwd->setClearButtonEnabled(true);
 
     cbState = new QComboBox();
     ledActiveTime = new QLineEdit();
@@ -49,7 +57,7 @@ S_UserDetail::S_UserDetail(QWidget *parent) :
 
     foreach(E_State *item, listState)
     {
-        ui->cbState->addItem(item->state, QVariant(item->stateID));
+        cbState->addItem(item->state, QVariant(item->stateID));
     }
 
     image = new  CustomeQlabel("", ui->frame);
@@ -60,8 +68,8 @@ S_UserDetail::S_UserDetail(QWidget *parent) :
 
     QRegExp date("((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])");
     QRegExpValidator *dateVal = new QRegExpValidator(date);
-    ui->ledDOB->setValidator(dateVal);
-    //    ui->ledDOB->setInputMask("9999-99-99");
+    ledDOB->setValidator(dateVal);
+    //    ledDOB->setInputMask("9999-99-99");
     connect(image, SIGNAL(clicked()), SLOT(capture()));
     fillRolesData();
     fillLayout();
@@ -69,6 +77,7 @@ S_UserDetail::S_UserDetail(QWidget *parent) :
 
 void S_UserDetail::fillLayout(){
 
+    QWidget *wget = new QWidget();
     QGridLayout *grid = new QGridLayout();
     grid->addWidget(new QLabel("First Name"),0,0);
     ledFirstName->setPlaceholderText("Enter FirstName");
@@ -82,23 +91,28 @@ void S_UserDetail::fillLayout(){
     grid->addWidget(new QLabel("Day Of Birth"),6,0);
     ledDOB->setPlaceholderText("Form : yyyy-mm-dd");
     grid->addWidget(ledDOB,7,0);
-    grid->addWidget(new QLabel("State"),8,0);
-    grid->addWidget(cbState,9,0);
-    grid->addWidget(new QLabel("Active Time"),10,0);
+
+    grid->addWidget(new QLabel("Phone Number"),8,0);
+    ledPhone->setPlaceholderText("Phone Number");
+    grid->addWidget(ledPhone,9,0);
+    grid->addWidget(new QLabel("State"),10,0);
+    grid->addWidget(cbState,11,0);
+    grid->addWidget(new QLabel("Active Time"),12,0);
     ledActiveTime->setDisabled(true);
-    grid->addWidget(ledActiveTime,11,0);
+    grid->addWidget(ledActiveTime,13,0);
     ledEndTime->setDisabled(true);
-    grid->addWidget(new QLabel("End Time"),12,0);
-    grid->addWidget(ledEndTime,13,0);
-    grid->addWidget(new QLabel("PIN Code"),14,0);
+    grid->addWidget(new QLabel("End Time"),14,0);
+    grid->addWidget(ledEndTime,15,0);
+    grid->addWidget(new QLabel("PIN Code"),16,0);
     ledPinCode->setEchoMode(QLineEdit::PasswordEchoOnEdit);
     ledPinCode->setPlaceholderText("Enter PIN Code");
-    grid->addWidget(ledPinCode,15,0);
+    grid->addWidget(ledPinCode,17,0);
     ledPwd->setPlaceholderText("Enter Password");
     ledPwd->setEchoMode(QLineEdit::PasswordEchoOnEdit);
-    grid->addWidget(new QLabel("Password"),16,0);
-    grid->addWidget(ledPwd,17,0);
-    ui->scrollArea->setLayout(grid);
+    grid->addWidget(new QLabel("Password"),18,0);
+    grid->addWidget(ledPwd,19,0);
+    wget->setLayout(grid);
+    ui->scrollArea->setWidget(wget);
 }
 
 void S_UserDetail::setUserDetail(E_User *user)
@@ -148,17 +162,17 @@ void S_UserDetail::fillDataUserDetail()
 {
     if(user)
     {
-        ui->ledFirstName->setText(user->firstname);
-        ui->ledIdCard->setText(user->idCard);
-        ui->ledLastName->setText(user->lastname);
-        ui->ledPhone->setText(user->phone);
-        ui->ledPinCode->setText(user->pincode);
-        ui->ledDOB->setText(user->DOB);
+        ledFirstName->setText(user->firstname);
+        ledIdCard->setText(user->idCard);
+        ledLastName->setText(user->lastname);
+        ledPhone->setText(user->phone);
+        ledPinCode->setText(user->pincode);
+        ledDOB->setText(user->DOB);
         ui->cbRoles->setCurrentIndex(ui->cbRoles->findText(user->roleType->roleType));
-        ui->ledActiveTime->setText(user->activeTime.replace("T"," "));
-        ui->ledEndTime->setText(user->endTime.replace("T"," "));
-        ui->cbState->setCurrentIndex(ui->cbState->findText(user->state->state));
-        ui->ledPwd->setText(user->pwd);
+        ledActiveTime->setText(user->activeTime.replace("T"," "));
+        ledEndTime->setText(user->endTime.replace("T"," "));
+        cbState->setCurrentIndex(cbState->findText(user->state->state));
+        ledPwd->setText(user->pwd);
         if(!user->picUrl.isEmpty())
         {
             image->setPixmap(QPixmap(QDir::currentPath() + "/" + user->picUrl).scaled(image->size()));
@@ -183,15 +197,15 @@ void S_UserDetail::fillRolesData()
 
 void S_UserDetail::clearAll()
 {
-    ui->ledFirstName->setText("");
-    ui->ledIdCard->setText("");
-    ui->ledLastName->setText("");
-    ui->ledPhone->setText("");
-    ui->ledPinCode->setText("");
-    ui->ledDOB->setText("");
+    ledFirstName->setText("");
+    ledIdCard->setText("");
+    ledLastName->setText("");
+    ledPhone->setText("");
+    ledPinCode->setText("");
+    ledDOB->setText("");
     ui->cbRoles->setCurrentIndex(1);
-    ui->ledActiveTime->setText("");
-    ui->ledEndTime->setText("");
+    ledActiveTime->setText("");
+    ledEndTime->setText("");
     image->setEnabled(true);
     image->setPixmap(QPixmap(":/images/images/camera.png").scaled(QSize(120, 120)));
 }
@@ -226,21 +240,21 @@ void S_UserDetail::runKeyboard()
 void S_UserDetail::on_btnSave_clicked()
 {
     QHash<QString, QString> userHash;
-    userHash.insert("firstName", ui->ledFirstName->text());
-    userHash.insert("lastName", ui->ledLastName->text());
-    userHash.insert("phone", ui->ledPhone->text());
-    userHash.insert("pinCode", ui->ledPinCode->text());
+    userHash.insert("firstName", ledFirstName->text());
+    userHash.insert("lastName", ledLastName->text());
+    userHash.insert("phone", ledPhone->text());
+    userHash.insert("pinCode", ledPinCode->text());
     userHash.insert("roleID", ui->cbRoles->currentData().toString());
-    userHash.insert("idCard", ui->ledIdCard->text());
-    if(!ui->ledDOB->text().isEmpty())
-        userHash.insert("DOB", ui->ledDOB->text());
-    userHash.insert("pwd", ui->ledPwd->text());
-    userHash.insert("stateID", ui->cbState->currentData().toString());
+    userHash.insert("idCard", ledIdCard->text());
+    if(!ledDOB->text().isEmpty())
+        userHash.insert("DOB", ledDOB->text());
+    userHash.insert("pwd", ledPwd->text());
+    userHash.insert("stateID", cbState->currentData().toString());
     userHash.insert("pictureUrl", user->picUrl);
-    if(ui->cbState->currentData().toInt() == 1 && user->activeTime.isEmpty()){
+    if(cbState->currentData().toInt() == 1 && user->activeTime.isEmpty()){
         userHash.insert("activeTime", Utils::instance()->getCurrentDateTime());
     }
-    if(ui->cbState->currentData().toInt() == 4 && user->endTime.isEmpty()) {
+    if(cbState->currentData().toInt() == 4 && user->endTime.isEmpty()) {
         userHash.insert("endTime",Utils::instance()->getCurrentDateTime());
     }
 

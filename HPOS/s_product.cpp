@@ -52,8 +52,9 @@ S_Product::S_Product(QWidget *parent) :
     image->setAlignment(Qt::AlignCenter);
     image->setPixmap(QPixmap(":/images/images/camera.png").scaled(QSize(120, 120)));
     ledCountry = new CustomeLineEdit();
+    ledCountry->setClearButtonEnabled(true);
     ledManufacture = new CustomeLineEdit();
-
+    ledManufacture->setDisabled(true);
     ledPrice = new CustomeLineEdit(ui->frame);
     ledPrice->setGeometry(0,179,154,62);
     ledPrice->setObjectName("ledPrice");
@@ -64,6 +65,7 @@ S_Product::S_Product(QWidget *parent) :
     priceLabel->setText("VND");
 
     ledQuantity = new CustomeLineEdit();
+    ledQuantity->setClearButtonEnabled(true);
     btnAddManufacture = new QToolButton();
     btnAddManufacture->setObjectName("btnAddManufacture");
     btnAddManufacture->setFixedWidth(29);
@@ -112,6 +114,7 @@ S_Product::S_Product(QWidget *parent) :
 
 void S_Product::fillLayout(){
 
+    QWidget *wget = new QWidget();
     QGridLayout *grid = new QGridLayout();
 
     grid->addWidget(new QLabel("Quantity"),0,0);
@@ -124,7 +127,8 @@ void S_Product::fillLayout(){
 
     grid->addWidget(new QLabel("Category"),6,0);
     grid->addWidget(cbCategory,7,0);
-    ui->scrollArea->setLayout(grid);
+    wget->setLayout(grid);
+    ui->scrollArea->setWidget(wget);
 }
 
 void S_Product::capture()
