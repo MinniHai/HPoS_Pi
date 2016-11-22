@@ -233,7 +233,7 @@ void S_Product::viewInformation(E_Product *productTmp)
     if(action == View || action == Update)
     {
         ledQuantity->setText(QString::number(productTmp->quantity));
-    } if(action == UpdateCart){
+    }else if(action == UpdateCart){
         ledQuantity->setText(QString::number(ShoppingCart::instance()->quantity[ShoppingCart::instance()->cart.indexOf(productTmp)]));
     }
     else {
@@ -291,6 +291,7 @@ void S_Product::viewInformation(E_Product *productTmp)
     }
     ledCountry->setEnabled(false);
     ledManufacture->setEnabled(false);
+    image->setFocus();
 }
 
 void S_Product::clearAll()

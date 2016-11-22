@@ -65,13 +65,15 @@ S_Search::S_Search(QWidget *parent) :
     btnPre = new QToolButton(ui->frame_3);
     btnPre->setGeometry(0,60,40,121);
     btnPre->setIcon(QIcon(":/images/images/pre.png"));
-    btnPre->setStyleSheet("border-top-right-radius:34px;"
+    btnPre->setStyleSheet("border:0;"
+                          "border-top-right-radius:34px;"
                           "border-bottom-right-radius:34px;");
 
     btnNext = new QToolButton(ui->frame_3);
     btnNext->setGeometry(360,60,40,121);
     btnNext->setIcon(QIcon(":/images/images/next.png"));
-    btnNext->setStyleSheet("border-top-left-radius:34px;"
+    btnNext->setStyleSheet("border:0;"
+                           "border-top-left-radius:34px;"
                            "border-bottom-left-radius:34px;");
     isScanned = false;
     txtSearch->setValidator(new QIntValidator);

@@ -14,6 +14,7 @@
 #include <QHBoxLayout>
 #include <QDebug>
 #include <QVariant>
+#include <QFont>
 
 S_InventoryManager *S_InventoryManager::s_instance;
 
@@ -42,9 +43,16 @@ S_InventoryManager::S_InventoryManager(QWidget *parent) :
 
     ui->cbbSearchType->setCurrentIndex(ui->cbbSearchType->findText("Name"));
 
+    ledSearch = new CustomeLineEdit(ui->frame_3);
+    ledSearch->setGeometry(60,0,301,41);
+    ledSearch->setObjectName("ledSearch");
+    QFont font("times",50,QFont::Normal,true);
+    ledSearch->setFont(font);
+    ledSearch->setPlaceholderText("Search...");
+    ledSearch->setClearButtonEnabled(true);
+
     ui->btnDelete->setEnabled(false);
-    connect(ui->ledSearch, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
-    connect(ui->ledSearch, SIGNAL(textChanged(QString)), SLOT(searchInventory(QString)));
+    connect(ledSearch, SIGNAL(textChanged(QString)), SLOT(searchInventory(QString)));
 
     listProduct.clear();
     listProduct = E_Product::getAllProduct();
@@ -120,6 +128,7 @@ void S_InventoryManager::setDataToTable()
         }
         connect(mapper, SIGNAL(mapped(int)), this, SLOT(edit_clicked(int)));
     }
+    ui->btnBack->setFocus();
 }
 
 void S_InventoryManager::edit_clicked(int row)
@@ -157,7 +166,7 @@ void S_InventoryManager::on_btnNew_clicked()
 void S_InventoryManager::runKeyboard()
 {
     Keyboard *keyboard = Keyboard::instance();
-    QLineEdit *line = ui->ledSearch;
+    QLineEdit *line = ledSearch;
     keyboard->setLineEdit(line);
     keyboard->setWindowModality(Qt::WindowModal);
     keyboard->showFullScreen();

@@ -4,6 +4,7 @@
 #include "s_menu.h"
 #include "keyboard.h"
 #include <QMessageBox>
+#include <QFont>
 
 S_Login *S_Login::s_instance;
 S_Login *S_Login::instance()
@@ -20,7 +21,14 @@ S_Login::S_Login(QWidget *parent) :
     ui(new Ui::Login)
 {
     ui->setupUi(this);
-    connect(ui->ledPassword, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
+    ledPassword = new CustomeLineEdit(ui->groupBox_2);
+    ledPassword->setGeometry(10,20,301,51);
+    ledPassword->setObjectName("ledPassword");
+    ledPassword->setEchoMode(QLineEdit::Password);
+    ledPassword->setAlignment(Qt::AlignCenter);
+    QFont font("times",50,QFont::Normal,true);
+    ledPassword->setFont(font);
+    connect(ledPassword, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
 }
 
 S_Login::~S_Login()
@@ -30,10 +38,10 @@ S_Login::~S_Login()
 
 void S_Login::login()
 {
-    if(ui->ledPassword->text().length() > 1)
+    if(ledPassword->text().length() > 1)
     {
         E_User *user = new E_User();
-        user  = user->getUserByPincode(ui->ledPassword->text());
+        user  = user->getUserByPincode(ledPassword->text());
         if(user != NULL)
         {
             if(user->stateID == Active)

@@ -13,6 +13,8 @@
 #include <QItemSelection>
 #include <QModelIndex>
 #include "e_state.h"
+#include <QFont>
+
 
 S_UserManager *S_UserManager::s_instance;
 
@@ -39,11 +41,18 @@ S_UserManager::S_UserManager(QWidget *parent) :
         ui->cbbSearchType->addItem(item->state, QVariant(item->stateID));
     }
 
+    ledSearch = new CustomeLineEdit(ui->frame_3);
+    ledSearch->setGeometry(60,0,301,41);
+    ledSearch->setObjectName("ledSearch");
+    QFont font("times",50,QFont::Normal,true);
+    ledSearch->setFont(font);
+    ledSearch->setPlaceholderText("Search...");
+    ledSearch->setClearButtonEnabled(true);
+
     ui->btnDelete->setEnabled(false);
     ui->tblListUser->setSelectionMode(QAbstractItemView::MultiSelection);
     ui->tblListUser->setSelectionBehavior(QAbstractItemView::SelectRows);
-    connect(ui->ledSearch, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
-    connect(ui->ledSearch, SIGNAL(textChanged(QString)), SLOT(search()));
+    connect(ledSearch, SIGNAL(textChanged(QString)), SLOT(search()));
     connect(ui->cbbSearchType, SIGNAL(currentIndexChanged(int)), SLOT(search()));
 
 }
@@ -154,7 +163,7 @@ void S_UserManager::on_btnBack_clicked()
 void S_UserManager::runKeyboard()
 {
     Keyboard *keyboard = Keyboard::instance();
-    QLineEdit *line = ui->ledSearch;
+    QLineEdit *line = ledSearch;
     keyboard->setLineEdit(line);
     keyboard->setWindowModality(Qt::WindowModal);
     keyboard->showFullScreen();
@@ -188,6 +197,6 @@ void S_UserManager::on_btnDelete_clicked()
 
 void S_UserManager::search()
 {
-    listUser = E_User::SearchByUserName(ui->ledSearch->text(), ui->cbbSearchType->currentData().toString());
+    listUser = E_User::SearchByUserName(ledSearch->text(), ui->cbbSearchType->currentData().toString());
     setDataToTable();
 }

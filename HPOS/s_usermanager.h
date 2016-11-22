@@ -5,6 +5,7 @@
 #include <QList>
 #include <QTableWidget>
 #include <QTableWidgetItem>
+#include "customelineedit.h"
 
 class E_User;
 class E_State;
@@ -49,6 +50,7 @@ private slots:
 private:
     QList<E_State *> listState;
     Ui::S_UserManager *ui;
+    CustomeLineEdit *ledSearch;
 };
 
 #endif // S_USERMANAGER_H

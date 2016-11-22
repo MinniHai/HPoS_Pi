@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "ui_loginScreen.h"
 #include <QDebug>
+#include "customelineedit.h"
 
 namespace Ui {
     class Login;
@@ -34,6 +35,7 @@ private slots:
 
 private:
     void login();
+    CustomeLineEdit *ledPassword;
     Ui::Login *ui;
 };
 

@@ -5,6 +5,7 @@
 #include <QList>
 #include <QTableWidget>
 #include <QTableWidgetItem>
+#include "customelineedit.h"
 
 class E_Product;
 namespace Ui {
@@ -42,6 +43,7 @@ private:
 
     void resizeEvent(QResizeEvent *);
     Ui::S_InventoryManager *ui;
+    CustomeLineEdit *ledSearch;
 };
 
 #endif // S_INVENTORYMANAGER_H

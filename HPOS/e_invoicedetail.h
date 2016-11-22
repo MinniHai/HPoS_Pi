@@ -2,6 +2,8 @@
 #define E_INVOICEDETAIL_H
 
 #include "repository.h"
+
+
 class E_InvoiceDetail : public Repository
 {
 public:
@@ -15,6 +17,7 @@ public:
 
     static E_InvoiceDetail *getInvoiceDetailByID(QString ID);
     static bool insertIvDetail(QHash<QString, QString> invoiceDetail);
+
 };
 
 #endif // E_INVOICEDETAIL_H

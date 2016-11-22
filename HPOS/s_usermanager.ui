@@ -14,7 +14,20 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
+   <string notr="true"> QLineEdit {
+    	border: 4px qlineargradient(spread:pad, x1:0.63, y1:0.829546, 			x2:0.852182, y2:0.232, stop:0 rgba(255, 170, 0, 0), stop:1 rgba(255, 220, 19, 0));
+    	border-radius: 10px;
+		
+    	background:qlineargradient(spread:pad, x1:0.63, y1:0.829546, x2:0.852182, y2:0.232, stop:0 rgba(255, 170, 0, 255), stop:1 rgba(255, 220, 19, 255)) ;
+		
+	font: 20pt &quot;MS Shell Dlg 2&quot;;
+    padding: 1px 2px 1px 40px;
+	color: rgb(255, 255, 255);
+    }
+QLineEdit:pressed{
+	padding-right:12px;
+}
+ 
 #frame_3
 {
 		background-color: qlineargradient(spread:pad, x1:0.637, y1:0.279591, x2:0.489, y2:0.574, stop:0 rgba(255, 151, 0, 255), stop:0.75 rgba(255, 170, 0, 255));
@@ -126,38 +139,6 @@ QToolButton:hover{
       <width>120</width>
       <height>120</height>
      </size>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="ledSearch">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>0</y>
-      <width>301</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"> QLineEdit {
-    	border: 4px qlineargradient(spread:pad, x1:0.63, y1:0.829546, 			x2:0.852182, y2:0.232, stop:0 rgba(255, 170, 0, 0), stop:1 rgba(255, 220, 19, 0));
-    	border-radius: 10px;
-		
-    	background:qlineargradient(spread:pad, x1:0.63, y1:0.829546, x2:0.852182, y2:0.232, stop:0 rgba(255, 170, 0, 255), stop:1 rgba(255, 220, 19, 255)) ;
-		
-	font: 20pt &quot;MS Shell Dlg 2&quot;;
-    padding: 1px 2px 1px 40px;
-	color: rgb(255, 255, 255);
-    }
-QLineEdit:pressed{
-	padding-right:12px;
-}
- </string>
-    </property>
-    <property name="placeholderText">
-     <string>Search .....</string>
-    </property>
-    <property name="clearButtonEnabled">
-     <bool>true</bool>
     </property>
    </widget>
    <widget class="QComboBox" name="cbbSearchType">
@@ -393,7 +374,7 @@ QComboBox:hover,QPushButton:hover {
      </font>
     </property>
     <property name="textAlignment">
-     <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+     <set>AlignCenter</set>
     </property>
    </column>
    <column>
@@ -407,7 +388,7 @@ QComboBox:hover,QPushButton:hover {
      </font>
     </property>
     <property name="textAlignment">
-     <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+     <set>AlignCenter</set>
     </property>
    </column>
    <column>
@@ -421,7 +402,7 @@ QComboBox:hover,QPushButton:hover {
      </font>
     </property>
     <property name="textAlignment">
-     <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+     <set>AlignCenter</set>
     </property>
    </column>
    <column>
@@ -435,7 +416,7 @@ QComboBox:hover,QPushButton:hover {
      </font>
     </property>
     <property name="textAlignment">
-     <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+     <set>AlignCenter</set>
     </property>
    </column>
    <column>
@@ -449,7 +430,7 @@ QComboBox:hover,QPushButton:hover {
      </font>
     </property>
     <property name="textAlignment">
-     <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+     <set>AlignCenter</set>
     </property>
    </column>
   </widget>
