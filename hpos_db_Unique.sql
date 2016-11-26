@@ -162,9 +162,11 @@ proID INT NOT NULL,
 countryPrefix nvarchar(10) not null,
 manuPrefix nvarchar(10) not null,
 productPrefix nvarchar(10) not null unique,
+quantity int not null,
 checkDigit INT NULL,
 imDate DATE NOT NULL,
 imTime TIME NOT NULL,
+cost double not null, -- tien mua hang/von'.
 primary key(barcodeID),
 constraint fk_Barcode_Country
 foreign key (countryPrefix)
@@ -222,12 +224,12 @@ INSERT INTO `HPoS`.`ActionType` (`actionType`) VALUES ('Modify Employee');
 INSERT INTO `HPoS`.`ActionType` (`actionType`) VALUES ('Remove Employee');
 
 -- Insert Product 
-INSERT INTO `HPoS`.`Product` (`proName`, `proPrice`, `proDes`,`quantity`,`ctID`) VALUES ('Aquafina', '6000', NULL,'41','14');
+INSERT INTO `HPoS`.`Product` (`proName`, `proPrice`, `proDes`,`quantity`,`ctID`) VALUES ('Aquafina', '6000', NULL,'24','14');
 INSERT INTO `HPoS`.`Product` (`proName`, `proPrice`, `proDes`, `quantity`,`ctID`) VALUES ('Raspberry Pi 3', '1200000', '', '10','6');
 
 -- Insert Barcode
-INSERT INTO `HPoS`.`Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `checkDigit`, `imDate`, `imTime`) VALUES ('1', '893', '4588', '06305', '3', '2016-10-12', '16:32:00');
-INSERT INTO `HPoS`.`Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `checkDigit`, `imDate`, `imTime`) VALUES ('2', '506', '0214', '37002', '8', '2016-10-15', '11:27:00');
+INSERT INTO `HPoS`.`Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `checkDigit`, `imDate`, `imTime`,`cost`,`quantity`) VALUES ('1', '893', '4588', '06305', '3', '2016-10-12', '16:32:00',1000,24);
+INSERT INTO `HPoS`.`Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `checkDigit`, `imDate`, `imTime`,`cost`,`quantity`) VALUES ('2', '506', '0214', '37002', '8', '2016-10-15', '11:27:00',5500,10);
 
 
  -- Category data
