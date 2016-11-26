@@ -110,9 +110,10 @@ CREATE TABLE InvoiceDetail (
 );
 -- Table History
 create table History(
-historyID INT NOT NULL,
+historyID INT NOT NULL AUTO_INCREMENT,
 actionTypeID INT NOT NULL,
 historyTime time not null,
+historyDate date not null,
 historyDescription nvarchar(150) NULL,
 userID INT NOT NULL,
 primary key (historyID),
@@ -201,35 +202,63 @@ CREATE TABLE Category (
  -- User data
  
 
-INSERT INTO `HPoS`.`State` (`state`) VALUES ('Active');
-INSERT INTO `HPoS`.`State` (`state`) VALUES ('Pending');
-INSERT INTO `HPoS`.`State` (`state`) VALUES ('Suspend');
-INSERT INTO `HPoS`.`State` (`state`) VALUES ('End');
+INSERT INTO `State` (`state`) VALUES ('Active');
+INSERT INTO `State` (`state`) VALUES ('Pending');
+INSERT INTO `State` (`state`) VALUES ('Suspend');
+INSERT INTO `State` (`state`) VALUES ('End');
 
 
 
-  INSERT INTO User ( lastname, firstname,  DOB,  roleID,  pincode, stateID,pwd)
- VALUES ( 'admin', 'admin',  '1991-06-22',   '1', '123123','1','123123');  
+INSERT INTO User ( lastname, firstname,  DOB,  roleID,  pincode, stateID,pwd)
+VALUES ( 'admin', 'admin',  '1991-06-22',   '1', '123123','1','123123');  
+INSERT INTO `User` (`pinCode`, `lastName`, `firstName`, `DOB`, `stateID`, `roleID`, `pwd`) VALUES ('1234', 'Hieu', 'Dang', '1992-11-11', '1', '2', '1234');
+INSERT INTO `User` (`pinCode`, `lastName`, `firstName`, `DOB`, `stateID`, `roleID`, `pwd`) VALUES ('9999', 'Ho', 'Le', '1993-11-11', '1', '2', '9999');
+
 
 -- Insert Company
-INSERT INTO `HPoS`.`Manufacturer` (`manuPrefix`, `manuName`, `address`, `phone`, `logoUrl`) VALUES ('4588', 'PepsiCo', '', '', '');
-INSERT INTO `HPoS`.`Manufacturer` (`manuPrefix`, `manuName`, `address`) VALUES ('0214', 'Electrocomponents plc', 'John Wheeler');
+INSERT INTO `Manufacturer` (`manuPrefix`, `manuName`, `address`, `phone`, `logoUrl`) VALUES ('4588', 'PepsiCo', '', '', '');
+INSERT INTO `Manufacturer` (`manuPrefix`, `manuName`, `address`) VALUES ('0214', 'Electrocomponents plc', 'John Wheeler');
+INSERT INTO `Manufacturer` (`manuPrefix`, `manuName`, `address`) VALUES ('4567', 'OPC Co', 'Binh Duong');
+INSERT INTO `Manufacturer` (`manuPrefix`, `manuName`, `address`) VALUES ('7534', 'PocketBac', 'Texas');
 
 -- Insert ActionType
-INSERT INTO `HPoS`.`ActionType` (`actionType`) VALUES ('Add Inventory');
-INSERT INTO `HPoS`.`ActionType` (`actionType`) VALUES ('Modify Inventory');
-INSERT INTO `HPoS`.`ActionType` (`actionType`) VALUES ('Remove Inventory');
-INSERT INTO `HPoS`.`ActionType` (`actionType`) VALUES ('Add Employee');
-INSERT INTO `HPoS`.`ActionType` (`actionType`) VALUES ('Modify Employee');
-INSERT INTO `HPoS`.`ActionType` (`actionType`) VALUES ('Remove Employee');
+INSERT INTO `ActionType` (`actionType`) VALUES ('Add Inventory');
+INSERT INTO `ActionType` (`actionType`) VALUES ('Modify Inventory');
+INSERT INTO `ActionType` (`actionType`) VALUES ('Remove Inventory');
+INSERT INTO `ActionType` (`actionType`) VALUES ('Add Employee');
+INSERT INTO `ActionType` (`actionType`) VALUES ('Modify Employee');
+INSERT INTO `ActionType` (`actionType`) VALUES ('Remove Employee');
+INSERT INTO `ActionType` (`actionType`) VALUES ('Login');
+INSERT INTO `ActionType` (`actionType`) VALUES ('Logout');
 
 -- Insert Product 
-INSERT INTO `HPoS`.`Product` (`proName`, `proPrice`, `proDes`,`quantity`,`ctID`) VALUES ('Aquafina', '6000', NULL,'24','14');
-INSERT INTO `HPoS`.`Product` (`proName`, `proPrice`, `proDes`, `quantity`,`ctID`) VALUES ('Raspberry Pi 3', '1200000', '', '10','6');
+INSERT INTO `Product` (`proName`, `proPrice`, `proDes`,`quantity`,`ctID`) VALUES ('Aquafina', '6000', NULL,'24','14');
+INSERT INTO `Product` (`proName`, `proPrice`, `proDes`, `quantity`,`ctID`) VALUES ('Raspberry Pi 3', '1200000', '', '10','6');
+INSERT INTO `Product` (`proName`, `proPrice`, `quantity`, `ctID`, `proDes`) VALUES ('Alcool 90', '10000', '50', '15', 'Oxi gia');
+INSERT INTO `Product` (`proName`, `proPrice`, `quantity`, `ctID`, `proDes`) VALUES ('Anti-bacterial', '40000', '100', '15', 'Rua tay');
 
 -- Insert Barcode
-INSERT INTO `HPoS`.`Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `checkDigit`, `imDate`, `imTime`,`cost`,`quantity`) VALUES ('1', '893', '4588', '06305', '3', '2016-10-12', '16:32:00',1000,24);
-INSERT INTO `HPoS`.`Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `checkDigit`, `imDate`, `imTime`,`cost`,`quantity`) VALUES ('2', '506', '0214', '37002', '8', '2016-10-15', '11:27:00',5500,10);
+INSERT INTO `Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `checkDigit`, `imDate`, `imTime`,`cost`,`quantity`) VALUES ('1', '893', '4588', '06305', '3', '2016-10-12', '16:32:00',1000,24);
+INSERT INTO `Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `checkDigit`, `imDate`, `imTime`,`cost`,`quantity`) VALUES ('2', '506', '0214', '37002', '8', '2016-10-15', '11:27:00',5500,10);
+INSERT INTO `Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `quantity`, `checkDigit`, `imDate`, `imTime`, `cost`) VALUES ('3', '893', '4567', '00317', '50', '9', '2016-11-26', '18:00:00', '3000');
+INSERT INTO `Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `quantity`, `checkDigit`, `imDate`, `imTime`, `cost`) VALUES ('4', '066', '7534', '74110', '100', '8', '2016-11-26', '20:30:00', '15000');
+
+-- Insert Invoice
+INSERT INTO `Invoice` (`userID`, `ivDate`, `ivTime`, `subtotal`, `total`) VALUES ('2', '2016-11-26', '10:30:00', '100000', '100000');
+INSERT INTO `Invoice` (`userID`, `ivDate`, `ivTime`, `subtotal`, `total`) VALUES ('3', '2016-11-26', '14:45:11', '1256000', '1256000');
+
+-- Insert Invoice Detail
+INSERT INTO `InvoiceDetail` (`ivID`, `proID`, `quantity`, `subtotal`) VALUES ('1', '3', '10', '100000');
+INSERT INTO `InvoiceDetail` (`ivID`, `proID`, `quantity`, `subtotal`) VALUES ('2', '1', '1', '6000');
+INSERT INTO `InvoiceDetail` (`ivID`, `proID`, `quantity`, `subtotal`) VALUES ('2', '2', '1', '1200000');
+INSERT INTO `InvoiceDetail` (`ivID`, `proID`, `quantity`, `subtotal`) VALUES ('2', '3', '1', '10000');
+INSERT INTO `InvoiceDetail` (`ivID`, `proID`, `quantity`, `subtotal`) VALUES ('2', '4', '1', '40000');
+
+-- history
+INSERT INTO `History` (`actionTypeID`, `historyTime`, `historyDate`, `historyDescription`, `userID`) VALUES ('7', '07:00:00', '2016-11-26', 'start', '2');
+INSERT INTO `History` (`actionTypeID`, `historyTime`, `historyDate`, `historyDescription`, `userID`) VALUES ('8', '12:00:00', '2016-11-26', 'end', '2');
+INSERT INTO `History` (`actionTypeID`, `historyTime`, `historyDate`, `historyDescription`, `userID`) VALUES ('7', '12:01:00', '2016-11-26', 'start', '3');
+INSERT INTO `History` (`actionTypeID`, `historyTime`, `historyDate`, `historyDescription`, `userID`) VALUES ('8', '17:00:00', '2016-11-26', 'end', '3');
 
 
  -- Category data
@@ -259,7 +288,7 @@ INSERT INTO `HPoS`.`Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPr
  VALUES (NULL, 'Book');
  INSERT INTO Category (ctID, ctName)
  VALUES (NULL, 'Wine');
-  INSERT INTO `HPoS`.`Category` (`ctName`) VALUES ('Water');
+  INSERT INTO `Category` (`ctName`) VALUES ('Water');
  INSERT INTO Category (ctID, ctName)
  VALUES (NULL, 'Other');
 
