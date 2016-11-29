@@ -58,7 +58,7 @@ QToolButton:hover
 	
 	background-color: qlineargradient(spread:reflect, x1:0.653, y1:0.699136, x2:0.437227, y2:0.057, stop:0.159091 rgba(59, 59, 59, 255), stop:0.846591 rgba(143, 143, 143, 255));
 }
-#btnDelete{
+#btnReport{
 	background-color: qlineargradient(spread:pad, x1:0.528, y1:0.749227, x2:0.795, y2:0.209818, stop:0.1875 rgba(218, 0, 0, 255), stop:0.818182 rgba(232, 0, 0, 255));
 
 }
@@ -269,7 +269,7 @@ QComboBox:hover,QPushButton:hover {
      </size>
     </property>
    </widget>
-   <widget class="QToolButton" name="btnDelete">
+   <widget class="QToolButton" name="btnReport">
     <property name="geometry">
      <rect>
       <x>360</x>
@@ -342,7 +342,7 @@ QComboBox:hover,QPushButton:hover {
     <bool>true</bool>
    </property>
    <attribute name="horizontalHeaderVisible">
-    <bool>false</bool>
+    <bool>true</bool>
    </attribute>
    <attribute name="horizontalHeaderCascadingSectionResizes">
     <bool>false</bool>

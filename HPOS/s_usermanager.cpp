@@ -4,6 +4,8 @@
 #include "e_role.h"
 #include "s_menu.h"
 #include "s_userdetail.h"
+#include "empreportscreen.h"
+
 #include "keyboard.h"
 #include <QResizeEvent>
 #include <QPushButton>
@@ -14,6 +16,7 @@
 #include <QModelIndex>
 #include "e_state.h"
 #include <QFont>
+#include <QScrollBar>
 
 
 S_UserManager *S_UserManager::s_instance;
@@ -49,9 +52,15 @@ S_UserManager::S_UserManager(QWidget *parent) :
     ledSearch->setPlaceholderText("Search...");
     ledSearch->setClearButtonEnabled(true);
 
-    ui->btnDelete->setEnabled(false);
+    ui->tblListUser->horizontalHeader()->setVisible(true);
     ui->tblListUser->setSelectionMode(QAbstractItemView::MultiSelection);
     ui->tblListUser->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tblListUser->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->tblListUser->horizontalHeader()->setSectionResizeMode (QHeaderView::Fixed);
+    ui->tblListUser->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    ui->tblListUser->verticalScrollBar()->setStyleSheet(
+        "QScrollBar:vertical { width: 15; }");
+
     connect(ledSearch, SIGNAL(textChanged(QString)), SLOT(search()));
     connect(ui->cbbSearchType, SIGNAL(currentIndexChanged(int)), SLOT(search()));
 
@@ -63,13 +72,12 @@ S_UserManager::~S_UserManager()
 }
 void S_UserManager::resizeEvent(QResizeEvent *)
 {
-    int width =  480;
+    int width =  480 -17;
     ui->tblListUser->setColumnWidth(0, width * 4 / 15);
     ui->tblListUser->setColumnWidth(1, width * 4 / 15);
     ui->tblListUser->setColumnWidth(2, width * 2 / 15);
     ui->tblListUser->setColumnWidth(3, width * 4 / 15);
-    ui->tblListUser->setColumnWidth(4, width * 0.95 / 15);
-    //TODO: scroll off
+    ui->tblListUser->setColumnWidth(4, width * 1 / 15);
 }
 void S_UserManager::setDataToTable()
 {
@@ -169,29 +177,29 @@ void S_UserManager::runKeyboard()
     keyboard->showFullScreen();
 }
 
-void S_UserManager::on_btnDelete_clicked()
-{
-    QItemSelection selection(ui->tblListUser->selectionModel()->selection());
+//void S_UserManager::on_btnDelete_clicked()
+//{
+//    QItemSelection selection(ui->tblListUser->selectionModel()->selection());
 
-    qDebug() <<  selection.indexes().size();
-    QList<int > listDelete;
+//    qDebug() <<  selection.indexes().size();
+//    QList<int > listDelete;
 
-    foreach(QModelIndex item, selection.indexes())
-    {
-        if(!listDelete.contains(item.row()))
-        {
-            listDelete.append(item.row());
-        }
-    }
-    foreach(int item, listDelete)
-    {
-        if(E_User::deleteUser(listUser.at(item)->userID))
-        {
-            qDebug() << "delete successfull!";
-        }
-    }
+//    foreach(QModelIndex item, selection.indexes())
+//    {
+//        if(!listDelete.contains(item.row()))
+//        {
+//            listDelete.append(item.row());
+//        }
+//    }
+//    foreach(int item, listDelete)
+//    {
+//        if(E_User::deleteUser(listUser.at(item)->userID))
+//        {
+//            qDebug() << "delete successfull!";
+//        }
+//    }
 
-}
+//}
 
 
 
@@ -199,4 +207,12 @@ void S_UserManager::search()
 {
     listUser = E_User::SearchByUserName(ledSearch->text(), ui->cbbSearchType->currentData().toString());
     setDataToTable();
+}
+
+void S_UserManager::on_btnReport_clicked()
+{
+    EmpReportScreen *emp = EmpReportScreen::instance();
+    emp->setModal(true);
+    emp->showFullScreen();
+    this->close();
 }

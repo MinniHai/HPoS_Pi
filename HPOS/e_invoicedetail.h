@@ -3,7 +3,7 @@
 
 #include "repository.h"
 
-
+class E_Product;
 class E_InvoiceDetail : public Repository
 {
 public:
@@ -14,8 +14,10 @@ public:
     QString proID;
     int quantity;
     ulong subtotal;
+    E_Product *product;
 
     static E_InvoiceDetail *getInvoiceDetailByID(QString ID);
+    static QList<E_InvoiceDetail *> getListInvoiceDetailByIvID(QString ivID);
     static bool insertIvDetail(QHash<QString, QString> invoiceDetail);
 
 };

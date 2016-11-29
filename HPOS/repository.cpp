@@ -43,6 +43,52 @@ void Repository::setUpdateQuery(QString into, QHash<QString, QString> hash, QStr
     //TODO: database NULL
 }
 
+void Repository::setUpdateQuery(QString into, QHash<QString, QString> hash,
+                                QString where1, QString equal1,
+                                QString where2, QString equal2,
+                                QString where3, QString equal3
+                                )
+{
+    if(database)
+    {
+        if(database->open())
+        {
+            query = QSqlQuery(*database);
+
+            QString queryString = "UPDATE " + into ;
+            QString valuesString = " SET ";
+            QHashIterator<QString, QString> values(hash);
+            while(values.hasNext())
+            {
+                values.next();
+                if(values.hasNext())
+                {
+                    valuesString.append(values.key() + "= :" + values.key() + " , ");
+                }
+                else
+                {
+                    valuesString.append(values.key() + "= :" + values.key() + " WHERE " +
+                                        where1 + " = :equal1" +
+                                        where2 + " = :equal2" +
+                                        where3 + " = :equal3"
+                                        );
+                }
+            }
+            queryString.append(valuesString);
+            qDebug() << queryString;
+            query.prepare(queryString);
+            while(values.hasPrevious())
+            {
+                values.previous();
+                query.bindValue(":" + values.key(), values.value());
+            }
+            query.bindValue(":equal1", equal1);
+            query.bindValue(":equal2", equal2);
+            query.bindValue(":equal3", equal3);
+        }
+    }
+    //TODO: database NULL
+}
 
 void Repository::setDeleteQuery(QString table, QString where, QString equal)
 {
@@ -123,6 +169,26 @@ void Repository::setSelectQuery(QString select, QString from, QString where, QSt
         }
     }
     //TODO: database NULL
+}
+
+void Repository::setSelectQueryFromTo(QString select, QString from,
+                                QString where1, QString fromDate,
+                                 QString toDate
+                               )
+{
+    if(database)
+    {
+        if(database->open())
+        {
+            query = QSqlQuery(*database);
+            QString queryString = "SELECT " + select + " FROM " + from + " WHERE "
+                                  + ":equal1" + " <= " + where1 + " AND " + where1+" <= :equal2";
+            query.prepare(queryString);
+            query.bindValue(":equal1", fromDate);
+            query.bindValue(":equal2",  toDate);
+        }
+    }
+
 }
 
 void Repository::setSelectQuery(QString select, QString from,
@@ -332,4 +398,18 @@ QList<Repository *> Repository::getListEntityByQuery()
         }
     }
     return listRepository;
+}
+
+
+void Repository::getAllBarcodeSortedByProID(QString proID){
+    if(database)
+    {
+        if(database->open())
+        {
+            query = QSqlQuery(*database);
+            query.prepare("Select * from (SELECT * FROM HPoS.Barcode where proID = :equal AND quantity > 0 order by imDate ) as a order by a.imTime"
+                         );
+            query.bindValue(":equal", proID );
+        }
+    }
 }

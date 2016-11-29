@@ -2,6 +2,7 @@
 #include "e_product.h"
 #include "e_invoice.h"
 #include "e_invoicedetail.h"
+#include "e_barcode.h"
 
 #include "session.h"
 #include "utils.h"
@@ -83,24 +84,66 @@ bool ShoppingCart::saveCarts()
         for(int i = 0; i < cart.size(); i++)
         {
             E_Product *item = cart[i];
-            QHash<QString, QString> ivDetail;
-            ivDetail.insert("ivID", E_Invoice::getMaxID());
-            ivDetail.insert("proID", item->proID);
-            ivDetail.insert("quantity", QString::number(quantity[i]));
-            ivDetail.insert("subtotal", QString::number(item->price * quantity[i]));
-            if(!E_InvoiceDetail::insertIvDetail(ivDetail))
-            {
-                return false;
-            }
-            else
-            {
-                QHash <QString , QString> product;
-                product.insert("quantity", QString::number(item->quantity - quantity[i]));
-                E_Product::upateProduct(product, item->proID);
+            int qty = quantity[i];
+            QList<E_Barcode *> barlist = E_Barcode::getAllBarcodeSortedByProID(item->proID);
+
+            foreach (E_Barcode *barItem, barlist) {
+
+                if(qty < barItem->quantity)
+                {
+                    QHash<QString, QString> ivDetail;
+                    ivDetail.insert("ivID", E_Invoice::getMaxID());
+                    ivDetail.insert("barcodeID", QString::number(barItem->barcodeID));
+                    ivDetail.insert("quantity", QString::number(qty));
+                    ivDetail.insert("subtotal", QString::number(item->price * (qty)));
+
+                    if(!E_InvoiceDetail::insertIvDetail(ivDetail))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        QHash <QString , QString> product;
+                        product.insert("quantity", QString::number(item->quantity -qty));
+                        if(E_Product::upateProduct(product, item->proID))
+                        {
+                            QHash <QString , QString> bar;
+                            bar.insert("quantity", QString::number(barItem->quantity - qty));
+                            if(!E_Barcode::upateBarcode(bar,QString::number(barItem->barcodeID))){
+                                return false;
+                            }
+                        }
+                    }
+                } else {
+
+                    QHash<QString, QString> ivDetail;
+                    ivDetail.insert("ivID", E_Invoice::getMaxID());
+                    ivDetail.insert("barcodeID", QString::number(barItem->barcodeID));
+                    ivDetail.insert("quantity", QString::number(barItem->quantity));
+                    ivDetail.insert("subtotal", QString::number(item->price * (barItem->quantity)));
+
+                    if(!E_InvoiceDetail::insertIvDetail(ivDetail))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        qty = qty - barItem->quantity;
+                        QHash <QString , QString> product;
+                        product.insert("quantity", QString::number(item->quantity -  qty));
+                        if(E_Product::upateProduct(product, item->proID))
+                        {
+                            QHash <QString , QString> bar;
+                            bar.insert("quantity", QString::number(0));
+                            if(!E_Barcode::upateBarcode(bar,QString::number(barItem->barcodeID))){
+                                return false;
+                            }
+                        }
+                    }
+                }
             }
         }
         return true;
     }
     return false;
-
 }

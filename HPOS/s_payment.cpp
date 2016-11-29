@@ -72,7 +72,7 @@ void S_Payment::on_btnCheckOK_clicked()
     }
     else
     {
-        QMessageBox::warning(this, "Warning", "Not Enought Money for Cash");
+        QMessageBox::warning(this, "Warning", "Not Enough Money for Cash");
     }
 }
 

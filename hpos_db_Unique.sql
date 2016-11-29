@@ -97,13 +97,13 @@ CREATE TABLE Picture (
 CREATE TABLE InvoiceDetail (
  dtID INT NOT NULL AUTO_INCREMENT,
  ivID INT NOT NULL,
- proID INT NOT NULL,
+ barcodeID INT NOT NULL,
  quantity INT NOT NULL,
  subtotal double NOT NULL,
  PRIMARY KEY (dtID),
- CONSTRAINT fk_InvoiceDetail_Product
- FOREIGN KEY (proID)
- REFERENCES Product (proID),
+ CONSTRAINT fk_InvoiceDetail_Barcode
+ FOREIGN KEY (barcodeID)
+ REFERENCES Barcode (barcodeID),
  CONSTRAINT fk_InvoiceDetail_Invoice 
  FOREIGN KEY (ivID)
  REFERENCES Invoice (ivID)
@@ -238,28 +238,54 @@ INSERT INTO `Product` (`proName`, `proPrice`, `quantity`, `ctID`, `proDes`) VALU
 INSERT INTO `Product` (`proName`, `proPrice`, `quantity`, `ctID`, `proDes`) VALUES ('Anti-bacterial', '40000', '100', '15', 'Rua tay');
 
 -- Insert Barcode
-INSERT INTO `Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `checkDigit`, `imDate`, `imTime`,`cost`,`quantity`) VALUES ('1', '893', '4588', '06305', '3', '2016-10-12', '16:32:00',1000,24);
-INSERT INTO `Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `checkDigit`, `imDate`, `imTime`,`cost`,`quantity`) VALUES ('2', '506', '0214', '37002', '8', '2016-10-15', '11:27:00',5500,10);
-INSERT INTO `Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `quantity`, `checkDigit`, `imDate`, `imTime`, `cost`) VALUES ('3', '893', '4567', '00317', '50', '9', '2016-11-26', '18:00:00', '3000');
-INSERT INTO `Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `quantity`, `checkDigit`, `imDate`, `imTime`, `cost`) VALUES ('4', '066', '7534', '74110', '100', '8', '2016-11-26', '20:30:00', '15000');
+INSERT INTO `Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `checkDigit`, `imDate`, `imTime`,`cost`,`quantity`) 
+VALUES ('1', '893', '4588', '06305', '3', '2016-10-12', '16:32:00','1000000','24');
+INSERT INTO `Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `checkDigit`, `imDate`, `imTime`,`cost`,`quantity`) 
+VALUES ('2', '506', '0214', '37002', '8', '2016-10-15', '11:27:00','4000','10');
+INSERT INTO `Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `quantity`, `checkDigit`, `imDate`, `imTime`, `cost`) 
+VALUES ('3', '893', '4567', '00317', '50', '9', '2016-11-26', '18:00:00', '7000');
+INSERT INTO `Barcode` (`proID`, `countryPrefix`, `manuPrefix`, `productPrefix`, `quantity`, `checkDigit`, `imDate`, `imTime`, `cost`) 
+VALUES ('4', '066', '7534', '74110', '100', '8', '2016-11-26', '20:30:00', '30000');
 
 -- Insert Invoice
 INSERT INTO `Invoice` (`userID`, `ivDate`, `ivTime`, `subtotal`, `total`) VALUES ('2', '2016-11-26', '10:30:00', '100000', '100000');
 INSERT INTO `Invoice` (`userID`, `ivDate`, `ivTime`, `subtotal`, `total`) VALUES ('3', '2016-11-26', '14:45:11', '1256000', '1256000');
+INSERT INTO `Invoice` (`userID`, `ivDate`, `ivTime`, `subtotal`, `total`) VALUES ('2', '2016-10-20', '09:53:00', '1200000', '1200000');
+INSERT INTO `Invoice` (`userID`, `ivDate`, `ivTime`, `subtotal`, `total`) VALUES ('2', '2016-10-30', '11:01:00', '120000', '120000');
+INSERT INTO `Invoice` (`userID`, `ivDate`, `ivTime`, `subtotal`, `total`) VALUES ('3', '2016-11-27', '15:15:14', '250000', '250000');
+INSERT INTO `Invoice` (`userID`, `ivDate`, `ivTime`, `subtotal`, `total`) VALUES ('3', '2016-11-27', '16:05:54', '10000', '10000');
+INSERT INTO `Invoice` (`userID`, `ivDate`, `ivTime`, `subtotal`, `total`) VALUES ('3', '2016-11-27', '16:57:54', '2500000', '2500000');
+INSERT INTO `Invoice` (`userID`, `ivDate`, `ivTime`, `subtotal`, `total`) VALUES ('2', '2016-11-28', '08:09:00', '13200000', '13200000');
 
 -- Insert Invoice Detail
-INSERT INTO `InvoiceDetail` (`ivID`, `proID`, `quantity`, `subtotal`) VALUES ('1', '3', '10', '100000');
-INSERT INTO `InvoiceDetail` (`ivID`, `proID`, `quantity`, `subtotal`) VALUES ('2', '1', '1', '6000');
-INSERT INTO `InvoiceDetail` (`ivID`, `proID`, `quantity`, `subtotal`) VALUES ('2', '2', '1', '1200000');
-INSERT INTO `InvoiceDetail` (`ivID`, `proID`, `quantity`, `subtotal`) VALUES ('2', '3', '1', '10000');
-INSERT INTO `InvoiceDetail` (`ivID`, `proID`, `quantity`, `subtotal`) VALUES ('2', '4', '1', '40000');
+INSERT INTO `InvoiceDetail` (`ivID`, `barcodeID`, `quantity`, `subtotal`) VALUES ('1', '3', '10', '100000');
+INSERT INTO `InvoiceDetail` (`ivID`, `barcodeID`, `quantity`, `subtotal`) VALUES ('2', '1', '1', '6000');
+INSERT INTO `InvoiceDetail` (`ivID`, `barcodeID`, `quantity`, `subtotal`) VALUES ('2', '2', '1', '1200000');
+INSERT INTO `InvoiceDetail` (`ivID`, `barcodeID`, `quantity`, `subtotal`) VALUES ('2', '3', '1', '10000');
+INSERT INTO `InvoiceDetail` (`ivID`, `barcodeID`, `quantity`, `subtotal`) VALUES ('2', '4', '1', '40000');
+INSERT INTO `InvoiceDetail` (`ivID`, `barcodeID`, `quantity`, `subtotal`) VALUES ('3', '2', '1', '1200000');
+INSERT INTO `InvoiceDetail` (`ivID`, `barcodeID`, `quantity`, `subtotal`) VALUES ('4', '1', '20', '120000');
+INSERT INTO `InvoiceDetail` (`ivID`, `barcodeID`, `quantity`, `subtotal`) VALUES ('5', '3', '5', '50000');
+INSERT INTO `InvoiceDetail` (`ivID`, `barcodeID`, `quantity`, `subtotal`) VALUES ('5', '4', '5', '200000');
+INSERT INTO `InvoiceDetail` (`ivID`, `barcodeID`, `quantity`, `subtotal`) VALUES ('6', '3', '1', '10000');
+INSERT INTO `InvoiceDetail` (`ivID`, `barcodeID`, `quantity`, `subtotal`) VALUES ('7', '2', '2', '2400000');
+INSERT INTO `InvoiceDetail` (`ivID`, `barcodeID`, `quantity`, `subtotal`) VALUES ('7', '3', '2', '20000');
+INSERT INTO `InvoiceDetail` (`ivID`, `barcodeID`, `quantity`, `subtotal`) VALUES ('7', '4', '2', '800000');
+INSERT INTO `InvoiceDetail` (`ivID`, `barcodeID`, `quantity`, `subtotal`) VALUES ('8', '2', '11', '13200000');
 
 -- history
 INSERT INTO `History` (`actionTypeID`, `historyTime`, `historyDate`, `historyDescription`, `userID`) VALUES ('7', '07:00:00', '2016-11-26', 'start', '2');
 INSERT INTO `History` (`actionTypeID`, `historyTime`, `historyDate`, `historyDescription`, `userID`) VALUES ('8', '12:00:00', '2016-11-26', 'end', '2');
 INSERT INTO `History` (`actionTypeID`, `historyTime`, `historyDate`, `historyDescription`, `userID`) VALUES ('7', '12:01:00', '2016-11-26', 'start', '3');
 INSERT INTO `History` (`actionTypeID`, `historyTime`, `historyDate`, `historyDescription`, `userID`) VALUES ('8', '17:00:00', '2016-11-26', 'end', '3');
-
+INSERT INTO `History` (`actionTypeID`, `historyTime`, `historyDate`, `historyDescription`, `userID`) VALUES ('7', '07:00:00', '2016-10-20', 'start', '2');
+INSERT INTO `History` (`actionTypeID`, `historyTime`, `historyDate`, `historyDescription`, `userID`) VALUES ('8', '12:00:00', '2016-10-20', 'end', '2');
+INSERT INTO `History` (`actionTypeID`, `historyTime`, `historyDate`, `historyDescription`, `userID`) VALUES ('7', '07:00:00', '2016-10-30', 'start', '2');
+INSERT INTO `History` (`actionTypeID`, `historyTime`, `historyDate`, `historyDescription`, `userID`) VALUES ('8', '12:00:00', '2016-10-30', 'end', '2');
+INSERT INTO `History` (`actionTypeID`, `historyTime`, `historyDate`, `historyDescription`, `userID`) VALUES ('7', '12:01:00', '2016-11-27', 'start', '3');
+INSERT INTO `History` (`actionTypeID`, `historyTime`, `historyDate`, `historyDescription`, `userID`) VALUES ('8', '17:00:00', '2016-11-27', 'end', '3');
+INSERT INTO `History` (`actionTypeID`, `historyTime`, `historyDate`, `historyDescription`, `userID`) VALUES ('7', '07:00:00', '2016-11-28', 'start', '2');
+INSERT INTO `History` (`actionTypeID`, `historyTime`, `historyDate`, `historyDescription`, `userID`) VALUES ('8', '12:00:00', '2016-11-28', 'end', '2');
 
  -- Category data
  INSERT INTO Category (ctID, ctName)

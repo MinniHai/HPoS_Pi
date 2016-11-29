@@ -9,6 +9,17 @@ class CustomeLineEdit : public QLineEdit
 {
     Q_OBJECT
 public:
+    enum TextType{
+        Password,
+        Name,
+        Number,
+        PhoneNumber,
+        Money,
+        DOB
+    };
+
+    QString regex;
+    void setValidate(TextType type);
     explicit CustomeLineEdit(QWidget *parent = 0);
     ~CustomeLineEdit() {}
 signals:

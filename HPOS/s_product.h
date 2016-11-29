@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QList>
 #include "customelineedit.h"
+#include <QLabel>
+
 class E_Product;
 class E_Barcode;
 class CustomeQlabel;
@@ -63,6 +65,7 @@ private slots:
 
 private:
     void fillLayout();
+    void changeInformation(E_Product *productTmp);
 
     QLineEdit *lineName;
     CustomeLineEdit *cbPro;
@@ -72,9 +75,12 @@ private:
     CustomeLineEdit *ledManufacture;
     CustomeLineEdit *ledPrice;
     CustomeLineEdit *ledQuantity;
+    CustomeLineEdit *ledCost;
     QComboBox *cbCategory;
+    QLineEdit *ledBarcode;
     QToolButton *btnAddManufacture;
-
+    QLabel *lbCost;
+    QLabel *lbBarcode;
 };
 
 #endif // PRODUCT_H

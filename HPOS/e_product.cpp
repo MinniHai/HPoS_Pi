@@ -64,7 +64,11 @@ QList<E_Product *> E_Product::getAllProduct()
     foreach(Repository *item, productRepo->getListEntityByQuery())
     {
         E_Product *product = (E_Product *)item;
-
+        product->barcode = E_Barcode::getBarcodeByProID(product->proID);
+        product->barcode->barcode = product->barcode->countryPrefix
+                +product->barcode->manufacturerPrefix
+                +product->barcode->productPrefix
+                +product->barcode->checkDigit;
         listProduct.append(product);
     }
     return listProduct;

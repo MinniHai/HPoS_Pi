@@ -39,6 +39,9 @@ private slots:
     void on_btnNew_clicked();
     void edit_clicked(int row);
 
+
+    void on_btnReport_clicked();
+
 private:
 
     void resizeEvent(QResizeEvent *);

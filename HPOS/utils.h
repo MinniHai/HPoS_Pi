@@ -15,6 +15,9 @@ public:
     void showMessageBox();
     Utils();
     QSqlDatabase *database;
+    static QString getCurrentYear();
+    static QString getCurrentMonth();
+    static QString getCurrentDay();
     QString getCurrentDate();
     QString getCurrentTime();
     QString getCurrentDateTime();

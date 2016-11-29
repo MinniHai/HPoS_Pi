@@ -12,6 +12,8 @@ E_Barcode::E_Barcode()
 {
     manufacturer = NULL;
     country = NULL;
+    cost = 0;
+    quantity = 0;
 }
 
 E_Barcode *E_Barcode::getResultSet()
@@ -25,7 +27,21 @@ E_Barcode *E_Barcode::getResultSet()
     barcode->proID = query.value(query.record().indexOf("proID")).toString();
     barcode->imDate = query.value(query.record().indexOf("imDate")).toString();
     barcode->imTime = query.value(query.record().indexOf("imTime")).toString();
+    barcode->cost = query.value(query.record().indexOf("cost")).toULongLong();
+    barcode->barcodeID = query.value(query.record().indexOf("barcodeID")).toInt();
+    barcode->quantity = query.value(query.record().indexOf("quantity")).toInt();
     return barcode;
+}
+
+QList<E_Barcode *> E_Barcode::getAllBarcodeSortedByProID(QString proID){
+    Repository *barcodeRepository = new E_Barcode();
+    QList<E_Barcode *> barcodeList;
+    barcodeRepository->getAllBarcodeSortedByProID(proID);
+    foreach(Repository *item, barcodeRepository->getListEntityByQuery())
+    {
+        barcodeList.append((E_Barcode *)item);
+    }
+    return barcodeList;
 }
 
 E_Barcode *E_Barcode::getBarcodeByProID(QString proID)
@@ -133,6 +149,17 @@ bool E_Barcode::upateBarcode(QHash<QString, QString> hash, QString barcodeID)
 {
     Repository *productRepo = new E_Barcode();
     productRepo->setUpdateQuery("Barcode", hash, "barcodeID", barcodeID);
+    return productRepo->query.exec();
+}
+bool E_Barcode::upateBarcode(QHash<QString, QString> hash,
+                             QString countryPr,QString productPr , QString manufacturerPr)
+{
+    Repository *productRepo = new E_Barcode();
+    productRepo->setUpdateQuery("Barcode", hash,
+                                "countryPrefix", countryPr,
+                                "manuPrefix", productPr,
+                                "productPrefix", manufacturerPr
+                                );
     return productRepo->query.exec();
 }
 

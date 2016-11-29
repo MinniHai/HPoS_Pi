@@ -182,6 +182,7 @@ void S_Search::viewInformation()
                 qDebug() << "Insert";
                 productScreen->action = S_Product::Insert;
                 listProduct[index]->barcode->analysisBarcode(listProduct[index]->barcode->barcode);
+                productScreen->barcode = listProduct[index]->barcode;
                 productScreen->setProductInsert(listProduct[index]);
             }
             productScreen->setEnabled(true);

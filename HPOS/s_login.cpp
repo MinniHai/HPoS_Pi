@@ -74,6 +74,7 @@ void S_Login::login()
 void S_Login::on_btnLogin_clicked()
 {
     login();
+//    ui->frame->repaint();
 }
 
 void S_Login::runKeyboard()

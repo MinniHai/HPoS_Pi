@@ -28,6 +28,10 @@
 #include <QVariant>
 #include <QDateTime>
 #include <QGridLayout>
+#include <QFrame>
+#include <QAbstractItemView>
+#include <QScrollBar>
+#include <session.h>
 
 S_Product *S_Product::s_instance;
 S_Product *S_Product::instance()
@@ -46,14 +50,12 @@ S_Product::S_Product(QWidget *parent) :
 {
     ui->setupUi(this);
     product = new E_Product();
+
     image = new CustomeQlabel("", ui->frame);
     image->setGeometry(0, 0, 151, 181);
     image->setObjectName("image");
     image->setAlignment(Qt::AlignCenter);
     image->setPixmap(QPixmap(":/images/images/camera.png").scaled(QSize(120, 120)));
-
-    ledCountry = new CustomeLineEdit();
-    ledManufacture = new CustomeLineEdit();
 
     ledPrice = new CustomeLineEdit(ui->frame);
     ledPrice->setGeometry(0,179,154,62);
@@ -64,38 +66,12 @@ S_Product::S_Product(QWidget *parent) :
     priceLabel->setStyleSheet("color: rgb(255, 255, 255);");
     priceLabel->setText("VND");
 
-    ledQuantity = new CustomeLineEdit();
-    ledQuantity->setClearButtonEnabled(true);
-    btnAddManufacture = new QToolButton();
-    btnAddManufacture->setObjectName("btnAddManufacture");
-    btnAddManufacture->setFixedWidth(29);
-    btnAddManufacture->setText("+");
-    cbCategory = new QComboBox();
-//    cbCategory->addItem("");
-
-    QRegExp date("(\\d\\d\\d\\d)");
-    QRegExpValidator *dateVal = new QRegExpValidator(date);
-    ledQuantity->setValidator(dateVal);
-    cateList = E_Category::getAllCategory();
-    if(!cateList.isEmpty())
-    {
-        foreach(E_Category *item, cateList)
-        {
-            cbCategory->addItem(item->categoryName, QVariant(item->ctID));
-        }
-
-    }
-    QScrollArea *scrollArea = ui->scrollArea;
-    scrollArea->setWidget(parent);
-    QScroller::grabGesture(scrollArea, QScroller::TouchGesture);
-
     ui->cbProductName->setGeometry(70,0,350,40);
     ui->cbProductName->setEditable(true);
-    cbPro = (CustomeLineEdit *)ui->cbProductName->lineEdit();
     ui->cbProductName->lineEdit()->setAlignment(Qt::AlignCenter);
-//    connect(ui->cbProductName, SIGNAL(currentIndexChanged(int)), SLOT(viewInformation(int)));
 
-    connect(btnAddManufacture,SIGNAL(pressed()),SLOT(btnAddManufacture_click()));
+    //    connect(ui->cbProductName, SIGNAL(currentIndexChanged(int)), SLOT(viewInformation(int)));
+
     connect(image, SIGNAL(clicked()), SLOT(capture()));
 
     connect(ledPrice, SIGNAL(selectionChanged()), SLOT(runKeyboard()));
@@ -106,21 +82,61 @@ S_Product::S_Product(QWidget *parent) :
 
 void S_Product::fillLayout(){
 
-    QWidget *wget = new QWidget();
+    QWidget *widget = new QWidget();
+
     QGridLayout *grid = new QGridLayout();
 
-    grid->addWidget(new QLabel("Quantity"),0,0);
-    grid->addWidget(ledQuantity,1,0);
-    grid->addWidget(new QLabel("Country"),2,0);
-    grid->addWidget(ledCountry,3,0);
-    grid->addWidget(new QLabel("Manufacturer"),4,0);
-    grid->addWidget(ledManufacture,5,0);
-    grid->addWidget(btnAddManufacture,5,1);
+    ledCountry = new CustomeLineEdit();
+    ledManufacture = new CustomeLineEdit();
+    ledBarcode = new QLineEdit();
+    ledBarcode->setDisabled(true);
+    ledQuantity = new CustomeLineEdit();
+    ledQuantity->setClearButtonEnabled(true);
+    btnAddManufacture = new QToolButton();
+    btnAddManufacture->setObjectName("btnAddManufacture");
+    btnAddManufacture->setFixedWidth(29);
+    btnAddManufacture->setText("+");
+    cbCategory = new QComboBox();
+    QAbstractItemView *cvView1 = cbCategory->view();
+    cvView1->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    cbCategory->setStyleSheet("combobox-popup: 0;");
+    cbCategory->setMaxVisibleItems(4);
+    QRegExp date1("(\\d\\d\\d\\d)");
+    QRegExpValidator *dateVal1 = new QRegExpValidator(date1);
+    ledQuantity->setValidator(dateVal1);
+    cateList = E_Category::getAllCategory();
+    if(!cateList.isEmpty())
+    {
+        foreach(E_Category *item, cateList)
+        {
+            cbCategory->addItem(item->categoryName, QVariant(item->ctID));
+        }
 
-    grid->addWidget(new QLabel("Category"),6,0);
-    grid->addWidget(cbCategory,7,0);
-    wget->setLayout(grid);
-    ui->scrollArea->setWidget(wget);
+    }
+    lbCost = new QLabel("Cost");
+    ledCost  = new CustomeLineEdit();
+    lbBarcode = new QLabel("Barcode");
+
+
+    grid->addWidget(new QLabel("Category"),0,0,1,1);
+    grid->addWidget(cbCategory,1,0,1,2);
+    grid->addWidget(lbCost,2,0);
+    grid->addWidget(ledCost,3,0,1,2);
+    grid->addWidget(new QLabel("Quantity"),4,0);
+    grid->addWidget(ledQuantity,5,0,1,2);
+    grid->addWidget(new QLabel("Country"),6,0);
+    grid->addWidget(ledCountry,7,0,1,2);
+    grid->addWidget(new QLabel("Manufacturer"),8,0);
+    grid->addWidget(ledManufacture,9,0);
+    grid->addWidget(btnAddManufacture,9,1);
+    grid->addWidget(lbBarcode,10,0,1,2);
+    grid->addWidget(ledBarcode,11,0,1,2);
+    connect(btnAddManufacture,SIGNAL(pressed()),SLOT(btnAddManufacture_click()));
+    widget->setLayout(grid);
+    ui->scrollArea->setWidget(widget);
+    ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    ui->scrollArea->verticalScrollBar()->setStyleSheet(
+                "QScrollBar:vertical { width: 15; }");
 }
 
 void S_Product::capture()
@@ -206,7 +222,7 @@ void S_Product::setEnabled(bool isEnable)
     {
         ledQuantity->setEnabled(true);
     }
-//    ui->tetDescription->setEnabled(isEnable);
+    //    ui->tetDescription->setEnabled(isEnable);
 }
 
 void S_Product::viewInformation(int currentIndext)
@@ -214,19 +230,38 @@ void S_Product::viewInformation(int currentIndext)
     if(!productList.isEmpty() && -1 < currentIndext && currentIndext < productList.size())
     {
         product = productList.at(currentIndext);
-        viewInformation(product);
+        if(action == Insert) {
+            changeInformation(product);
+        } else
+            viewInformation(product);
     }
 }
 
-
+void S_Product::changeInformation(E_Product *productTmp){
+    if(!productTmp->name.isEmpty()) {
+        ledCost->setText(QString::number(productTmp->barcode->cost));
+        ledPrice->setText(QString::number(productTmp->price));
+        cbCategory->setCurrentIndex(cbCategory->findText(productTmp->category->categoryName));
+    } else {
+        ledCost->setText("");
+        ledPrice->setText("");
+    }
+}
 
 void S_Product::viewInformation(E_Product *productTmp)
 {
     ledCountry->setEnabled(true);
     ledManufacture->setEnabled(true);
+
+    ledBarcode->setText(productTmp->barcode->barcode);
     if(action == Insert || action == InsertMore || action == Update) {
         ui->btnKeyboard->setVisible(true);
+        lbCost->setVisible(true);
+        ledCost->setVisible(true);
+        ledCost->setText(QString::number(productTmp->barcode->cost));
     } else {
+        lbCost->setVisible(false);
+        ledCost->setVisible(false);
         ui->btnKeyboard->setVisible(false);
     }
     this->product = productTmp;
@@ -253,6 +288,8 @@ void S_Product::viewInformation(E_Product *productTmp)
     if(productTmp->price > 0)
     {
         ledPrice->setText(QString::number(productTmp->price));
+    } else {
+        ledPrice->setText("");
     }
     if(productTmp->barcode->country)
     {
@@ -271,7 +308,7 @@ void S_Product::viewInformation(E_Product *productTmp)
     {
         ledManufacture->setText("");
     }
-//    ui->tetDescription->setText(productTmp->description);
+    //    ui->tetDescription->setText(productTmp->description);
 
     if(productTmp->category)
     {
@@ -296,11 +333,8 @@ void S_Product::viewInformation(E_Product *productTmp)
 
 void S_Product::clearAll()
 {
-    ledCountry->setText("");
-    ledManufacture->setText("");
     ledPrice->setText("");
-    ledQuantity->setText("");
-//    ui->tetDescription->setText("");
+    ledQuantity->setText("1");
     cbCategory->setCurrentIndex(0);
 }
 
@@ -343,7 +377,7 @@ void S_Product::btnAddManufacture_click()
 
 void S_Product::on_btnClear_clicked()
 {
-    if(product)
+    if(!product->name.isEmpty() && action != Insert)
     {
         viewInformation(product);
     }
@@ -380,16 +414,49 @@ void S_Product::on_btnSave_clicked()
         QHash<QString, QString> proHash;
         proHash.insert("proName", ui->cbProductName->currentText());
         proHash.insert("proPrice", ledPrice->text());
-        proHash.insert("quantity", ledQuantity->text());
+
         proHash.insert("ctID", cbCategory->currentData().toString());
-//        proHash.insert("proDes", ui->tetDescription->toPlainText());
+        //        proHash.insert("proDes", ui->tetDescription->toPlainText());
+        QHash<QString, QString> barcodeHash;
         if(action == Insert)
         {
-            if(E_Product::insertProduct(proHash))
-            {
-
-                qDebug() << "Insert Product Ok";
-                QHash<QString, QString> barcodeHash;
+            if(product->name.isEmpty()) {
+                proHash.insert("quantity", QString::number(ledQuantity->text().toInt()));
+                if(E_Product::insertProduct(proHash))
+                {
+                    barcodeHash.insert("countryPrefix", product->barcode->countryPrefix);
+                    barcodeHash.insert("manuPrefix", product->barcode->manufacturerPrefix);
+                    barcodeHash.insert("productPrefix", product->barcode->productPrefix);
+                    barcodeHash.insert("checkDigit", product->barcode->checkDigit);
+                    barcodeHash.insert("imDate", Utils::instance()->getCurrentDate());
+                    barcodeHash.insert("imTime", Utils::instance()->getCurrentTime());
+                    barcodeHash.insert("proID", E_Product::getMaxID());
+                    barcodeHash.insert("cost",ledCost->text());
+                    barcodeHash.insert("quantity",ledQuantity->text());
+                    qDebug() << "Insert Product Ok";
+                    if(E_Barcode::insertBarcode(barcodeHash))
+                    {
+                        qDebug() << "Insert Barcode Ok";
+                        QMessageBox box ;
+                        box.setText("Insert Done!");
+                        QPushButton *ok = box.addButton(QMessageBox::Ok);
+                        box.exec();
+                        if(box.clickedButton() == ok)
+                        {
+                            on_btnBack_clicked();
+                        }
+                    }
+                    else
+                    {
+                        QMessageBox::warning(this, "Warning", "Something was wrong.");
+                    }
+                }
+                else
+                {
+                    QMessageBox::warning(this, "Warning", "Something was wrong.");
+                }
+            } else {
+                proHash.insert("quantity", QString::number((ledQuantity->text().toInt() + product->quantity)));
                 barcodeHash.insert("countryPrefix", barcode->countryPrefix);
                 barcodeHash.insert("manuPrefix", barcode->manufacturerPrefix);
                 barcodeHash.insert("productPrefix", barcode->productPrefix);
@@ -397,19 +464,57 @@ void S_Product::on_btnSave_clicked()
                 barcodeHash.insert("imDate", Utils::instance()->getCurrentDate());
                 barcodeHash.insert("imTime", Utils::instance()->getCurrentTime());
                 barcodeHash.insert("proID", E_Product::getMaxID());
+                barcodeHash.insert("cost",ledCost->text());
+                barcodeHash.insert("quantity",ledQuantity->text());
+                qDebug() << "Insert Product Ok";
                 if(E_Barcode::insertBarcode(barcodeHash))
                 {
-                    qDebug() << "Insert Barcode Ok";
+                    if(E_Product::upateProduct(proHash, product->proID))
+                    {
+                        qDebug() << "Insert Barcode Ok";
+                        QMessageBox box ;
+                        box.setText("Insert Done!");
+                        QPushButton *ok = box.addButton(QMessageBox::Ok);
+                        box.exec();
+                        if(box.clickedButton() == ok)
+                        {
+                            on_btnBack_clicked();
+                        }
+                    }else
+                    {
+                        QMessageBox::warning(this, "Warning", "Something was wrong.");
+                    }
+                }
+                else
+                {
+                    QMessageBox::warning(this, "Warning", "Something was wrong.");
+                }
+            }
+        }
+        else if(action == Update)
+        {
+            proHash.insert("quantity", ledQuantity->text());
+            if(E_Product::upateProduct(proHash, product->proID))
+            {
+
+//                proHash.insert("quantity", ledQuantity->text() + product->quantity);
+                barcodeHash.insert("cost",ledCost->text());
+                barcodeHash.insert("quantity",ledQuantity->text());
+
+                if(E_Barcode::upateBarcode(barcodeHash,QString::number(product->barcode->barcodeID)))
+                {
+                    qDebug() << "Update Product : Ok";
                     QMessageBox box ;
-                    box.setText("Insert Done!");
+                    box.setText("Update Done!");
                     QPushButton *ok = box.addButton(QMessageBox::Ok);
                     box.exec();
                     if(box.clickedButton() == ok)
                     {
+                        E_Barcode::upateBarcode(barcodeHash,product->barcode->countryPrefix
+                                                ,product->barcode->productPrefix,product->barcode->manufacturerPrefix);
                         on_btnBack_clicked();
                     }
-                }
-                else
+                }else
                 {
                     QMessageBox::warning(this, "Warning", "Something was wrong.");
                 }
@@ -419,31 +524,16 @@ void S_Product::on_btnSave_clicked()
                 QMessageBox::warning(this, "Warning", "Something was wrong.");
             }
         }
-        else if(action == Update)
-        {
-            if(E_Product::upateProduct(proHash, product->proID))
-            {
-                qDebug() << "Update Product : Ok";
-                QMessageBox box ;
-                box.setText("Update Done!");
-                QPushButton *ok = box.addButton(QMessageBox::Ok);
-                box.exec();
-                if(box.clickedButton() == ok)
-                {
-                    on_btnBack_clicked();
-                }
-            }
-            else
-            {
-                QMessageBox::warning(this, "Warning", "Something was wrong.");
-            }
-        }
         else if(action == InsertMore)
         {
-            proHash.clear();
             proHash.insert("quantity", QString::number(ledQuantity->text().toInt() + product->quantity));
             if(E_Product::upateProduct(proHash, product->proID))
             {
+                barcodeHash.insert("cost",ledCost->text());
+                barcodeHash.insert("quantity",QString::number(ledQuantity->text().toInt() + product->quantity));
+                E_Barcode::upateBarcode(barcodeHash,product->barcode->countryPrefix,product->barcode->productPrefix
+                                        ,product->barcode->manufacturerPrefix);
+
                 qDebug() << "Insert more product : Ok";
                 QMessageBox box ;
                 box.setText("Insert more product :Done!");

@@ -45,6 +45,21 @@ ulong Utils::getULong(QString number)
     return 1;
 }
 
+QString Utils::getCurrentYear()
+{
+    QDateTime dateTime = QDateTime::currentDateTime();
+    return dateTime.toString("yyyy");
+}
+QString Utils::getCurrentMonth()
+{
+    QDateTime dateTime = QDateTime::currentDateTime();
+    return dateTime.toString("MM");
+}
+QString Utils::getCurrentDay()
+{
+    QDateTime dateTime = QDateTime::currentDateTime();
+    return dateTime.toString("dd");
+}
 QString Utils::getCurrentDate()
 {
     QDateTime dateTime = QDateTime::currentDateTime();

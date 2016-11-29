@@ -43,7 +43,10 @@ SOURCES += main.cpp\
     s_userdetail.cpp \
     e_state.cpp \
     invoiceprinter.cpp \
-    customelineedit.cpp
+    customelineedit.cpp \
+    empreportscreen.cpp \
+    invreportscreen.cpp \
+    invreport.cpp
 
 HEADERS  += \
     utils.h \
@@ -78,7 +81,10 @@ HEADERS  += \
     s_userdetail.h \
     e_state.h \
     invoiceprinter.h \
-    customelineedit.h
+    customelineedit.h \
+    empreportscreen.h \
+    invreportscreen.h \
+    invreport.h
 
 FORMS    += \
     keyboard.ui \
@@ -93,7 +99,9 @@ FORMS    += \
     shoppingCartScreen.ui \
     s_usermanager.ui \
     s_inventorymanager.ui \
-    userdetail.ui
+    userdetail.ui \
+    empreportscreen.ui \
+    invreportscreen.ui
 
 RESOURCES += \
     images.qrc \
@@ -101,7 +109,7 @@ RESOURCES += \
 INCLUDEPATH += $$PWD
 include($$PWD/QtRptProject/QtRPT/QtRPT.pri)
 
-CONFIG += build_arm
+CONFIG += build_ubuntu
 build_ubuntu{
 
     INCLUDEPATH += /opt/opencv/include/opencv
@@ -112,6 +120,8 @@ build_ubuntu{
     LIBS += /opt/opencv/lib/*.so.2.4
 
     LIBS += /opt/zbar/lib/*.so
+
+
 
 
 
@@ -135,3 +145,8 @@ LIBS += /opt/opencv2.4.13/lib/*.so.2.4.13
 DISTFILES += \
     HPOS.pro.user
 
+
+unix:!macx: LIBS += -L$$PWD/../../../../../usr/local/qwt-6.1.3/lib/ -lqwt
+
+INCLUDEPATH += $$PWD/../../../../../usr/local/qwt-6.1.3/include
+DEPENDPATH += $$PWD/../../../../../usr/local/qwt-6.1.3/include

@@ -8,6 +8,7 @@
 #include "e_product.h"
 #include "keyboard.h"
 #include "e_barcode.h"
+#include "invreportscreen.h"
 
 #include "QResizeEvent"
 #include <QPushButton>
@@ -15,6 +16,7 @@
 #include <QDebug>
 #include <QVariant>
 #include <QFont>
+#include <QScrollBar>
 
 S_InventoryManager *S_InventoryManager::s_instance;
 
@@ -40,6 +42,11 @@ S_InventoryManager::S_InventoryManager(QWidget *parent) :
 
     ui->tblListInventory->setSelectionMode(QAbstractItemView::MultiSelection);
     ui->tblListInventory->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tblListInventory->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->tblListInventory->horizontalHeader()->setSectionResizeMode (QHeaderView::Fixed);
+    ui->tblListInventory->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    ui->tblListInventory->verticalScrollBar()->setStyleSheet(
+        "QScrollBar:vertical { width: 15; }");
 
     ui->cbbSearchType->setCurrentIndex(ui->cbbSearchType->findText("Name"));
 
@@ -51,7 +58,6 @@ S_InventoryManager::S_InventoryManager(QWidget *parent) :
     ledSearch->setPlaceholderText("Search...");
     ledSearch->setClearButtonEnabled(true);
 
-    ui->btnDelete->setEnabled(false);
     connect(ledSearch, SIGNAL(textChanged(QString)), SLOT(searchInventory(QString)));
 
     listProduct.clear();
@@ -75,13 +81,13 @@ void S_InventoryManager::on_btnMenu_clicked()
 
 void S_InventoryManager::resizeEvent(QResizeEvent *)
 {
-    int width =  480;
+    int width =  480 -15;
     ui->tblListInventory->setColumnWidth(0, width * 5.5 / 19);
     ui->tblListInventory->setColumnWidth(1, width * 3 / 19);
     ui->tblListInventory->setColumnWidth(2, width * 3 / 19);
     ui->tblListInventory->setColumnWidth(3, width * 2 / 19);
     ui->tblListInventory->setColumnWidth(4, width * 4 / 19);
-    ui->tblListInventory->setColumnWidth(5, width * 1.45 / 19);
+    ui->tblListInventory->setColumnWidth(5, width * 1.5 / 19);
 
 }
 
@@ -227,4 +233,14 @@ void S_InventoryManager::searchInventory(QString text)
         }
     }
     setDataToTable();
+}
+
+
+void S_InventoryManager::on_btnReport_clicked()
+{
+    InvReportScreen *inv = InvReportScreen::instance();
+    inv->setModal(true);
+    inv->loadTableData();
+    inv->showFullScreen();
+    this->close();
 }

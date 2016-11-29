@@ -41,11 +41,13 @@ private slots:
 
     void on_btnBack_clicked();
 
-    void on_btnDelete_clicked();
+//    void on_btnDelete_clicked();
 
     void edit_clicked(int row);
 
     void cell_click(int row, int column);
+
+    void on_btnReport_clicked();
 
 private:
     QList<E_State *> listState;

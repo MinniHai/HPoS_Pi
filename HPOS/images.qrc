@@ -49,5 +49,6 @@
         <file>images/cash.png</file>
         <file>images/next.png</file>
         <file>images/pre.png</file>
+        <file>images/chart.png</file>
     </qresource>
 </RCC>

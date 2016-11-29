@@ -2,6 +2,7 @@
 #define S_USERDETAIL_H
 
 #include <QDialog>
+#include <QDateEdit>
 #include "customeqlabel.h"
 #include "customelineedit.h"
 
@@ -54,10 +55,12 @@ private slots:
 
 private:
     void fillLayout();
+    bool eventFilter(QObject *obj, QEvent *event);
+
     CustomeLineEdit *ledFirstName;
     CustomeLineEdit *ledLastName;
     CustomeLineEdit *ledIdCard;
-    CustomeLineEdit *ledDOB;
+    QDateEdit *ledDOB;
     CustomeLineEdit *ledPhone;
     CustomeLineEdit *ledPinCode;
     CustomeLineEdit *ledPwd;

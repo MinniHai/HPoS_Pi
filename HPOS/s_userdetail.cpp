@@ -15,6 +15,7 @@
 #include "barcodescanner.h"
 #include <QRegExpValidator>
 #include <QGridLayout>
+#include <QCalendarWidget>
 
 
 S_UserDetail *S_UserDetail::s_instance;
@@ -34,10 +35,16 @@ S_UserDetail::S_UserDetail(QWidget *parent) :
     ui(new Ui::S_UserDetail)
 {
     ui->setupUi(this);
-
     listState = E_State::getAllState();
-    ledDOB = new CustomeLineEdit();
-    ledDOB->setClearButtonEnabled(true);
+    ledDOB = new QDateEdit();
+    ledDOB->setCalendarPopup(true);
+    ledDOB->setDisplayFormat("yyyy-MM-dd");
+    ledDOB->setMinimumDate(QDate(1970,01,01));
+    ledDOB->setMaximumDate(QDate::currentDate());
+    ledDOB->calendarWidget()->installEventFilter(this);
+    ledDOB->setDate(QDate::fromString("2000-01-01","yyyy-MM-dd"));
+//    ledDOB->calendarWidget()->setSelectedDate(QDate::fromString("2000-01-01","yyyy-MM-dd"));
+
     ledFirstName = new CustomeLineEdit();
     ledFirstName->setClearButtonEnabled(true);
     ledIdCard = new CustomeLineEdit();
@@ -66,13 +73,21 @@ S_UserDetail::S_UserDetail(QWidget *parent) :
     image->setAlignment(Qt::AlignCenter);
     image->setPixmap(QPixmap(":/images/images/camera.png").scaled(QSize(120, 120)));
 
-    QRegExp date("((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])");
-    QRegExpValidator *dateVal = new QRegExpValidator(date);
-    ledDOB->setValidator(dateVal);
+//    QRegExp date("((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])");
+//    QRegExpValidator *dateVal = new QRegExpValidator(date);
+//    ledDOB->setValidator(dateVal);
     //    ledDOB->setInputMask("9999-99-99");
     connect(image, SIGNAL(clicked()), SLOT(capture()));
     fillRolesData();
     fillLayout();
+}
+
+bool S_UserDetail::eventFilter(QObject *obj, QEvent *event) {
+    if(obj == ledDOB->calendarWidget() && event->type() == QEvent::Show){
+        QPoint pos = ledDOB->mapToGlobal(ledDOB->geometry().bottomLeft());
+        ledDOB->calendarWidget()->window()->move(pos.x() - 130,pos.y()-280);
+    }
+    return false;
 }
 
 void S_UserDetail::fillLayout(){
@@ -85,12 +100,12 @@ void S_UserDetail::fillLayout(){
     grid->addWidget(new QLabel("Last Name"),2,0);
     ledLastName->setPlaceholderText("Enter LastName");
     grid->addWidget(ledLastName,3,0);
-    grid->addWidget(new QLabel("ID CARD"),4,0);
+    grid->addWidget(new QLabel("Day Of Birth"),4,0);
+//    ledDOB->setPlaceholderText("Form : yyyy-mm-dd");
+    grid->addWidget(ledDOB,5,0);
+    grid->addWidget(new QLabel("ID CARD"),6,0);
     ledIdCard->setPlaceholderText("Enter ID Card");
-    grid->addWidget(ledIdCard,5,0);
-    grid->addWidget(new QLabel("Day Of Birth"),6,0);
-    ledDOB->setPlaceholderText("Form : yyyy-mm-dd");
-    grid->addWidget(ledDOB,7,0);
+    grid->addWidget(ledIdCard,7,0);
 
     grid->addWidget(new QLabel("Phone Number"),8,0);
     ledPhone->setPlaceholderText("Phone Number");
@@ -111,6 +126,7 @@ void S_UserDetail::fillLayout(){
     ledPwd->setEchoMode(QLineEdit::PasswordEchoOnEdit);
     grid->addWidget(new QLabel("Password"),18,0);
     grid->addWidget(ledPwd,19,0);
+
     wget->setLayout(grid);
     ui->scrollArea->setWidget(wget);
 }
@@ -167,7 +183,7 @@ void S_UserDetail::fillDataUserDetail()
         ledLastName->setText(user->lastname);
         ledPhone->setText(user->phone);
         ledPinCode->setText(user->pincode);
-        ledDOB->setText(user->DOB);
+        ledDOB->setDate(QDate::fromString(user->DOB,"yyyy-MM-dd"));
         ui->cbRoles->setCurrentIndex(ui->cbRoles->findText(user->roleType->roleType));
         ledActiveTime->setText(user->activeTime.replace("T"," "));
         ledEndTime->setText(user->endTime.replace("T"," "));
@@ -202,7 +218,8 @@ void S_UserDetail::clearAll()
     ledLastName->setText("");
     ledPhone->setText("");
     ledPinCode->setText("");
-    ledDOB->setText("");
+//    ledDOB->setText("");
+    ledDOB->setDate(QDate::fromString("2000-01-01","yyyy-MM-dd"));
     ui->cbRoles->setCurrentIndex(1);
     ledActiveTime->setText("");
     ledEndTime->setText("");
